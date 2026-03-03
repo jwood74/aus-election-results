@@ -31,9 +31,9 @@
       <table id="results-table" aria-label="Polling Place Results">
         <thead>
           <tr>
-            <th rowspan="2" class="col-contest sticky-col">Polling Place</th>
-            <th rowspan="2" class="col-num">Expected<br>Votes</th>
-            <th rowspan="2" class="col-num">Votes<br>Cast</th>
+            <th rowspan="2" class="col-contest sticky-col" data-sort-key="name">Polling Place</th>
+            <th rowspan="2" class="col-num" data-sort-key="expectedVotes">Expected<br>Votes</th>
+            <th rowspan="2" class="col-num" data-sort-key="votesCast">Votes<br>Cast</th>
             <th colspan="2" class="group-tcp">ALP TCP</th>
             <th colspan="5" class="group-primary-pct">Primary %</th>
             <th colspan="4" class="group-swing">Primary Swing</th>
@@ -41,22 +41,22 @@
           </tr>
           <tr>
             <!-- ALP TCP -->
-            <th class="col-num group-tcp col-party-alp">%</th>
-            <th class="col-num group-tcp col-party-alp">Swing</th>
+            <th class="col-num group-tcp col-party-alp" data-sort-key="alpTcpPct">%</th>
+            <th class="col-num group-tcp col-party-alp" data-sort-key="alpTcpSwing">Swing</th>
             <!-- Primary % -->
-            <th class="col-num group-primary-pct col-party-alp">ALP</th>
-            <th class="col-num group-primary-pct col-party-lnp">L/NP</th>
-            <th class="col-num group-primary-pct col-party-grn">GRN</th>
-            <th class="col-num group-primary-pct col-party-onp">ONP</th>
-            <th class="col-num group-primary-pct col-party-oth">OTH</th>
+            <th class="col-num group-primary-pct col-party-alp" data-sort-key="alpPct">ALP</th>
+            <th class="col-num group-primary-pct col-party-lnp" data-sort-key="lnpPct">L/NP</th>
+            <th class="col-num group-primary-pct col-party-grn" data-sort-key="grnPct">GRN</th>
+            <th class="col-num group-primary-pct col-party-onp" data-sort-key="onpPct">ONP</th>
+            <th class="col-num group-primary-pct col-party-oth" data-sort-key="othPct">OTH</th>
             <!-- Primary Swing -->
-            <th class="col-num group-swing col-party-alp">ALP</th>
-            <th class="col-num group-swing col-party-lnp">L/NP</th>
-            <th class="col-num group-swing col-party-grn">GRN</th>
-            <th class="col-num group-swing col-party-onp">ONP</th>
+            <th class="col-num group-swing col-party-alp" data-sort-key="alpSwing">ALP</th>
+            <th class="col-num group-swing col-party-lnp" data-sort-key="lnpSwing">L/NP</th>
+            <th class="col-num group-swing col-party-grn" data-sort-key="grnSwing">GRN</th>
+            <th class="col-num group-swing col-party-onp" data-sort-key="onpSwing">ONP</th>
             <!-- Preference Flow -->
-            <th class="col-num group-flow col-party-alp">→ ALP</th>
-            <th class="col-num group-flow col-party-lnp">→ L/NP</th>
+            <th class="col-num group-flow col-party-alp" data-sort-key="flowAlp">→ ALP</th>
+            <th class="col-num group-flow col-party-lnp" data-sort-key="flowLnp">→ L/NP</th>
           </tr>
         </thead>
         <tbody id="results-body">
