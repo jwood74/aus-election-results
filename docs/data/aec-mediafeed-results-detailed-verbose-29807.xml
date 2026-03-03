@@ -1,0 +1,3057 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<MediaFeed Id="a0356eaf-4cf8-414b-9c23-72ffb33446a4" Created="2024-05-02T11:52:41" SchemaVersion="3" EmlVersion="5" xmlns="http://www.aec.gov.au/xml/schema/mediafeed" xmlns:eml="urn:oasis:names:tc:evs:schema:eml" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:xal="urn:oasis:names:tc:ciq:xsdschema:xAL:2.0" xmlns:xnl="urn:oasis:names:tc:ciq:xsdschema:xNL:2.0" xmlns:ts="urn:oasis:names:tc:evs:schema:eml:ts" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:schemaLocation="http://www.aec.gov.au/xml/schema/mediafeed ../Schema/AEC/aec-mediafeed-results-v3-0.xsd">
+  <ManagingAuthority>
+    <eml:AuthorityIdentifier Id="AEC">Australian Electoral Commission</eml:AuthorityIdentifier>
+  </ManagingAuthority>
+  <MessageLanguage>en</MessageLanguage>
+  <MessageGenerator>
+    <Name>Virtual Tally Room</Name>
+    <Environment>PROD</Environment>
+    <Site>CANBERRA</Site>
+    <Server>TALLYROOM</Server>
+    <Platform>x64</Platform>
+    <Version>10.11.290.0</Version>
+  </MessageGenerator>
+  <Cycle Created="2024-05-02T11:52:38">a2a20260-bdb0-4ee6-abee-402d47fd7b4a</Cycle>
+  <Results Phase="FinalResults" Verbosity="Verbose" Granularity="Detailed">
+    <eml:EventIdentifier Id="29807">
+      <eml:EventName>2024 Cook By-election</eml:EventName>
+    </eml:EventIdentifier>
+    <Election>
+      <eml:ElectionIdentifier Id="H">
+        <eml:ElectionName>House of Representatives By-election for the division of Cook</eml:ElectionName>
+        <eml:ElectionCategory>ByElection</eml:ElectionCategory>
+      </eml:ElectionIdentifier>
+      <House>
+        <Contests>
+          <Contest Updated="2024-04-30T13:55:09" Declared="2024-04-16T00:00:00">
+            <eml:ContestIdentifier Id="112">
+              <eml:ContestName>Cook</eml:ContestName>
+            </eml:ContestIdentifier>
+            <PollingDistrictIdentifier Id="112" ShortCode="COOK">
+              <Name>Cook</Name>
+              <StateIdentifier Id="NSW" />
+            </PollingDistrictIdentifier>
+            <Enrolment CloseOfRolls="111968" Historic="110221">111902</Enrolment>
+            <FirstPreferences Updated="2024-04-30T13:55:09" PollingPlacesReturned="46" PollingPlacesExpected="46">
+              <Candidate>
+                <eml:CandidateIdentifier Id="38288">
+                  <eml:CandidateName>KOLHATKAR, Vinay</eml:CandidateName>
+                </eml:CandidateIdentifier>
+                <eml:AffiliationIdentifier Id="1515" ShortCode="LTP">
+                  <eml:RegisteredName>Libertarian</eml:RegisteredName>
+                </eml:AffiliationIdentifier>
+                <BallotPosition>1</BallotPosition>
+                <Elected Historic="false">false</Elected>
+                <Incumbent Notional="false">false</Incumbent>
+                <Votes Historic="0" Percentage="5.96" Swing="5.96" MatchedHistoric="0">5117</Votes>
+                <VotesByType>
+                  <Votes Type="Ordinary" Historic="0" Percentage="6.09" Swing="6.09">4739</Votes>
+                  <Votes Type="Absent" Historic="0" Percentage="0" Swing="0">0</Votes>
+                  <Votes Type="Provisional" Historic="0" Percentage="7.22" Swing="7.22">19</Votes>
+                  <Votes Type="PrePoll" Historic="0" Percentage="7.92" Swing="7.92">8</Votes>
+                  <Votes Type="Postal" Historic="0" Percentage="4.55" Swing="4.55">351</Votes>
+                </VotesByType>
+              </Candidate>
+              <Candidate>
+                <eml:CandidateIdentifier Id="38292">
+                  <eml:CandidateName>BROWN, Natasha</eml:CandidateName>
+                </eml:CandidateIdentifier>
+                <eml:AffiliationIdentifier Id="1339" ShortCode="AJP">
+                  <eml:RegisteredName>Animal Justice Party</eml:RegisteredName>
+                </eml:AffiliationIdentifier>
+                <BallotPosition>2</BallotPosition>
+                <Elected Historic="false">false</Elected>
+                <Incumbent Notional="false">false</Incumbent>
+                <Votes Historic="0" Percentage="6.8" Swing="6.8" MatchedHistoric="0">5841</Votes>
+                <VotesByType>
+                  <Votes Type="Ordinary" Historic="0" Percentage="6.93" Swing="6.93">5389</Votes>
+                  <Votes Type="Absent" Historic="0" Percentage="0" Swing="0">0</Votes>
+                  <Votes Type="Provisional" Historic="0" Percentage="9.51" Swing="9.51">25</Votes>
+                  <Votes Type="PrePoll" Historic="0" Percentage="4.95" Swing="4.95">5</Votes>
+                  <Votes Type="Postal" Historic="0" Percentage="5.47" Swing="5.47">422</Votes>
+                </VotesByType>
+              </Candidate>
+              <Candidate Independent="true">
+                <eml:CandidateIdentifier Id="38291">
+                  <eml:CandidateName>WOODWARD, Roger</eml:CandidateName>
+                </eml:CandidateIdentifier>
+                <BallotPosition>3</BallotPosition>
+                <Elected Historic="false">false</Elected>
+                <Incumbent Notional="false">false</Incumbent>
+                <Votes Historic="0" Percentage="5.73" Swing="5.73" MatchedHistoric="0">4920</Votes>
+                <VotesByType>
+                  <Votes Type="Ordinary" Historic="0" Percentage="5.41" Swing="5.41">4211</Votes>
+                  <Votes Type="Absent" Historic="0" Percentage="0" Swing="0">0</Votes>
+                  <Votes Type="Provisional" Historic="0" Percentage="3.04" Swing="3.04">8</Votes>
+                  <Votes Type="PrePoll" Historic="0" Percentage="3.96" Swing="3.96">4</Votes>
+                  <Votes Type="Postal" Historic="0" Percentage="9.04" Swing="9.04">697</Votes>
+                </VotesByType>
+              </Candidate>
+              <Candidate>
+                <eml:CandidateIdentifier Id="38287">
+                  <eml:CandidateName>MOORE, Martin</eml:CandidateName>
+                </eml:CandidateIdentifier>
+                <eml:AffiliationIdentifier Id="1058" ShortCode="GRN">
+                  <eml:RegisteredName>The Greens</eml:RegisteredName>
+                </eml:AffiliationIdentifier>
+                <BallotPosition>4</BallotPosition>
+                <Elected Historic="false">false</Elected>
+                <Incumbent Notional="false">false</Incumbent>
+                <Votes Historic="9685" Percentage="16.45" Swing="6.55" MatchedHistoric="8016">14120</Votes>
+                <VotesByType>
+                  <Votes Type="Ordinary" Historic="8038" Percentage="16.65" Swing="7.05">12949</Votes>
+                  <Votes Type="Absent" Historic="453" Percentage="0" Swing="-16.42">0</Votes>
+                  <Votes Type="Provisional" Historic="30" Percentage="16.73" Swing="5.9">44</Votes>
+                  <Votes Type="PrePoll" Historic="381" Percentage="15.84" Swing="0.22">16</Votes>
+                  <Votes Type="Postal" Historic="783" Percentage="14.41" Swing="5.35">1111</Votes>
+                </VotesByType>
+              </Candidate>
+              <Candidate>
+                <eml:CandidateIdentifier Id="38290">
+                  <eml:CandidateName>KENNEDY, Simon</eml:CandidateName>
+                </eml:CandidateIdentifier>
+                <eml:AffiliationIdentifier Id="188" ShortCode="LP">
+                  <eml:RegisteredName>Liberal</eml:RegisteredName>
+                </eml:AffiliationIdentifier>
+                <BallotPosition>5</BallotPosition>
+                <Elected Historic="false">true</Elected>
+                <Incumbent Notional="true">true</Incumbent>
+                <Votes Historic="54322" Percentage="62.67" Swing="7.14" MatchedHistoric="46943">53799</Votes>
+                <VotesByType>
+                  <Votes Type="Ordinary" Historic="46967" Percentage="62.53" Swing="6.42">48633</Votes>
+                  <Votes Type="Absent" Historic="1090" Percentage="0" Swing="-39.51">0</Votes>
+                  <Votes Type="Provisional" Historic="135" Percentage="61.6" Swing="12.86">162</Votes>
+                  <Votes Type="PrePoll" Historic="1089" Percentage="67.33" Swing="22.68">68</Votes>
+                  <Votes Type="Postal" Historic="5041" Percentage="64.03" Swing="5.66">4936</Votes>
+                </VotesByType>
+              </Candidate>
+              <Candidate>
+                <eml:CandidateIdentifier Id="38289">
+                  <eml:CandidateName>GAGATAM, Simone Francis</eml:CandidateName>
+                </eml:CandidateIdentifier>
+                <eml:AffiliationIdentifier Id="1336" ShortCode="SPP">
+                  <eml:RegisteredName>Sustainable Australia Party - Universal Basic Income</eml:RegisteredName>
+                </eml:AffiliationIdentifier>
+                <BallotPosition>6</BallotPosition>
+                <Elected Historic="false">false</Elected>
+                <Incumbent Notional="false">false</Incumbent>
+                <Votes Historic="0" Percentage="2.39" Swing="2.39" MatchedHistoric="0">2054</Votes>
+                <VotesByType>
+                  <Votes Type="Ordinary" Historic="0" Percentage="2.39" Swing="2.39">1857</Votes>
+                  <Votes Type="Absent" Historic="0" Percentage="0" Swing="0">0</Votes>
+                  <Votes Type="Provisional" Historic="0" Percentage="1.9" Swing="1.9">5</Votes>
+                  <Votes Type="PrePoll" Historic="0" Percentage="0" Swing="0">0</Votes>
+                  <Votes Type="Postal" Historic="0" Percentage="2.49" Swing="2.49">192</Votes>
+                </VotesByType>
+              </Candidate>
+              <Ghost>
+                <eml:CandidateIdentifier Id="37731">
+                  <eml:CandidateName>CAMERON, Gaye</eml:CandidateName>
+                </eml:CandidateIdentifier>
+                <eml:AffiliationIdentifier Id="1133" ShortCode="ON">
+                  <eml:RegisteredName>Pauline Hanson's One Nation</eml:RegisteredName>
+                </eml:AffiliationIdentifier>
+                <BallotPosition>901</BallotPosition>
+                <Elected Historic="false">false</Elected>
+                <Incumbent Notional="false">false</Incumbent>
+                <Votes Historic="4985" Percentage="0" Swing="-5.1" MatchedHistoric="4157">0</Votes>
+                <VotesByType>
+                  <Votes Type="Ordinary" Historic="4168" Percentage="0" Swing="-4.98">0</Votes>
+                  <Votes Type="Absent" Historic="218" Percentage="0" Swing="-7.9">0</Votes>
+                  <Votes Type="Provisional" Historic="20" Percentage="0" Swing="-7.22">0</Votes>
+                  <Votes Type="PrePoll" Historic="189" Percentage="0" Swing="-7.75">0</Votes>
+                  <Votes Type="Postal" Historic="390" Percentage="0" Swing="-4.51">0</Votes>
+                </VotesByType>
+              </Ghost>
+              <Ghost>
+                <eml:CandidateIdentifier Id="36694">
+                  <eml:CandidateName>GUINANE, Jacqueline</eml:CandidateName>
+                </eml:CandidateIdentifier>
+                <eml:AffiliationIdentifier Id="1469" ShortCode="UAPP">
+                  <eml:RegisteredName>United Australia Party</eml:RegisteredName>
+                </eml:AffiliationIdentifier>
+                <BallotPosition>904</BallotPosition>
+                <Elected Historic="false">false</Elected>
+                <Incumbent Notional="false">false</Incumbent>
+                <Votes Historic="4381" Percentage="0" Swing="-4.48" MatchedHistoric="3747">0</Votes>
+                <VotesByType>
+                  <Votes Type="Ordinary" Historic="3758" Percentage="0" Swing="-4.49">0</Votes>
+                  <Votes Type="Absent" Historic="212" Percentage="0" Swing="-7.68">0</Votes>
+                  <Votes Type="Provisional" Historic="17" Percentage="0" Swing="-6.14">0</Votes>
+                  <Votes Type="PrePoll" Historic="131" Percentage="0" Swing="-5.37">0</Votes>
+                  <Votes Type="Postal" Historic="263" Percentage="0" Swing="-3.04">0</Votes>
+                </VotesByType>
+              </Ghost>
+              <Ghost>
+                <eml:CandidateIdentifier Id="36784">
+                  <eml:CandidateName>EARLE, Simon</eml:CandidateName>
+                </eml:CandidateIdentifier>
+                <eml:AffiliationIdentifier Id="194" ShortCode="ALP">
+                  <eml:RegisteredName>Australian Labor Party (N.S.W. Branch)</eml:RegisteredName>
+                </eml:AffiliationIdentifier>
+                <BallotPosition>905</BallotPosition>
+                <Elected Historic="false">false</Elected>
+                <Incumbent Notional="false">false</Incumbent>
+                <Votes Historic="24444" Percentage="0" Swing="-24.99" MatchedHistoric="20751">0</Votes>
+                <VotesByType>
+                  <Votes Type="Ordinary" Historic="20773" Percentage="0" Swing="-24.82">0</Votes>
+                  <Votes Type="Absent" Historic="786" Percentage="0" Swing="-28.49">0</Votes>
+                  <Votes Type="Provisional" Historic="75" Percentage="0" Swing="-27.08">0</Votes>
+                  <Votes Type="PrePoll" Historic="649" Percentage="0" Swing="-26.61">0</Votes>
+                  <Votes Type="Postal" Historic="2161" Percentage="0" Swing="-25.02">0</Votes>
+                </VotesByType>
+              </Ghost>
+              <Formal>
+                <Votes Historic="97817" Percentage="93.24" Swing="-2.36" MatchedHistoric="83614">85851</Votes>
+                <VotesByType>
+                  <Votes Type="Ordinary" Historic="83705" Percentage="92.96" Swing="-2.57">77778</Votes>
+                  <Votes Type="Absent" Historic="2759" Percentage="0" Swing="-94.23">0</Votes>
+                  <Votes Type="Provisional" Historic="277" Percentage="96.34" Swing="3.39">263</Votes>
+                  <Votes Type="PrePoll" Historic="2439" Percentage="94.39" Swing="-2.82">101</Votes>
+                  <Votes Type="Postal" Historic="8637" Percentage="96.04" Swing="-0.42">7709</Votes>
+                </VotesByType>
+              </Formal>
+              <Informal>
+                <Votes Historic="4498" Percentage="6.76" Swing="2.36" MatchedHistoric="3917">6225</Votes>
+                <VotesByType>
+                  <Votes Type="Ordinary" Historic="3921" Percentage="7.04" Swing="2.57">5891</Votes>
+                  <Votes Type="Absent" Historic="169" Percentage="0" Swing="-5.77">0</Votes>
+                  <Votes Type="Provisional" Historic="21" Percentage="3.66" Swing="-3.39">10</Votes>
+                  <Votes Type="PrePoll" Historic="70" Percentage="5.61" Swing="2.82">6</Votes>
+                  <Votes Type="Postal" Historic="317" Percentage="3.96" Swing="0.42">318</Votes>
+                </VotesByType>
+              </Informal>
+              <Total>
+                <Votes Historic="102315" Percentage="82.28" Swing="-10.55" MatchedHistoric="87531">92076</Votes>
+                <VotesByType>
+                  <Votes Type="Ordinary" Historic="87626" Percentage="90.87" Swing="-4.73">83669</Votes>
+                  <Votes Type="Absent" Historic="2928" Percentage="0" Swing="-2.66">0</Votes>
+                  <Votes Type="Provisional" Historic="298" Percentage="0.3" Swing="-0.03">273</Votes>
+                  <Votes Type="PrePoll" Historic="2509" Percentage="0.12" Swing="-2.18">107</Votes>
+                  <Votes Type="Postal" Historic="8954" Percentage="8.72" Swing="-0.95">8027</Votes>
+                </VotesByType>
+              </Total>
+            </FirstPreferences>
+            <TwoCandidatePreferred Updated="2024-04-30T13:55:09" PollingPlacesReturned="46" PollingPlacesExpected="46">
+              <Candidate>
+                <eml:CandidateIdentifier Id="38287">
+                  <eml:CandidateName>MOORE, Martin</eml:CandidateName>
+                </eml:CandidateIdentifier>
+                <eml:AffiliationIdentifier Id="1058" ShortCode="GRN">
+                  <eml:RegisteredName>The Greens</eml:RegisteredName>
+                </eml:AffiliationIdentifier>
+                <BallotPosition>4</BallotPosition>
+                <Elected Historic="false">false</Elected>
+                <Incumbent Notional="false">false</Incumbent>
+                <Votes Historic="0" Percentage="28.75" Swing="28.75" MatchedHistoric="0" MatchedHistoricFirstPrefsIn="0">24682</Votes>
+                <VotesByType>
+                  <Votes Type="Ordinary" Historic="0" Percentage="28.86" Swing="28.86">22445</Votes>
+                  <Votes Type="Absent" Historic="0" Percentage="0" Swing="0">0</Votes>
+                  <Votes Type="Provisional" Historic="0" Percentage="29.66" Swing="29.66">78</Votes>
+                  <Votes Type="PrePoll" Historic="0" Percentage="22.77" Swing="22.77">23</Votes>
+                  <Votes Type="Postal" Historic="0" Percentage="27.71" Swing="27.71">2136</Votes>
+                </VotesByType>
+              </Candidate>
+              <Candidate>
+                <eml:CandidateIdentifier Id="38290">
+                  <eml:CandidateName>KENNEDY, Simon</eml:CandidateName>
+                </eml:CandidateIdentifier>
+                <eml:AffiliationIdentifier Id="188" ShortCode="LP">
+                  <eml:RegisteredName>Liberal</eml:RegisteredName>
+                </eml:AffiliationIdentifier>
+                <BallotPosition>5</BallotPosition>
+                <Elected Historic="false">true</Elected>
+                <Incumbent Notional="true">true</Incumbent>
+                <Votes Historic="0" Percentage="71.25" Swing="71.25" MatchedHistoric="0" MatchedHistoricFirstPrefsIn="0">61169</Votes>
+                <VotesByType>
+                  <Votes Type="Ordinary" Historic="0" Percentage="71.14" Swing="71.14">55333</Votes>
+                  <Votes Type="Absent" Historic="0" Percentage="0" Swing="0">0</Votes>
+                  <Votes Type="Provisional" Historic="0" Percentage="70.34" Swing="70.34">185</Votes>
+                  <Votes Type="PrePoll" Historic="0" Percentage="77.23" Swing="77.23">78</Votes>
+                  <Votes Type="Postal" Historic="0" Percentage="72.29" Swing="72.29">5573</Votes>
+                </VotesByType>
+              </Candidate>
+            </TwoCandidatePreferred>
+            <TwoPartyPreferred>
+              <Coalition>
+                <CoalitionIdentifier Id="1" ShortCode="ALP">
+                  <CoalitionName>Australian Labor Party</CoalitionName>
+                </CoalitionIdentifier>
+                <Votes Historic="36737" Percentage="0" Swing="-37.56" MatchedHistoric="0">0</Votes>
+              </Coalition>
+              <Coalition>
+                <CoalitionIdentifier Id="2" ShortCode="LNC">
+                  <CoalitionName>Liberal/National Coalition</CoalitionName>
+                </CoalitionIdentifier>
+                <Votes Historic="61080" Percentage="0" Swing="-62.44" MatchedHistoric="0">0</Votes>
+              </Coalition>
+            </TwoPartyPreferred>
+            <PollingPlaces>
+              <PollingPlace Updated="2024-04-14T12:45:09">
+                <PollingPlaceIdentifier Id="33" Name="Blakehurst South" />
+                <FirstPreferences Updated="2024-04-14T12:45:09">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38288" />
+                    <Votes Historic="0" Percentage="5.52" Swing="5.52">90</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38292" />
+                    <Votes Historic="0" Percentage="10.3" Swing="10.3">168</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38291" />
+                    <Votes Historic="0" Percentage="4.72" Swing="4.72">77</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="114" Percentage="12.32" Swing="5.16">201</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="953" Percentage="65.91" Swing="6.02">1075</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38289" />
+                    <Votes Historic="0" Percentage="1.23" Swing="1.23">20</Votes>
+                  </Candidate>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="37731" />
+                    <Votes Historic="89" Percentage="0" Swing="-5.61">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36694" />
+                    <Votes Historic="73" Percentage="0" Swing="-4.6">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36784" />
+                    <Votes Historic="362" Percentage="0" Swing="-22.74">0</Votes>
+                  </Ghost>
+                  <Formal>
+                    <Votes Historic="1592" Percentage="94.22" Swing="-0.2">1631</Votes>
+                  </Formal>
+                  <Informal>
+                    <Votes Historic="94" Percentage="5.78" Swing="0.2">100</Votes>
+                  </Informal>
+                  <Total>
+                    <Votes Historic="1686" Percentage="1.55" Swing="0.02">1731</Votes>
+                  </Total>
+                </FirstPreferences>
+                <TwoCandidatePreferred Updated="2024-04-14T12:45:09">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="0" Percentage="26.36" Swing="26.36">430</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="0" Percentage="73.64" Swing="73.64">1201</Votes>
+                  </Candidate>
+                </TwoCandidatePreferred>
+              </PollingPlace>
+              <PollingPlace Updated="2024-04-14T10:15:44">
+                <PollingPlaceIdentifier Id="83518" Name="Burraneer" />
+                <FirstPreferences Updated="2024-04-14T10:15:44">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38288" />
+                    <Votes Historic="0" Percentage="2.73" Swing="2.73">10</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38292" />
+                    <Votes Historic="0" Percentage="7.38" Swing="7.38">27</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38291" />
+                    <Votes Historic="0" Percentage="3.28" Swing="3.28">12</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="42" Percentage="13.11" Swing="0.75">48</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="229" Percentage="72.4" Swing="5.43">265</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38289" />
+                    <Votes Historic="0" Percentage="1.09" Swing="1.09">4</Votes>
+                  </Candidate>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="37731" />
+                    <Votes Historic="8" Percentage="0" Swing="-2.36">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36694" />
+                    <Votes Historic="4" Percentage="0" Swing="-1.19">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36784" />
+                    <Votes Historic="58" Percentage="0" Swing="-17.12">0</Votes>
+                  </Ghost>
+                  <Formal>
+                    <Votes Historic="342" Percentage="96.06" Swing="-1.37">366</Votes>
+                  </Formal>
+                  <Informal>
+                    <Votes Historic="9" Percentage="3.94" Swing="1.37">15</Votes>
+                  </Informal>
+                  <Total>
+                    <Votes Historic="351" Percentage="0.34" Swing="0.02">381</Votes>
+                  </Total>
+                </FirstPreferences>
+                <TwoCandidatePreferred Updated="2024-04-14T10:15:44">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="0" Percentage="20.22" Swing="20.22">74</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="0" Percentage="79.78" Swing="79.78">292</Votes>
+                  </Candidate>
+                </TwoCandidatePreferred>
+              </PollingPlace>
+              <PollingPlace Updated="2024-04-29T14:42:36">
+                <PollingPlaceIdentifier Id="417" Name="Burraneer Bay" />
+                <FirstPreferences Updated="2024-04-29T14:42:36">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38288" />
+                    <Votes Historic="0" Percentage="4.87" Swing="4.87">96</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38292" />
+                    <Votes Historic="0" Percentage="6.35" Swing="6.35">125</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38291" />
+                    <Votes Historic="0" Percentage="4.52" Swing="4.52">89</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="197" Percentage="15.08" Swing="3.8">297</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="1077" Percentage="67.51" Swing="5.95">1330</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38289" />
+                    <Votes Historic="0" Percentage="1.68" Swing="1.68">33</Votes>
+                  </Candidate>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="37731" />
+                    <Votes Historic="59" Percentage="0" Swing="-3.37">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36694" />
+                    <Votes Historic="83" Percentage="0" Swing="-4.75">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36784" />
+                    <Votes Historic="333" Percentage="0" Swing="-19.03">0</Votes>
+                  </Ghost>
+                  <Formal>
+                    <Votes Historic="1750" Percentage="93.45" Swing="-3.6">1970</Votes>
+                  </Formal>
+                  <Informal>
+                    <Votes Historic="53" Percentage="6.55" Swing="3.6">138</Votes>
+                  </Informal>
+                  <Total>
+                    <Votes Historic="1803" Percentage="1.88" Swing="0.24">2108</Votes>
+                  </Total>
+                </FirstPreferences>
+                <TwoCandidatePreferred Updated="2024-04-29T14:42:36">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="0" Percentage="24.37" Swing="24.37">480</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="0" Percentage="75.63" Swing="75.63">1490</Votes>
+                  </Candidate>
+                </TwoCandidatePreferred>
+              </PollingPlace>
+              <PollingPlace Updated="2024-04-30T09:41:39">
+                <PollingPlaceIdentifier Id="419" Name="Caringbah Central" />
+                <FirstPreferences Updated="2024-04-30T09:41:39">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38288" />
+                    <Votes Historic="0" Percentage="4.76" Swing="4.76">81</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38292" />
+                    <Votes Historic="0" Percentage="7.75" Swing="7.75">132</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38291" />
+                    <Votes Historic="0" Percentage="6.17" Swing="6.17">105</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="131" Percentage="18.85" Swing="7.79">321</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="634" Percentage="59.84" Swing="6.26">1019</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38289" />
+                    <Votes Historic="0" Percentage="2.64" Swing="2.64">45</Votes>
+                  </Candidate>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="37731" />
+                    <Votes Historic="79" Percentage="0" Swing="-6.69">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36694" />
+                    <Votes Historic="64" Percentage="0" Swing="-5.43">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36784" />
+                    <Votes Historic="275" Percentage="0" Swing="-23.23">0</Votes>
+                  </Ghost>
+                  <Formal>
+                    <Votes Historic="1183" Percentage="90.97" Swing="-4.82">1703</Votes>
+                  </Formal>
+                  <Informal>
+                    <Votes Historic="52" Percentage="9.03" Swing="4.82">169</Votes>
+                  </Informal>
+                  <Total>
+                    <Votes Historic="1235" Percentage="1.67" Swing="0.55">1872</Votes>
+                  </Total>
+                </FirstPreferences>
+                <TwoCandidatePreferred Updated="2024-04-30T09:41:39">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="0" Percentage="31.12" Swing="31.12">530</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="0" Percentage="68.88" Swing="68.88">1173</Votes>
+                  </Candidate>
+                </TwoCandidatePreferred>
+              </PollingPlace>
+              <PollingPlace Updated="2024-04-30T10:42:55">
+                <PollingPlaceIdentifier Id="420" Name="Caringbah North" />
+                <FirstPreferences Updated="2024-04-30T10:42:55">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38288" />
+                    <Votes Historic="0" Percentage="6.7" Swing="6.7">118</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38292" />
+                    <Votes Historic="0" Percentage="10.84" Swing="10.84">191</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38291" />
+                    <Votes Historic="0" Percentage="4.94" Swing="4.94">87</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="247" Percentage="16.63" Swing="3.97">293</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="1045" Percentage="54.71" Swing="1.18">964</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38289" />
+                    <Votes Historic="0" Percentage="6.19" Swing="6.19">109</Votes>
+                  </Candidate>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="37731" />
+                    <Votes Historic="77" Percentage="0" Swing="-3.96">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36694" />
+                    <Votes Historic="105" Percentage="0" Swing="-5.39">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36784" />
+                    <Votes Historic="478" Percentage="0" Swing="-24.46">0</Votes>
+                  </Ghost>
+                  <Formal>
+                    <Votes Historic="1953" Percentage="89.76" Swing="-4.91">1762</Votes>
+                  </Formal>
+                  <Informal>
+                    <Votes Historic="110" Percentage="10.24" Swing="4.91">201</Votes>
+                  </Informal>
+                  <Total>
+                    <Votes Historic="2063" Percentage="1.75" Swing="-0.12">1963</Votes>
+                  </Total>
+                </FirstPreferences>
+                <TwoCandidatePreferred Updated="2024-04-30T10:42:55">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="0" Percentage="32.75" Swing="32.75">577</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="0" Percentage="67.25" Swing="67.25">1185</Votes>
+                  </Candidate>
+                </TwoCandidatePreferred>
+              </PollingPlace>
+              <PollingPlace Updated="2024-04-30T10:38:30">
+                <PollingPlaceIdentifier Id="97903" Name="Caringbah PPVC" Classification="PrePollVotingCentre" />
+                <FirstPreferences Updated="2024-04-30T10:38:30">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38288" />
+                    <Votes Historic="0" Percentage="3.52" Swing="3.52">288</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38292" />
+                    <Votes Historic="0" Percentage="6.05" Swing="6.05">495</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38291" />
+                    <Votes Historic="0" Percentage="5.22" Swing="5.22">427</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="641" Percentage="15.27" Swing="6.3">1249</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="4350" Percentage="68.1" Swing="7.18">5571</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38289" />
+                    <Votes Historic="0" Percentage="1.85" Swing="1.85">151</Votes>
+                  </Candidate>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="37731" />
+                    <Votes Historic="276" Percentage="0" Swing="-3.86">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36694" />
+                    <Votes Historic="252" Percentage="0" Swing="-3.53">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36784" />
+                    <Votes Historic="1622" Percentage="0" Swing="-22.72">0</Votes>
+                  </Ghost>
+                  <Formal>
+                    <Votes Historic="7141" Percentage="95.52" Swing="-1.46">8181</Votes>
+                  </Formal>
+                  <Informal>
+                    <Votes Historic="222" Percentage="4.48" Swing="1.46">384</Votes>
+                  </Informal>
+                  <Total>
+                    <Votes Historic="7363" Percentage="7.65" Swing="0.97">8565</Votes>
+                  </Total>
+                </FirstPreferences>
+                <TwoCandidatePreferred Updated="2024-04-30T10:38:30">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="0" Percentage="25.56" Swing="25.56">2091</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="0" Percentage="74.44" Swing="74.44">6090</Votes>
+                  </Candidate>
+                </TwoCandidatePreferred>
+              </PollingPlace>
+              <PollingPlace Updated="2024-04-30T11:58:17">
+                <PollingPlaceIdentifier Id="418" Name="Caringbah South" />
+                <FirstPreferences Updated="2024-04-30T11:58:17">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38288" />
+                    <Votes Historic="0" Percentage="3.93" Swing="3.93">56</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38292" />
+                    <Votes Historic="0" Percentage="8" Swing="8">114</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38291" />
+                    <Votes Historic="0" Percentage="3.79" Swing="3.79">54</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="186" Percentage="18.32" Swing="8.21">261</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="1092" Percentage="63.16" Swing="3.85">900</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38289" />
+                    <Votes Historic="0" Percentage="2.81" Swing="2.81">40</Votes>
+                  </Candidate>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="37731" />
+                    <Votes Historic="69" Percentage="0" Swing="-3.76">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36694" />
+                    <Votes Historic="73" Percentage="0" Swing="-3.98">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36784" />
+                    <Votes Historic="420" Percentage="0" Swing="-22.84">0</Votes>
+                  </Ghost>
+                  <Formal>
+                    <Votes Historic="1841" Percentage="93.69" Swing="-2.39">1425</Votes>
+                  </Formal>
+                  <Informal>
+                    <Votes Historic="75" Percentage="6.31" Swing="2.39">96</Votes>
+                  </Informal>
+                  <Total>
+                    <Votes Historic="1916" Percentage="1.36" Swing="-0.38">1521</Votes>
+                  </Total>
+                </FirstPreferences>
+                <TwoCandidatePreferred Updated="2024-04-30T11:58:17">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="0" Percentage="29.54" Swing="29.54">421</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="0" Percentage="70.46" Swing="70.46">1004</Votes>
+                  </Candidate>
+                </TwoCandidatePreferred>
+              </PollingPlace>
+              <PollingPlace Updated="2024-04-30T10:14:36">
+                <PollingPlaceIdentifier Id="421" Name="Caringbah West" />
+                <FirstPreferences Updated="2024-04-30T10:14:36">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38288" />
+                    <Votes Historic="0" Percentage="3.56" Swing="3.56">37</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38292" />
+                    <Votes Historic="0" Percentage="5.77" Swing="5.77">60</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38291" />
+                    <Votes Historic="0" Percentage="6.64" Swing="6.64">69</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="146" Percentage="15.11" Swing="3.33">157</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="707" Percentage="66.12" Swing="9.29">687</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38289" />
+                    <Votes Historic="0" Percentage="2.79" Swing="2.79">29</Votes>
+                  </Candidate>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="37731" />
+                    <Votes Historic="53" Percentage="0" Swing="-4.27">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36694" />
+                    <Votes Historic="52" Percentage="0" Swing="-4.19">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36784" />
+                    <Votes Historic="285" Percentage="0" Swing="-22.92">0</Votes>
+                  </Ghost>
+                  <Formal>
+                    <Votes Historic="1243" Percentage="93.86" Swing="-2.35">1039</Votes>
+                  </Formal>
+                  <Informal>
+                    <Votes Historic="49" Percentage="6.14" Swing="2.35">68</Votes>
+                  </Informal>
+                  <Total>
+                    <Votes Historic="1292" Percentage="0.99" Swing="-0.18">1107</Votes>
+                  </Total>
+                </FirstPreferences>
+                <TwoCandidatePreferred Updated="2024-04-30T10:14:36">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="0" Percentage="27.53" Swing="27.53">286</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="0" Percentage="72.47" Swing="72.47">753</Votes>
+                  </Candidate>
+                </TwoCandidatePreferred>
+              </PollingPlace>
+              <PollingPlace Updated="2024-04-14T10:58:09">
+                <PollingPlaceIdentifier Id="80139" Name="Carlton South" />
+                <FirstPreferences Updated="2024-04-14T10:58:09">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38288" />
+                    <Votes Historic="0" Percentage="9.18" Swing="9.18">74</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38292" />
+                    <Votes Historic="0" Percentage="5.71" Swing="5.71">46</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38291" />
+                    <Votes Historic="0" Percentage="5.71" Swing="5.71">46</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="58" Percentage="18.86" Swing="8.57">152</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="209" Percentage="57.32" Swing="20.42">462</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38289" />
+                    <Votes Historic="0" Percentage="3.23" Swing="3.23">26</Votes>
+                  </Candidate>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="37731" />
+                    <Votes Historic="34" Percentage="0" Swing="-6.02">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36694" />
+                    <Votes Historic="33" Percentage="0" Swing="-5.85">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36784" />
+                    <Votes Historic="231" Percentage="0" Swing="-40.94">0</Votes>
+                  </Ghost>
+                  <Formal>
+                    <Votes Historic="565" Percentage="88.96" Swing="-3.36">806</Votes>
+                  </Formal>
+                  <Informal>
+                    <Votes Historic="47" Percentage="11.04" Swing="3.36">100</Votes>
+                  </Informal>
+                  <Total>
+                    <Votes Historic="612" Percentage="0.81" Swing="0.25">906</Votes>
+                  </Total>
+                </FirstPreferences>
+                <TwoCandidatePreferred Updated="2024-04-14T10:58:09">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="0" Percentage="33.5" Swing="33.5">270</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="0" Percentage="66.5" Swing="66.5">536</Votes>
+                  </Candidate>
+                </TwoCandidatePreferred>
+              </PollingPlace>
+              <PollingPlace Updated="2024-04-30T10:45:47">
+                <PollingPlaceIdentifier Id="40" Name="Carss Park" />
+                <FirstPreferences Updated="2024-04-30T10:45:47">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38288" />
+                    <Votes Historic="0" Percentage="4.43" Swing="4.43">29</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38292" />
+                    <Votes Historic="0" Percentage="4.74" Swing="4.74">31</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38291" />
+                    <Votes Historic="0" Percentage="8.1" Swing="8.1">53</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="49" Percentage="14.07" Swing="7.47">92</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="424" Percentage="66.82" Swing="9.84">437</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38289" />
+                    <Votes Historic="0" Percentage="1.83" Swing="1.83">12</Votes>
+                  </Candidate>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="37731" />
+                    <Votes Historic="34" Percentage="0" Swing="-4.61">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36694" />
+                    <Votes Historic="35" Percentage="0" Swing="-4.74">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36784" />
+                    <Votes Historic="201" Percentage="0" Swing="-27.07">0</Votes>
+                  </Ghost>
+                  <Formal>
+                    <Votes Historic="744" Percentage="90.71" Swing="-4.3">654</Votes>
+                  </Formal>
+                  <Informal>
+                    <Votes Historic="39" Percentage="9.29" Swing="4.3">67</Votes>
+                  </Informal>
+                  <Total>
+                    <Votes Historic="783" Percentage="0.64" Swing="-0.07">721</Votes>
+                  </Total>
+                </FirstPreferences>
+                <TwoCandidatePreferred Updated="2024-04-30T10:45:47">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="0" Percentage="24.77" Swing="24.77">162</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="0" Percentage="75.23" Swing="75.23">492</Votes>
+                  </Candidate>
+                </TwoCandidatePreferred>
+              </PollingPlace>
+              <PollingPlace Updated="2024-04-14T12:15:59">
+                <PollingPlaceIdentifier Id="80121" Name="Connells Point" />
+                <FirstPreferences Updated="2024-04-14T12:15:59">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38288" />
+                    <Votes Historic="0" Percentage="4.81" Swing="4.81">42</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38292" />
+                    <Votes Historic="0" Percentage="4.47" Swing="4.47">39</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38291" />
+                    <Votes Historic="0" Percentage="5.61" Swing="5.61">49</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="72" Percentage="13.4" Swing="5.81">117</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="539" Percentage="68.5" Swing="11.35">598</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38289" />
+                    <Votes Historic="0" Percentage="3.21" Swing="3.21">28</Votes>
+                  </Candidate>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="37731" />
+                    <Votes Historic="52" Percentage="0" Swing="-5.53">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36694" />
+                    <Votes Historic="38" Percentage="0" Swing="-4.04">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36784" />
+                    <Votes Historic="242" Percentage="0" Swing="-25.69">0</Votes>
+                  </Ghost>
+                  <Formal>
+                    <Votes Historic="943" Percentage="93.47" Swing="-2.36">873</Votes>
+                  </Formal>
+                  <Informal>
+                    <Votes Historic="41" Percentage="6.53" Swing="2.36">61</Votes>
+                  </Informal>
+                  <Total>
+                    <Votes Historic="984" Percentage="0.83" Swing="-0.06">934</Votes>
+                  </Total>
+                </FirstPreferences>
+                <TwoCandidatePreferred Updated="2024-04-14T12:15:59">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="0" Percentage="22.11" Swing="22.11">193</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="0" Percentage="77.89" Swing="77.89">680</Votes>
+                  </Candidate>
+                </TwoCandidatePreferred>
+              </PollingPlace>
+              <PollingPlace Updated="2024-04-14T11:50:21">
+                <PollingPlaceIdentifier Id="422" Name="Cronulla" />
+                <FirstPreferences Updated="2024-04-14T11:50:21">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38288" />
+                    <Votes Historic="0" Percentage="5.09" Swing="5.09">62</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38292" />
+                    <Votes Historic="0" Percentage="7.4" Swing="7.4">90</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38291" />
+                    <Votes Historic="0" Percentage="5.01" Swing="5.01">61</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="218" Percentage="21.36" Swing="6.44">260</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="769" Percentage="59.41" Swing="6.74">723</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38289" />
+                    <Votes Historic="0" Percentage="1.73" Swing="1.73">21</Votes>
+                  </Candidate>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="37731" />
+                    <Votes Historic="67" Percentage="0" Swing="-4.6">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36694" />
+                    <Votes Historic="50" Percentage="0" Swing="-3.44">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36784" />
+                    <Votes Historic="356" Percentage="0" Swing="-24.37">0</Votes>
+                  </Ghost>
+                  <Formal>
+                    <Votes Historic="1460" Percentage="93.69" Swing="-1.86">1217</Votes>
+                  </Formal>
+                  <Informal>
+                    <Votes Historic="68" Percentage="6.31" Swing="1.86">82</Votes>
+                  </Informal>
+                  <Total>
+                    <Votes Historic="1528" Percentage="1.16" Swing="-0.23">1299</Votes>
+                  </Total>
+                </FirstPreferences>
+                <TwoCandidatePreferred Updated="2024-04-14T11:50:21">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="0" Percentage="32.46" Swing="32.46">395</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="0" Percentage="67.54" Swing="67.54">822</Votes>
+                  </Candidate>
+                </TwoCandidatePreferred>
+              </PollingPlace>
+              <PollingPlace Updated="2024-04-14T13:21:37">
+                <PollingPlaceIdentifier Id="423" Name="Cronulla Central" />
+                <FirstPreferences Updated="2024-04-14T13:21:37">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38288" />
+                    <Votes Historic="0" Percentage="7.4" Swing="7.4">83</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38292" />
+                    <Votes Historic="0" Percentage="8.56" Swing="8.56">96</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38291" />
+                    <Votes Historic="0" Percentage="4.81" Swing="4.81">54</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="260" Percentage="23.53" Swing="8.71">264</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="908" Percentage="51.43" Swing="-0.27">577</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38289" />
+                    <Votes Historic="0" Percentage="4.28" Swing="4.28">48</Votes>
+                  </Candidate>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="37731" />
+                    <Votes Historic="80" Percentage="0" Swing="-4.57">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36694" />
+                    <Votes Historic="70" Percentage="0" Swing="-4">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36784" />
+                    <Votes Historic="438" Percentage="0" Swing="-24.91">0</Votes>
+                  </Ghost>
+                  <Formal>
+                    <Votes Historic="1756" Percentage="93.97" Swing="-2.19">1122</Votes>
+                  </Formal>
+                  <Informal>
+                    <Votes Historic="70" Percentage="6.03" Swing="2.19">72</Votes>
+                  </Informal>
+                  <Total>
+                    <Votes Historic="1826" Percentage="1.07" Swing="-0.59">1194</Votes>
+                  </Total>
+                </FirstPreferences>
+                <TwoCandidatePreferred Updated="2024-04-14T13:21:37">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="0" Percentage="38.95" Swing="38.95">437</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="0" Percentage="61.05" Swing="61.05">685</Votes>
+                  </Candidate>
+                </TwoCandidatePreferred>
+              </PollingPlace>
+              <PollingPlace Updated="2024-04-30T10:27:03">
+                <PollingPlaceIdentifier Id="109350" Name="Cronulla PPVC" Classification="PrePollVotingCentre" />
+                <FirstPreferences Updated="2024-04-30T10:27:03">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38288" />
+                    <Votes Historic="0" Percentage="5.22" Swing="5.22">416</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38292" />
+                    <Votes Historic="0" Percentage="4.5" Swing="4.5">359</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38291" />
+                    <Votes Historic="0" Percentage="5.12" Swing="5.12">408</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="487" Percentage="18.42" Swing="8.34">1469</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="2830" Percentage="64.84" Swing="6.32">5172</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38289" />
+                    <Votes Historic="0" Percentage="1.91" Swing="1.91">152</Votes>
+                  </Candidate>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="37731" />
+                    <Votes Historic="194" Percentage="0" Swing="-4.02">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36694" />
+                    <Votes Historic="176" Percentage="0" Swing="-3.64">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36784" />
+                    <Votes Historic="1149" Percentage="0" Swing="-23.75">0</Votes>
+                  </Ghost>
+                  <Formal>
+                    <Votes Historic="4837" Percentage="95.25" Swing="-1.48">7976</Votes>
+                  </Formal>
+                  <Informal>
+                    <Votes Historic="163" Percentage="4.75" Swing="1.48">398</Votes>
+                  </Informal>
+                  <Total>
+                    <Votes Historic="5000" Percentage="7.48" Swing="2.94">8374</Votes>
+                  </Total>
+                </FirstPreferences>
+                <TwoCandidatePreferred Updated="2024-04-30T10:27:03">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="0" Percentage="27.82" Swing="27.82">2219</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="0" Percentage="72.18" Swing="72.18">5757</Votes>
+                  </Candidate>
+                </TwoCandidatePreferred>
+              </PollingPlace>
+              <PollingPlace Updated="2024-04-30T11:21:25">
+                <PollingPlaceIdentifier Id="425" Name="Cronulla South" />
+                <FirstPreferences Updated="2024-04-30T11:21:25">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38288" />
+                    <Votes Historic="0" Percentage="6.52" Swing="6.52">93</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38292" />
+                    <Votes Historic="0" Percentage="8.7" Swing="8.7">124</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38291" />
+                    <Votes Historic="0" Percentage="3.72" Swing="3.72">53</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="205" Percentage="21.39" Swing="6.49">305</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="746" Percentage="56.87" Swing="2.63">811</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38289" />
+                    <Votes Historic="0" Percentage="2.81" Swing="2.81">40</Votes>
+                  </Candidate>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="37731" />
+                    <Votes Historic="40" Percentage="0" Swing="-2.92">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36694" />
+                    <Votes Historic="54" Percentage="0" Swing="-3.94">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36784" />
+                    <Votes Historic="330" Percentage="0" Swing="-24">0</Votes>
+                  </Ghost>
+                  <Formal>
+                    <Votes Historic="1375" Percentage="93.88" Swing="-3.14">1426</Votes>
+                  </Formal>
+                  <Informal>
+                    <Votes Historic="42" Percentage="6.12" Swing="3.14">93</Votes>
+                  </Informal>
+                  <Total>
+                    <Votes Historic="1418" Percentage="1.36" Swing="0.07">1519</Votes>
+                  </Total>
+                </FirstPreferences>
+                <TwoCandidatePreferred Updated="2024-04-30T11:21:25">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="0" Percentage="33.66" Swing="33.66">480</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="0" Percentage="66.34" Swing="66.34">946</Votes>
+                  </Candidate>
+                </TwoCandidatePreferred>
+              </PollingPlace>
+              <PollingPlace Updated="2024-04-14T13:44:32">
+                <PollingPlaceIdentifier Id="65420" Name="EAV Cook PPVC" Classification="PrePollVotingCentre" />
+                <FirstPreferences Updated="2024-04-14T13:44:32">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38288" />
+                    <Votes Historic="0" Percentage="7.14" Swing="7.14">1</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38292" />
+                    <Votes Historic="0" Percentage="7.14" Swing="7.14">1</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38291" />
+                    <Votes Historic="0" Percentage="21.43" Swing="21.43">3</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="2" Percentage="14.29" Swing="-1.09">2</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="7" Percentage="42.86" Swing="-10.97">6</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38289" />
+                    <Votes Historic="0" Percentage="7.14" Swing="7.14">1</Votes>
+                  </Candidate>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="37731" />
+                    <Votes Historic="0" Percentage="0" Swing="-0.01">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36694" />
+                    <Votes Historic="0" Percentage="0" Swing="-0.01">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36784" />
+                    <Votes Historic="4" Percentage="0" Swing="-30.77">0</Votes>
+                  </Ghost>
+                  <Formal>
+                    <Votes Historic="13" Percentage="100" Swing="0">14</Votes>
+                  </Formal>
+                  <Informal>
+                    <Votes Historic="0" Percentage="0" Swing="0">0</Votes>
+                  </Informal>
+                  <Total>
+                    <Votes Historic="13" Percentage="0.01" Swing="0">14</Votes>
+                  </Total>
+                </FirstPreferences>
+                <TwoCandidatePreferred Updated="2024-04-14T13:44:32">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="0" Percentage="35.71" Swing="35.71">5</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="0" Percentage="64.29" Swing="64.29">9</Votes>
+                  </Candidate>
+                </TwoCandidatePreferred>
+              </PollingPlace>
+              <PollingPlace Updated="2024-04-29T16:09:10">
+                <PollingPlaceIdentifier Id="445" Name="Greenhills Beach" />
+                <FirstPreferences Updated="2024-04-29T16:09:10">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38288" />
+                    <Votes Historic="0" Percentage="3.03" Swing="3.03">30</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38292" />
+                    <Votes Historic="0" Percentage="12.21" Swing="12.21">121</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38291" />
+                    <Votes Historic="0" Percentage="5.95" Swing="5.95">59</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="201" Percentage="16.15" Swing="2.37">160</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="817" Percentage="60.34" Swing="4.23">598</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38289" />
+                    <Votes Historic="0" Percentage="2.32" Swing="2.32">23</Votes>
+                  </Candidate>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="37731" />
+                    <Votes Historic="67" Percentage="0" Swing="-4.61">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36694" />
+                    <Votes Historic="60" Percentage="0" Swing="-4.13">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36784" />
+                    <Votes Historic="311" Percentage="0" Swing="-21.38">0</Votes>
+                  </Ghost>
+                  <Formal>
+                    <Votes Historic="1457" Percentage="93.05" Swing="-3.69">991</Votes>
+                  </Formal>
+                  <Informal>
+                    <Votes Historic="49" Percentage="6.95" Swing="3.69">74</Votes>
+                  </Informal>
+                  <Total>
+                    <Votes Historic="1506" Percentage="0.95" Swing="-0.42">1065</Votes>
+                  </Total>
+                </FirstPreferences>
+                <TwoCandidatePreferred Updated="2024-04-29T16:09:10">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="0" Percentage="30.47" Swing="30.47">302</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="0" Percentage="69.53" Swing="69.53">689</Votes>
+                  </Candidate>
+                </TwoCandidatePreferred>
+              </PollingPlace>
+              <PollingPlace Updated="2024-04-14T11:30:52">
+                <PollingPlaceIdentifier Id="1207" Name="Gymea" />
+                <FirstPreferences Updated="2024-04-14T11:30:52">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38288" />
+                    <Votes Historic="0" Percentage="5.37" Swing="5.37">61</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38292" />
+                    <Votes Historic="0" Percentage="8.89" Swing="8.89">101</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38291" />
+                    <Votes Historic="0" Percentage="9.07" Swing="9.07">103</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="148" Percentage="20.51" Swing="9.1">233</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="666" Percentage="53.17" Swing="1.71">604</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38289" />
+                    <Votes Historic="0" Percentage="2.99" Swing="2.99">34</Votes>
+                  </Candidate>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="37731" />
+                    <Votes Historic="53" Percentage="0" Swing="-4.11">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36694" />
+                    <Votes Historic="54" Percentage="0" Swing="-4.18">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36784" />
+                    <Votes Historic="373" Percentage="0" Swing="-28.84">0</Votes>
+                  </Ghost>
+                  <Formal>
+                    <Votes Historic="1295" Percentage="92.21" Swing="-4.29">1136</Votes>
+                  </Formal>
+                  <Informal>
+                    <Votes Historic="47" Percentage="7.79" Swing="4.29">96</Votes>
+                  </Informal>
+                  <Total>
+                    <Votes Historic="1342" Percentage="1.1" Swing="-0.12">1232</Votes>
+                  </Total>
+                </FirstPreferences>
+                <TwoCandidatePreferred Updated="2024-04-14T11:30:52">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="0" Percentage="35.39" Swing="35.39">402</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="0" Percentage="64.61" Swing="64.61">734</Votes>
+                  </Candidate>
+                </TwoCandidatePreferred>
+              </PollingPlace>
+              <PollingPlace Updated="2024-04-14T12:30:21">
+                <PollingPlaceIdentifier Id="430" Name="Gymea Bay" />
+                <FirstPreferences Updated="2024-04-14T12:30:21">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38288" />
+                    <Votes Historic="0" Percentage="5.29" Swing="5.29">119</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38292" />
+                    <Votes Historic="0" Percentage="9.87" Swing="9.87">222</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38291" />
+                    <Votes Historic="0" Percentage="4.84" Swing="4.84">109</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="558" Percentage="19.07" Swing="7.34">429</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="2367" Percentage="58.58" Swing="8.77">1318</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38289" />
+                    <Votes Historic="0" Percentage="2.36" Swing="2.36">53</Votes>
+                  </Candidate>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="37731" />
+                    <Votes Historic="222" Percentage="0" Swing="-4.66">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36694" />
+                    <Votes Historic="212" Percentage="0" Swing="-4.45">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36784" />
+                    <Votes Historic="1395" Percentage="0" Swing="-29.34">0</Votes>
+                  </Ghost>
+                  <Formal>
+                    <Votes Historic="4752" Percentage="92.67" Swing="-2.22">2250</Votes>
+                  </Formal>
+                  <Informal>
+                    <Votes Historic="256" Percentage="7.33" Swing="2.22">178</Votes>
+                  </Informal>
+                  <Total>
+                    <Votes Historic="5008" Percentage="2.17" Swing="-2.37">2428</Votes>
+                  </Total>
+                </FirstPreferences>
+                <TwoCandidatePreferred Updated="2024-04-14T12:30:21">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="0" Percentage="33.42" Swing="33.42">752</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="0" Percentage="66.58" Swing="66.58">1498</Votes>
+                  </Candidate>
+                </TwoCandidatePreferred>
+              </PollingPlace>
+              <PollingPlace Updated="2024-04-14T12:41:07">
+                <PollingPlaceIdentifier Id="83533" Name="Gymea Bay North" />
+                <FirstPreferences Updated="2024-04-14T12:41:07">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38288" />
+                    <Votes Historic="0" Percentage="4.61" Swing="4.61">58</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38292" />
+                    <Votes Historic="0" Percentage="5.24" Swing="5.24">66</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38291" />
+                    <Votes Historic="0" Percentage="5.56" Swing="5.56">70</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="41" Percentage="17.32" Swing="9.1">218</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="304" Percentage="63.78" Swing="3.22">803</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38289" />
+                    <Votes Historic="0" Percentage="3.49" Swing="3.49">44</Votes>
+                  </Candidate>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="37731" />
+                    <Votes Historic="22" Percentage="0" Swing="-4.4">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36694" />
+                    <Votes Historic="13" Percentage="0" Swing="-2.6">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36784" />
+                    <Votes Historic="121" Percentage="0" Swing="-24.22">0</Votes>
+                  </Ghost>
+                  <Formal>
+                    <Votes Historic="502" Percentage="92.3" Swing="-3.68">1259</Votes>
+                  </Formal>
+                  <Informal>
+                    <Votes Historic="21" Percentage="7.7" Swing="3.68">105</Votes>
+                  </Informal>
+                  <Total>
+                    <Votes Historic="523" Percentage="1.22" Swing="0.75">1364</Votes>
+                  </Total>
+                </FirstPreferences>
+                <TwoCandidatePreferred Updated="2024-04-14T12:41:07">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="0" Percentage="30.1" Swing="30.1">379</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="0" Percentage="69.9" Swing="69.9">880</Votes>
+                  </Candidate>
+                </TwoCandidatePreferred>
+              </PollingPlace>
+              <PollingPlace Updated="2024-04-30T11:07:23">
+                <PollingPlaceIdentifier Id="429" Name="Gymea North" />
+                <FirstPreferences Updated="2024-04-30T11:07:23">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38288" />
+                    <Votes Historic="0" Percentage="4.79" Swing="4.79">42</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38292" />
+                    <Votes Historic="0" Percentage="7.07" Swing="7.07">62</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38291" />
+                    <Votes Historic="0" Percentage="7.64" Swing="7.64">67</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="68" Percentage="13.91" Swing="6.81">122</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="575" Percentage="63.51" Swing="3.05">557</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38289" />
+                    <Votes Historic="0" Percentage="3.08" Swing="3.08">27</Votes>
+                  </Candidate>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="37731" />
+                    <Votes Historic="47" Percentage="0" Swing="-4.96">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36694" />
+                    <Votes Historic="16" Percentage="0" Swing="-1.7">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36784" />
+                    <Votes Historic="245" Percentage="0" Swing="-25.78">0</Votes>
+                  </Ghost>
+                  <Formal>
+                    <Votes Historic="951" Percentage="92.71" Swing="-3.54">877</Votes>
+                  </Formal>
+                  <Informal>
+                    <Votes Historic="37" Percentage="7.29" Swing="3.54">69</Votes>
+                  </Informal>
+                  <Total>
+                    <Votes Historic="988" Percentage="0.85" Swing="-0.05">946</Votes>
+                  </Total>
+                </FirstPreferences>
+                <TwoCandidatePreferred Updated="2024-04-30T11:07:23">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="0" Percentage="28.16" Swing="28.16">247</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="0" Percentage="71.84" Swing="71.84">630</Votes>
+                  </Candidate>
+                </TwoCandidatePreferred>
+              </PollingPlace>
+              <PollingPlace Updated="2024-04-30T11:19:19">
+                <PollingPlaceIdentifier Id="49" Name="Kogarah Bay" />
+                <FirstPreferences Updated="2024-04-30T11:19:19">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38288" />
+                    <Votes Historic="0" Percentage="6.38" Swing="6.38">58</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38292" />
+                    <Votes Historic="0" Percentage="3.19" Swing="3.19">29</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38291" />
+                    <Votes Historic="0" Percentage="5.17" Swing="5.17">47</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="79" Percentage="12.87" Swing="5.3">117</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="582" Percentage="69.97" Swing="14.54">636</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38289" />
+                    <Votes Historic="0" Percentage="2.42" Swing="2.42">22</Votes>
+                  </Candidate>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="37731" />
+                    <Votes Historic="90" Percentage="0" Swing="-8.59">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36694" />
+                    <Votes Historic="54" Percentage="0" Swing="-5.16">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36784" />
+                    <Votes Historic="244" Percentage="0" Swing="-23.25">0</Votes>
+                  </Ghost>
+                  <Formal>
+                    <Votes Historic="1049" Percentage="90" Swing="-4.08">909</Votes>
+                  </Formal>
+                  <Informal>
+                    <Votes Historic="66" Percentage="10" Swing="4.08">101</Votes>
+                  </Informal>
+                  <Total>
+                    <Votes Historic="1115" Percentage="0.9" Swing="-0.11">1010</Votes>
+                  </Total>
+                </FirstPreferences>
+                <TwoCandidatePreferred Updated="2024-04-30T11:19:19">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="0" Percentage="22.99" Swing="22.99">209</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="0" Percentage="77.01" Swing="77.01">700</Votes>
+                  </Candidate>
+                </TwoCandidatePreferred>
+              </PollingPlace>
+              <PollingPlace Updated="2024-04-30T11:14:43">
+                <PollingPlaceIdentifier Id="54" Name="Kogarah East" />
+                <FirstPreferences Updated="2024-04-30T11:14:43">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38288" />
+                    <Votes Historic="0" Percentage="8.46" Swing="8.46">49</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38292" />
+                    <Votes Historic="0" Percentage="5.18" Swing="5.18">30</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38291" />
+                    <Votes Historic="0" Percentage="5.01" Swing="5.01">29</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="53" Percentage="19.69" Swing="10.76">114</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="304" Percentage="57.51" Swing="6.34">333</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38289" />
+                    <Votes Historic="0" Percentage="4.15" Swing="4.15">24</Votes>
+                  </Candidate>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="37731" />
+                    <Votes Historic="26" Percentage="0" Swing="-4.38">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36694" />
+                    <Votes Historic="16" Percentage="0" Swing="-2.69">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36784" />
+                    <Votes Historic="195" Percentage="0" Swing="-32.82">0</Votes>
+                  </Ghost>
+                  <Formal>
+                    <Votes Historic="595" Percentage="86.55" Swing="-4.57">579</Votes>
+                  </Formal>
+                  <Informal>
+                    <Votes Historic="58" Percentage="13.45" Swing="4.57">90</Votes>
+                  </Informal>
+                  <Total>
+                    <Votes Historic="653" Percentage="0.6" Swing="0.01">669</Votes>
+                  </Total>
+                </FirstPreferences>
+                <TwoCandidatePreferred Updated="2024-04-30T11:14:43">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="0" Percentage="34.2" Swing="34.2">198</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="0" Percentage="65.8" Swing="65.8">381</Votes>
+                  </Candidate>
+                </TwoCandidatePreferred>
+              </PollingPlace>
+              <PollingPlace Updated="2024-04-14T12:54:31">
+                <PollingPlaceIdentifier Id="433" Name="Kurnell" />
+                <FirstPreferences Updated="2024-04-14T12:54:31">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38288" />
+                    <Votes Historic="0" Percentage="5.53" Swing="5.53">61</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38292" />
+                    <Votes Historic="0" Percentage="6.62" Swing="6.62">73</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38291" />
+                    <Votes Historic="0" Percentage="7.8" Swing="7.8">86</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="97" Percentage="12.51" Swing="4.42">138</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="669" Percentage="64.73" Swing="8.85">714</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38289" />
+                    <Votes Historic="0" Percentage="2.81" Swing="2.81">31</Votes>
+                  </Candidate>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="37731" />
+                    <Votes Historic="118" Percentage="0" Swing="-9.87">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36694" />
+                    <Votes Historic="85" Percentage="0" Swing="-7.12">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36784" />
+                    <Votes Historic="228" Percentage="0" Swing="-19.03">0</Votes>
+                  </Ghost>
+                  <Formal>
+                    <Votes Historic="1197" Percentage="90.26" Swing="-5.34">1103</Votes>
+                  </Formal>
+                  <Informal>
+                    <Votes Historic="55" Percentage="9.74" Swing="5.34">119</Votes>
+                  </Informal>
+                  <Total>
+                    <Votes Historic="1252" Percentage="1.09" Swing="-0.05">1222</Votes>
+                  </Total>
+                </FirstPreferences>
+                <TwoCandidatePreferred Updated="2024-04-14T12:54:31">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="0" Percentage="24.84" Swing="24.84">274</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="0" Percentage="75.16" Swing="75.16">829</Votes>
+                  </Candidate>
+                </TwoCandidatePreferred>
+              </PollingPlace>
+              <PollingPlace Updated="2024-04-30T10:49:17">
+                <PollingPlaceIdentifier Id="434" Name="Lilli Pilli" />
+                <FirstPreferences Updated="2024-04-30T10:49:17">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38288" />
+                    <Votes Historic="0" Percentage="3.27" Swing="3.27">42</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38292" />
+                    <Votes Historic="0" Percentage="7" Swing="7">90</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38291" />
+                    <Votes Historic="0" Percentage="3.27" Swing="3.27">42</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="155" Percentage="16.25" Swing="7.68">209</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="1222" Percentage="68.35" Swing="0.72">879</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38289" />
+                    <Votes Historic="0" Percentage="1.87" Swing="1.87">24</Votes>
+                  </Candidate>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="37731" />
+                    <Votes Historic="52" Percentage="0" Swing="-2.89">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36694" />
+                    <Votes Historic="61" Percentage="0" Swing="-3.39">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36784" />
+                    <Votes Historic="317" Percentage="0" Swing="-17.53">0</Votes>
+                  </Ghost>
+                  <Formal>
+                    <Votes Historic="1806" Percentage="94.49" Swing="-2.61">1286</Votes>
+                  </Formal>
+                  <Informal>
+                    <Votes Historic="54" Percentage="5.51" Swing="2.61">75</Votes>
+                  </Informal>
+                  <Total>
+                    <Votes Historic="1860" Percentage="1.22" Swing="-0.47">1361</Votes>
+                  </Total>
+                </FirstPreferences>
+                <TwoCandidatePreferred Updated="2024-04-30T10:49:17">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="0" Percentage="25.97" Swing="25.97">334</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="0" Percentage="74.03" Swing="74.03">952</Votes>
+                  </Candidate>
+                </TwoCandidatePreferred>
+              </PollingPlace>
+              <PollingPlace Updated="2024-04-30T10:09:37">
+                <PollingPlaceIdentifier Id="435" Name="Miranda" />
+                <FirstPreferences Updated="2024-04-30T10:09:37">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38288" />
+                    <Votes Historic="0" Percentage="9.33" Swing="9.33">176</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38292" />
+                    <Votes Historic="0" Percentage="9.91" Swing="9.91">187</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38291" />
+                    <Votes Historic="0" Percentage="5.99" Swing="5.99">113</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="195" Percentage="17.65" Swing="5.43">333</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="788" Percentage="53.58" Swing="4.18">1011</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38289" />
+                    <Votes Historic="0" Percentage="3.55" Swing="3.55">67</Votes>
+                  </Candidate>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="37731" />
+                    <Votes Historic="80" Percentage="0" Swing="-5.03">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36694" />
+                    <Votes Historic="80" Percentage="0" Swing="-5.03">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36784" />
+                    <Votes Historic="452" Percentage="0" Swing="-28.33">0</Votes>
+                  </Ghost>
+                  <Formal>
+                    <Votes Historic="1594" Percentage="93.23" Swing="-1.93">1887</Votes>
+                  </Formal>
+                  <Informal>
+                    <Votes Historic="81" Percentage="6.77" Swing="1.93">137</Votes>
+                  </Informal>
+                  <Total>
+                    <Votes Historic="1675" Percentage="1.81" Swing="0.29">2024</Votes>
+                  </Total>
+                </FirstPreferences>
+                <TwoCandidatePreferred Updated="2024-04-30T10:09:37">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="0" Percentage="34.66" Swing="34.66">654</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="0" Percentage="65.34" Swing="65.34">1233</Votes>
+                  </Candidate>
+                </TwoCandidatePreferred>
+              </PollingPlace>
+              <PollingPlace Updated="2024-04-30T11:24:42">
+                <PollingPlaceIdentifier Id="436" Name="Miranda Central" />
+                <FirstPreferences Updated="2024-04-30T11:24:42">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38288" />
+                    <Votes Historic="0" Percentage="6.36" Swing="6.36">100</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38292" />
+                    <Votes Historic="0" Percentage="8.65" Swing="8.65">136</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38291" />
+                    <Votes Historic="0" Percentage="6.93" Swing="6.93">109</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="133" Percentage="22.25" Swing="9.72">350</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="517" Percentage="51.94" Swing="3.17">817</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38289" />
+                    <Votes Historic="0" Percentage="3.88" Swing="3.88">61</Votes>
+                  </Candidate>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="37731" />
+                    <Votes Historic="52" Percentage="0" Swing="-4.93">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36694" />
+                    <Votes Historic="51" Percentage="0" Swing="-4.83">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36784" />
+                    <Votes Historic="307" Percentage="0" Swing="-28.94">0</Votes>
+                  </Ghost>
+                  <Formal>
+                    <Votes Historic="1059" Percentage="91.51" Swing="-3.04">1573</Votes>
+                  </Formal>
+                  <Informal>
+                    <Votes Historic="61" Percentage="8.49" Swing="3.04">146</Votes>
+                  </Informal>
+                  <Total>
+                    <Votes Historic="1120" Percentage="1.54" Swing="0.52">1719</Votes>
+                  </Total>
+                </FirstPreferences>
+                <TwoCandidatePreferred Updated="2024-04-30T11:24:42">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="0" Percentage="38.72" Swing="38.72">609</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="0" Percentage="61.28" Swing="61.28">964</Votes>
+                  </Candidate>
+                </TwoCandidatePreferred>
+              </PollingPlace>
+              <PollingPlace Updated="2024-04-14T14:50:45">
+                <PollingPlaceIdentifier Id="437" Name="Miranda North" />
+                <FirstPreferences Updated="2024-04-14T14:50:45">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38288" />
+                    <Votes Historic="0" Percentage="7.29" Swing="7.29">103</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38292" />
+                    <Votes Historic="0" Percentage="11.46" Swing="11.46">162</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38291" />
+                    <Votes Historic="0" Percentage="5.87" Swing="5.87">83</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="119" Percentage="11.25" Swing="2.21">159</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="749" Percentage="61.85" Swing="5.03">874</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38289" />
+                    <Votes Historic="0" Percentage="2.26" Swing="2.26">32</Votes>
+                  </Candidate>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="37731" />
+                    <Votes Historic="79" Percentage="0" Swing="-6.02">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36694" />
+                    <Votes Historic="56" Percentage="0" Swing="-4.27">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36784" />
+                    <Votes Historic="314" Percentage="0" Swing="-23.85">0</Votes>
+                  </Ghost>
+                  <Formal>
+                    <Votes Historic="1318" Percentage="92.29" Swing="-2.73">1413</Votes>
+                  </Formal>
+                  <Informal>
+                    <Votes Historic="69" Percentage="7.71" Swing="2.73">118</Votes>
+                  </Informal>
+                  <Total>
+                    <Votes Historic="1387" Percentage="1.37" Swing="0.11">1531</Votes>
+                  </Total>
+                </FirstPreferences>
+                <TwoCandidatePreferred Updated="2024-04-14T14:50:45">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="0" Percentage="26.47" Swing="26.47">374</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="0" Percentage="73.53" Swing="73.53">1039</Votes>
+                  </Candidate>
+                </TwoCandidatePreferred>
+              </PollingPlace>
+              <PollingPlace Updated="2024-04-30T11:51:23">
+                <PollingPlaceIdentifier Id="33960" Name="Miranda PPVC" Classification="PrePollVotingCentre" />
+                <FirstPreferences Updated="2024-04-30T11:51:23">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38288" />
+                    <Votes Historic="0" Percentage="5.6" Swing="5.6">456</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38292" />
+                    <Votes Historic="0" Percentage="5.66" Swing="5.66">461</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38291" />
+                    <Votes Historic="0" Percentage="5.69" Swing="5.69">463</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="1291" Percentage="14.92" Swing="6.32">1215</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="8758" Percentage="66.43" Swing="8.08">5409</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38289" />
+                    <Votes Historic="0" Percentage="1.69" Swing="1.69">138</Votes>
+                  </Candidate>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="37731" />
+                    <Votes Historic="645" Percentage="0" Swing="-4.3">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36694" />
+                    <Votes Historic="534" Percentage="0" Swing="-3.56">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36784" />
+                    <Votes Historic="3780" Percentage="0" Swing="-25.18">0</Votes>
+                  </Ghost>
+                  <Formal>
+                    <Votes Historic="15008" Percentage="95.11" Swing="-1.68">8142</Votes>
+                  </Formal>
+                  <Informal>
+                    <Votes Historic="497" Percentage="4.89" Swing="1.68">419</Votes>
+                  </Informal>
+                  <Total>
+                    <Votes Historic="15505" Percentage="7.65" Swing="-6.42">8561</Votes>
+                  </Total>
+                </FirstPreferences>
+                <TwoCandidatePreferred Updated="2024-04-30T11:51:23">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="0" Percentage="25.19" Swing="25.19">2051</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="0" Percentage="74.81" Swing="74.81">6091</Votes>
+                  </Candidate>
+                </TwoCandidatePreferred>
+              </PollingPlace>
+              <PollingPlace Updated="2024-04-14T10:54:00">
+                <PollingPlaceIdentifier Id="97411" Name="Miranda South" />
+                <FirstPreferences Updated="2024-04-14T10:54:00">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38288" />
+                    <Votes Historic="0" Percentage="3.83" Swing="3.83">10</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38292" />
+                    <Votes Historic="0" Percentage="6.13" Swing="6.13">16</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38291" />
+                    <Votes Historic="0" Percentage="6.13" Swing="6.13">16</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="34" Percentage="22.22" Swing="13.07">58</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="180" Percentage="57.47" Swing="9.08">150</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38289" />
+                    <Votes Historic="0" Percentage="4.21" Swing="4.21">11</Votes>
+                  </Candidate>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="37731" />
+                    <Votes Historic="18" Percentage="0" Swing="-4.83">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36694" />
+                    <Votes Historic="17" Percentage="0" Swing="-4.57">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36784" />
+                    <Votes Historic="123" Percentage="0" Swing="-33.06">0</Votes>
+                  </Ghost>
+                  <Formal>
+                    <Votes Historic="373" Percentage="90.94" Swing="-6.7">261</Votes>
+                  </Formal>
+                  <Informal>
+                    <Votes Historic="9" Percentage="9.06" Swing="6.7">26</Votes>
+                  </Informal>
+                  <Total>
+                    <Votes Historic="382" Percentage="0.26" Swing="-0.09">287</Votes>
+                  </Total>
+                </FirstPreferences>
+                <TwoCandidatePreferred Updated="2024-04-14T10:54:00">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="0" Percentage="39.08" Swing="39.08">102</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="0" Percentage="60.92" Swing="60.92">159</Votes>
+                  </Candidate>
+                </TwoCandidatePreferred>
+              </PollingPlace>
+              <PollingPlace Updated="2024-04-14T13:15:25">
+                <PollingPlaceIdentifier Id="98005" Name="Monterey" />
+                <FirstPreferences Updated="2024-04-14T13:15:25">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38288" />
+                    <Votes Historic="0" Percentage="8.4" Swing="8.4">49</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38292" />
+                    <Votes Historic="0" Percentage="5.83" Swing="5.83">34</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38291" />
+                    <Votes Historic="0" Percentage="6.17" Swing="6.17">36</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="108" Percentage="17.32" Swing="9.91">101</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="720" Percentage="58.83" Swing="9.21">343</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38289" />
+                    <Votes Historic="0" Percentage="3.43" Swing="3.43">20</Votes>
+                  </Candidate>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="37731" />
+                    <Votes Historic="102" Percentage="0" Swing="-7.04">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36694" />
+                    <Votes Historic="87" Percentage="0" Swing="-6.01">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36784" />
+                    <Votes Historic="434" Percentage="0" Swing="-29.92">0</Votes>
+                  </Ghost>
+                  <Formal>
+                    <Votes Historic="1451" Percentage="90.53" Swing="-2.48">583</Votes>
+                  </Formal>
+                  <Informal>
+                    <Votes Historic="109" Percentage="9.47" Swing="2.48">61</Votes>
+                  </Informal>
+                  <Total>
+                    <Votes Historic="1560" Percentage="0.58" Swing="-0.84">644</Votes>
+                  </Total>
+                </FirstPreferences>
+                <TwoCandidatePreferred Updated="2024-04-14T13:15:25">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="0" Percentage="31.22" Swing="31.22">182</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="0" Percentage="68.78" Swing="68.78">401</Votes>
+                  </Candidate>
+                </TwoCandidatePreferred>
+              </PollingPlace>
+              <PollingPlace Updated="2024-04-29T13:10:00">
+                <PollingPlaceIdentifier Id="69" Name="Ramsgate" />
+                <FirstPreferences Updated="2024-04-29T13:10:00">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38288" />
+                    <Votes Historic="0" Percentage="13.93" Swing="13.93">174</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38292" />
+                    <Votes Historic="0" Percentage="7.45" Swing="7.45">93</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38291" />
+                    <Votes Historic="0" Percentage="4" Swing="4">50</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="133" Percentage="18.65" Swing="11.26">233</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="838" Percentage="53.72" Swing="7.09">671</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38289" />
+                    <Votes Historic="0" Percentage="2.24" Swing="2.24">28</Votes>
+                  </Candidate>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="37731" />
+                    <Votes Historic="125" Percentage="0" Swing="-6.97">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36694" />
+                    <Votes Historic="171" Percentage="0" Swing="-9.53">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36784" />
+                    <Votes Historic="530" Percentage="0" Swing="-29.48">0</Votes>
+                  </Ghost>
+                  <Formal>
+                    <Votes Historic="1797" Percentage="90.18" Swing="-2.69">1249</Votes>
+                  </Formal>
+                  <Informal>
+                    <Votes Historic="138" Percentage="9.82" Swing="2.69">136</Votes>
+                  </Informal>
+                  <Total>
+                    <Votes Historic="1935" Percentage="1.24" Swing="-0.52">1385</Votes>
+                  </Total>
+                </FirstPreferences>
+                <TwoCandidatePreferred Updated="2024-04-29T13:10:00">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="0" Percentage="33.95" Swing="33.95">424</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="0" Percentage="66.05" Swing="66.05">825</Votes>
+                  </Candidate>
+                </TwoCandidatePreferred>
+              </PollingPlace>
+              <PollingPlace Updated="2024-04-29T15:47:32">
+                <PollingPlaceIdentifier Id="61" Name="Ramsgate Beach" />
+                <FirstPreferences Updated="2024-04-29T15:47:32">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38288" />
+                    <Votes Historic="0" Percentage="11.89" Swing="11.89">316</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38292" />
+                    <Votes Historic="0" Percentage="7.3" Swing="7.3">194</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38291" />
+                    <Votes Historic="0" Percentage="4.55" Swing="4.55">121</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="198" Percentage="18.86" Swing="8.18">501</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="812" Percentage="54.08" Swing="10.26">1437</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38289" />
+                    <Votes Historic="0" Percentage="3.31" Swing="3.31">88</Votes>
+                  </Candidate>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="37731" />
+                    <Votes Historic="127" Percentage="0" Swing="-6.86">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36694" />
+                    <Votes Historic="147" Percentage="0" Swing="-7.94">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36784" />
+                    <Votes Historic="569" Percentage="0" Swing="-30.7">0</Votes>
+                  </Ghost>
+                  <Formal>
+                    <Votes Historic="1854" Percentage="85.49" Swing="-6.06">2657</Votes>
+                  </Formal>
+                  <Informal>
+                    <Votes Historic="171" Percentage="14.51" Swing="6.06">451</Votes>
+                  </Informal>
+                  <Total>
+                    <Votes Historic="2025" Percentage="2.78" Swing="0.94">3108</Votes>
+                  </Total>
+                </FirstPreferences>
+                <TwoCandidatePreferred Updated="2024-04-29T15:47:32">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="0" Percentage="33.42" Swing="33.42">888</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="0" Percentage="66.58" Swing="66.58">1769</Votes>
+                  </Candidate>
+                </TwoCandidatePreferred>
+              </PollingPlace>
+              <PollingPlace Updated="2024-04-30T12:07:25">
+                <PollingPlaceIdentifier Id="82542" Name="Ramsgate PPVC" Classification="PrePollVotingCentre" />
+                <FirstPreferences Updated="2024-04-30T12:07:25">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38288" />
+                    <Votes Historic="0" Percentage="7.89" Swing="7.89">311</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38292" />
+                    <Votes Historic="0" Percentage="5.69" Swing="5.69">224</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38291" />
+                    <Votes Historic="0" Percentage="5.94" Swing="5.94">234</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="242" Percentage="19.42" Swing="9.93">765</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="1199" Percentage="59.11" Swing="12.15">2329</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38289" />
+                    <Votes Historic="0" Percentage="1.95" Swing="1.95">77</Votes>
+                  </Candidate>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="37731" />
+                    <Votes Historic="202" Percentage="0" Swing="-7.92">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36694" />
+                    <Votes Historic="132" Percentage="0" Swing="-5.18">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36784" />
+                    <Votes Historic="777" Percentage="0" Swing="-30.45">0</Votes>
+                  </Ghost>
+                  <Formal>
+                    <Votes Historic="2553" Percentage="94.08" Swing="0.33">3940</Votes>
+                  </Formal>
+                  <Informal>
+                    <Votes Historic="170" Percentage="5.92" Swing="-0.33">248</Votes>
+                  </Informal>
+                  <Total>
+                    <Votes Historic="2723" Percentage="3.74" Swing="1.27">4188</Votes>
+                  </Total>
+                </FirstPreferences>
+                <TwoCandidatePreferred Updated="2024-04-30T12:07:25">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="0" Percentage="32.13" Swing="32.13">1266</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="0" Percentage="67.87" Swing="67.87">2674</Votes>
+                  </Candidate>
+                </TwoCandidatePreferred>
+              </PollingPlace>
+              <PollingPlace Updated="2024-04-30T13:55:09">
+                <PollingPlaceIdentifier Id="41" Name="Sandringham" />
+                <FirstPreferences Updated="2024-04-30T13:55:09">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38288" />
+                    <Votes Historic="0" Percentage="8.84" Swing="8.84">157</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38292" />
+                    <Votes Historic="0" Percentage="7.71" Swing="7.71">137</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38291" />
+                    <Votes Historic="0" Percentage="4.9" Swing="4.9">87</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="127" Percentage="16.99" Swing="10.76">302</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="1136" Percentage="60.21" Swing="4.42">1070</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38289" />
+                    <Votes Historic="0" Percentage="1.35" Swing="1.35">24</Votes>
+                  </Candidate>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="37731" />
+                    <Votes Historic="131" Percentage="0" Swing="-6.44">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36694" />
+                    <Votes Historic="112" Percentage="0" Swing="-5.51">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36784" />
+                    <Votes Historic="530" Percentage="0" Swing="-26.02">0</Votes>
+                  </Ghost>
+                  <Formal>
+                    <Votes Historic="2037" Percentage="91.22" Swing="-1.37">1777</Votes>
+                  </Formal>
+                  <Informal>
+                    <Votes Historic="163" Percentage="8.78" Swing="1.37">171</Votes>
+                  </Informal>
+                  <Total>
+                    <Votes Historic="2200" Percentage="1.74" Swing="-0.26">1948</Votes>
+                  </Total>
+                </FirstPreferences>
+                <TwoCandidatePreferred Updated="2024-04-30T13:55:09">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="0" Percentage="29.83" Swing="29.83">530</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="0" Percentage="70.17" Swing="70.17">1247</Votes>
+                  </Candidate>
+                </TwoCandidatePreferred>
+              </PollingPlace>
+              <PollingPlace Updated="2024-04-14T16:39:54">
+                <PollingPlaceIdentifier Id="68" Name="Sans Souci" />
+                <FirstPreferences Updated="2024-04-14T16:39:54">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38288" />
+                    <Votes Historic="0" Percentage="8.67" Swing="8.67">163</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38292" />
+                    <Votes Historic="0" Percentage="7.13" Swing="7.13">134</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38291" />
+                    <Votes Historic="0" Percentage="4.42" Swing="4.42">83</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="158" Percentage="14.8" Swing="7.28">278</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="1150" Percentage="61.68" Swing="7">1159</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38289" />
+                    <Votes Historic="0" Percentage="3.3" Swing="3.3">62</Votes>
+                  </Candidate>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="37731" />
+                    <Votes Historic="139" Percentage="0" Swing="-6.62">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36694" />
+                    <Votes Historic="164" Percentage="0" Swing="-7.81">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36784" />
+                    <Votes Historic="491" Percentage="0" Swing="-23.37">0</Votes>
+                  </Ghost>
+                  <Formal>
+                    <Votes Historic="2103" Percentage="89.22" Swing="-3.95">1879</Votes>
+                  </Formal>
+                  <Informal>
+                    <Votes Historic="154" Percentage="10.78" Swing="3.95">227</Votes>
+                  </Informal>
+                  <Total>
+                    <Votes Historic="2257" Percentage="1.88" Swing="-0.17">2106</Votes>
+                  </Total>
+                </FirstPreferences>
+                <TwoCandidatePreferred Updated="2024-04-14T16:39:54">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="0" Percentage="28.31" Swing="28.31">532</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="0" Percentage="71.69" Swing="71.69">1347</Votes>
+                  </Candidate>
+                </TwoCandidatePreferred>
+              </PollingPlace>
+              <PollingPlace Updated="2024-04-14T11:55:38">
+                <PollingPlaceIdentifier Id="108975" Name="Special Hospital Team 1" Classification="SpecialHospital" />
+                <FirstPreferences Updated="2024-04-14T11:55:38">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38288" />
+                    <Votes Historic="0" Percentage="11.49" Swing="11.49">17</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38292" />
+                    <Votes Historic="0" Percentage="7.43" Swing="7.43">11</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38291" />
+                    <Votes Historic="0" Percentage="9.46" Swing="9.46">14</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="25" Percentage="14.86" Swing="5.79">22</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="161" Percentage="52.7" Swing="-5.66">78</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38289" />
+                    <Votes Historic="0" Percentage="4.05" Swing="4.05">6</Votes>
+                  </Candidate>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="37731" />
+                    <Votes Historic="12" Percentage="0" Swing="-4.51">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36694" />
+                    <Votes Historic="8" Percentage="0" Swing="-3.04">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36784" />
+                    <Votes Historic="69" Percentage="0" Swing="-25.03">0</Votes>
+                  </Ghost>
+                  <Formal>
+                    <Votes Historic="276" Percentage="89.16" Swing="-7.3">148</Votes>
+                  </Formal>
+                  <Informal>
+                    <Votes Historic="10" Percentage="10.84" Swing="7.3">18</Votes>
+                  </Informal>
+                  <Total>
+                    <Votes Historic="287" Percentage="0.15" Swing="-0.11">166</Votes>
+                  </Total>
+                </FirstPreferences>
+                <TwoCandidatePreferred Updated="2024-04-14T11:55:38">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="0" Percentage="37.84" Swing="37.84">56</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="0" Percentage="62.16" Swing="62.16">92</Votes>
+                  </Candidate>
+                </TwoCandidatePreferred>
+              </PollingPlace>
+              <PollingPlace Updated="2024-04-14T12:47:14">
+                <PollingPlaceIdentifier Id="109050" Name="Special Hospital Team 2" Classification="SpecialHospital" />
+                <FirstPreferences Updated="2024-04-14T12:47:14">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38288" />
+                    <Votes Historic="0" Percentage="9.21" Swing="9.21">14</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38292" />
+                    <Votes Historic="0" Percentage="4.61" Swing="4.61">7</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38291" />
+                    <Votes Historic="0" Percentage="8.55" Swing="8.55">13</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="23" Percentage="5.92" Swing="-3.15">9</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="149" Percentage="70.39" Swing="12.03">107</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38289" />
+                    <Votes Historic="0" Percentage="1.32" Swing="1.32">2</Votes>
+                  </Candidate>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="37731" />
+                    <Votes Historic="11" Percentage="0" Swing="-4.51">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36694" />
+                    <Votes Historic="8" Percentage="0" Swing="-3.04">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36784" />
+                    <Votes Historic="64" Percentage="0" Swing="-25.03">0</Votes>
+                  </Ghost>
+                  <Formal>
+                    <Votes Historic="255" Percentage="91.57" Swing="-4.89">152</Votes>
+                  </Formal>
+                  <Informal>
+                    <Votes Historic="9" Percentage="8.43" Swing="4.89">14</Votes>
+                  </Informal>
+                  <Total>
+                    <Votes Historic="264" Percentage="0.15" Swing="-0.09">166</Votes>
+                  </Total>
+                </FirstPreferences>
+                <TwoCandidatePreferred Updated="2024-04-14T12:47:14">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="0" Percentage="17.76" Swing="17.76">27</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="0" Percentage="82.24" Swing="82.24">125</Votes>
+                  </Candidate>
+                </TwoCandidatePreferred>
+              </PollingPlace>
+              <PollingPlace Updated="2024-04-30T11:16:50">
+                <PollingPlaceIdentifier Id="439" Name="Sylvania" />
+                <FirstPreferences Updated="2024-04-30T11:16:50">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38288" />
+                    <Votes Historic="0" Percentage="6.47" Swing="6.47">70</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38292" />
+                    <Votes Historic="0" Percentage="4.9" Swing="4.9">53</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38291" />
+                    <Votes Historic="0" Percentage="5.27" Swing="5.27">57</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="88" Percentage="10.63" Swing="3.19">115</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="720" Percentage="69.96" Swing="8.79">757</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38289" />
+                    <Votes Historic="0" Percentage="2.77" Swing="2.77">30</Votes>
+                  </Candidate>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="37731" />
+                    <Votes Historic="67" Percentage="0" Swing="-5.7">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36694" />
+                    <Votes Historic="64" Percentage="0" Swing="-5.45">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36784" />
+                    <Votes Historic="238" Percentage="0" Swing="-20.24">0</Votes>
+                  </Ghost>
+                  <Formal>
+                    <Votes Historic="1177" Percentage="88.91" Swing="-5.02">1082</Votes>
+                  </Formal>
+                  <Informal>
+                    <Votes Historic="76" Percentage="11.09" Swing="5.02">135</Votes>
+                  </Informal>
+                  <Total>
+                    <Votes Historic="1253" Percentage="1.09" Swing="-0.05">1217</Votes>
+                  </Total>
+                </FirstPreferences>
+                <TwoCandidatePreferred Updated="2024-04-30T11:16:50">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="0" Percentage="22.64" Swing="22.64">245</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="0" Percentage="77.36" Swing="77.36">837</Votes>
+                  </Candidate>
+                </TwoCandidatePreferred>
+              </PollingPlace>
+              <PollingPlace Updated="2024-04-14T15:00:50">
+                <PollingPlaceIdentifier Id="441" Name="Sylvania Heights" />
+                <FirstPreferences Updated="2024-04-14T15:00:50">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38288" />
+                    <Votes Historic="0" Percentage="8.35" Swing="8.35">165</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38292" />
+                    <Votes Historic="0" Percentage="9.36" Swing="9.36">185</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38291" />
+                    <Votes Historic="0" Percentage="4.66" Swing="4.66">92</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="146" Percentage="14.78" Swing="7.93">292</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="1211" Percentage="61.13" Swing="4.18">1208</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38289" />
+                    <Votes Historic="0" Percentage="1.72" Swing="1.72">34</Votes>
+                  </Candidate>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="37731" />
+                    <Votes Historic="124" Percentage="0" Swing="-5.85">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36694" />
+                    <Votes Historic="128" Percentage="0" Swing="-6.04">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36784" />
+                    <Votes Historic="517" Percentage="0" Swing="-24.32">0</Votes>
+                  </Ghost>
+                  <Formal>
+                    <Votes Historic="2127" Percentage="91.91" Swing="-2.45">1976</Votes>
+                  </Formal>
+                  <Informal>
+                    <Votes Historic="127" Percentage="8.09" Swing="2.45">174</Votes>
+                  </Informal>
+                  <Total>
+                    <Votes Historic="2254" Percentage="1.92" Swing="-0.13">2150</Votes>
+                  </Total>
+                </FirstPreferences>
+                <TwoCandidatePreferred Updated="2024-04-14T15:00:50">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="0" Percentage="28.14" Swing="28.14">556</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="0" Percentage="71.86" Swing="71.86">1420</Votes>
+                  </Candidate>
+                </TwoCandidatePreferred>
+              </PollingPlace>
+              <PollingPlace Updated="2024-04-14T13:40:24">
+                <PollingPlaceIdentifier Id="83514" Name="Sylvania Heights South" />
+                <FirstPreferences Updated="2024-04-14T13:40:24">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38288" />
+                    <Votes Historic="0" Percentage="5.44" Swing="5.44">46</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38292" />
+                    <Votes Historic="0" Percentage="4.5" Swing="4.5">38</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38291" />
+                    <Votes Historic="0" Percentage="5.44" Swing="5.44">46</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="51" Percentage="15.38" Swing="9.03">130</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="523" Percentage="67.46" Swing="2.84">570</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38289" />
+                    <Votes Historic="0" Percentage="1.78" Swing="1.78">15</Votes>
+                  </Candidate>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="37731" />
+                    <Votes Historic="56" Percentage="0" Swing="-6.93">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36694" />
+                    <Votes Historic="33" Percentage="0" Swing="-4.09">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36784" />
+                    <Votes Historic="146" Percentage="0" Swing="-18.01">0</Votes>
+                  </Ghost>
+                  <Formal>
+                    <Votes Historic="810" Percentage="94.52" Swing="-1.22">845</Votes>
+                  </Formal>
+                  <Informal>
+                    <Votes Historic="36" Percentage="5.48" Swing="1.22">49</Votes>
+                  </Informal>
+                  <Total>
+                    <Votes Historic="846" Percentage="0.8" Swing="0.03">894</Votes>
+                  </Total>
+                </FirstPreferences>
+                <TwoCandidatePreferred Updated="2024-04-14T13:40:24">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="0" Percentage="26.27" Swing="26.27">222</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="0" Percentage="73.73" Swing="73.73">623</Votes>
+                  </Candidate>
+                </TwoCandidatePreferred>
+              </PollingPlace>
+              <PollingPlace Updated="2024-04-30T10:18:47">
+                <PollingPlaceIdentifier Id="444" Name="Sylvania South" />
+                <FirstPreferences Updated="2024-04-30T10:18:47">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38288" />
+                    <Votes Historic="0" Percentage="5.91" Swing="5.91">49</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38292" />
+                    <Votes Historic="0" Percentage="7.48" Swing="7.48">62</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38291" />
+                    <Votes Historic="0" Percentage="6.76" Swing="6.76">56</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="63" Percentage="14.84" Swing="7.4">123</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="488" Percentage="62.24" Swing="4.91">516</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38289" />
+                    <Votes Historic="0" Percentage="2.77" Swing="2.77">23</Votes>
+                  </Candidate>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="37731" />
+                    <Votes Historic="65" Percentage="0" Swing="-7.64">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36694" />
+                    <Votes Historic="37" Percentage="0" Swing="-4.35">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36784" />
+                    <Votes Historic="198" Percentage="0" Swing="-23.23">0</Votes>
+                  </Ghost>
+                  <Formal>
+                    <Votes Historic="852" Percentage="90.5" Swing="-4.69">829</Votes>
+                  </Formal>
+                  <Informal>
+                    <Votes Historic="43" Percentage="9.5" Swing="4.69">87</Votes>
+                  </Informal>
+                  <Total>
+                    <Votes Historic="895" Percentage="0.82" Swing="0.01">916</Votes>
+                  </Total>
+                </FirstPreferences>
+                <TwoCandidatePreferred Updated="2024-04-30T10:18:47">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="0" Percentage="30.52" Swing="30.52">253</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="0" Percentage="69.48" Swing="69.48">576</Votes>
+                  </Candidate>
+                </TwoCandidatePreferred>
+              </PollingPlace>
+              <PollingPlace Updated="2024-04-30T10:02:26">
+                <PollingPlaceIdentifier Id="443" Name="Taren Point" />
+                <FirstPreferences Updated="2024-04-30T10:02:26">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38288" />
+                    <Votes Historic="0" Percentage="7.02" Swing="7.02">78</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38292" />
+                    <Votes Historic="0" Percentage="4.77" Swing="4.77">53</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38291" />
+                    <Votes Historic="0" Percentage="5.67" Swing="5.67">63</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="52" Percentage="8.1" Swing="3.48">90</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="717" Percentage="72.91" Swing="8.79">810</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38289" />
+                    <Votes Historic="0" Percentage="1.53" Swing="1.53">17</Votes>
+                  </Candidate>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="37731" />
+                    <Votes Historic="76" Percentage="0" Swing="-6.81">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36694" />
+                    <Votes Historic="61" Percentage="0" Swing="-5.47">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36784" />
+                    <Votes Historic="212" Percentage="0" Swing="-18.98">0</Votes>
+                  </Ghost>
+                  <Formal>
+                    <Votes Historic="1118" Percentage="93.52" Swing="-0.98">1111</Votes>
+                  </Formal>
+                  <Informal>
+                    <Votes Historic="65" Percentage="6.48" Swing="0.98">77</Votes>
+                  </Informal>
+                  <Total>
+                    <Votes Historic="1183" Percentage="1.06" Swing="-0.01">1188</Votes>
+                  </Total>
+                </FirstPreferences>
+                <TwoCandidatePreferred Updated="2024-04-30T10:02:26">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="0" Percentage="19.26" Swing="19.26">214</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="0" Percentage="80.74" Swing="80.74">897</Votes>
+                  </Candidate>
+                </TwoCandidatePreferred>
+              </PollingPlace>
+              <PollingPlace Updated="2024-04-30T10:58:28">
+                <PollingPlaceIdentifier Id="446" Name="Woolooware" />
+                <FirstPreferences Updated="2024-04-30T10:58:28">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38288" />
+                    <Votes Historic="0" Percentage="6.28" Swing="6.28">106</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38292" />
+                    <Votes Historic="0" Percentage="8.65" Swing="8.65">146</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38291" />
+                    <Votes Historic="0" Percentage="5.69" Swing="5.69">96</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="197" Percentage="19.79" Swing="7.09">334</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="866" Percentage="57.11" Swing="1.39">964</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38289" />
+                    <Votes Historic="0" Percentage="2.49" Swing="2.49">42</Votes>
+                  </Candidate>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="37731" />
+                    <Votes Historic="66" Percentage="0" Swing="-4.24">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36694" />
+                    <Votes Historic="60" Percentage="0" Swing="-3.85">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36784" />
+                    <Votes Historic="365" Percentage="0" Swing="-23.48">0</Votes>
+                  </Ghost>
+                  <Formal>
+                    <Votes Historic="1553" Percentage="93.83" Swing="-2.15">1688</Votes>
+                  </Formal>
+                  <Informal>
+                    <Votes Historic="65" Percentage="6.17" Swing="2.15">111</Votes>
+                  </Informal>
+                  <Total>
+                    <Votes Historic="1618" Percentage="1.61" Swing="0.14">1799</Votes>
+                  </Total>
+                </FirstPreferences>
+                <TwoCandidatePreferred Updated="2024-04-30T10:58:28">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="0" Percentage="33.47" Swing="33.47">565</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="0" Percentage="66.53" Swing="66.53">1123</Votes>
+                  </Candidate>
+                </TwoCandidatePreferred>
+              </PollingPlace>
+              <PollingPlace Updated="2024-04-30T10:30:41">
+                <PollingPlaceIdentifier Id="97407" Name="Woolooware North" />
+                <FirstPreferences Updated="2024-04-30T10:30:41">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38288" />
+                    <Votes Historic="0" Percentage="5.25" Swing="5.25">24</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38292" />
+                    <Votes Historic="0" Percentage="6.13" Swing="6.13">28</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38291" />
+                    <Votes Historic="0" Percentage="5.03" Swing="5.03">23</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="38" Percentage="20.79" Swing="11.65">95</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="250" Percentage="61.49" Swing="1.83">281</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38289" />
+                    <Votes Historic="0" Percentage="1.31" Swing="1.31">6</Votes>
+                  </Candidate>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="37731" />
+                    <Votes Historic="22" Percentage="0" Swing="-5.27">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36694" />
+                    <Votes Historic="20" Percentage="0" Swing="-4.79">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36784" />
+                    <Votes Historic="89" Percentage="0" Swing="-21.15">0</Votes>
+                  </Ghost>
+                  <Formal>
+                    <Votes Historic="419" Percentage="94.23" Swing="-1.43">457</Votes>
+                  </Formal>
+                  <Informal>
+                    <Votes Historic="19" Percentage="5.77" Swing="1.43">28</Votes>
+                  </Informal>
+                  <Total>
+                    <Votes Historic="438" Percentage="0.43" Swing="0.03">485</Votes>
+                  </Total>
+                </FirstPreferences>
+                <TwoCandidatePreferred Updated="2024-04-30T10:30:41">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="0" Percentage="31.29" Swing="31.29">143</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="0" Percentage="68.71" Swing="68.71">314</Votes>
+                  </Candidate>
+                </TwoCandidatePreferred>
+              </PollingPlace>
+              <PollingPlace Updated="2024-04-29T14:47:37">
+                <PollingPlaceIdentifier Id="447" Name="Yowie Bay" />
+                <FirstPreferences Updated="2024-04-29T14:47:37">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38288" />
+                    <Votes Historic="0" Percentage="3.75" Swing="3.75">59</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38292" />
+                    <Votes Historic="0" Percentage="8.64" Swing="8.64">136</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38291" />
+                    <Votes Historic="0" Percentage="6.16" Swing="6.16">97</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="162" Percentage="13.72" Swing="3.8">216</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="1010" Percentage="65.63" Swing="3.64">1033</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38289" />
+                    <Votes Historic="0" Percentage="2.1" Swing="2.1">33</Votes>
+                  </Candidate>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="37731" />
+                    <Votes Historic="55" Percentage="0" Swing="-3.38">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36694" />
+                    <Votes Historic="49" Percentage="0" Swing="-3.02">0</Votes>
+                  </Ghost>
+                  <Ghost>
+                    <eml:CandidateIdentifier Id="36784" />
+                    <Votes Historic="353" Percentage="0" Swing="-21.69">0</Votes>
+                  </Ghost>
+                  <Formal>
+                    <Votes Historic="1630" Percentage="93.63" Swing="-2.31">1574</Votes>
+                  </Formal>
+                  <Informal>
+                    <Votes Historic="69" Percentage="6.37" Swing="2.31">107</Votes>
+                  </Informal>
+                  <Total>
+                    <Votes Historic="1699" Percentage="1.5" Swing="-0.04">1681</Votes>
+                  </Total>
+                </FirstPreferences>
+                <TwoCandidatePreferred Updated="2024-04-29T14:47:37">
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38287" />
+                    <Votes Historic="0" Percentage="25.73" Swing="25.73">405</Votes>
+                  </Candidate>
+                  <Candidate>
+                    <eml:CandidateIdentifier Id="38290" />
+                    <Votes Historic="0" Percentage="74.27" Swing="74.27">1169</Votes>
+                  </Candidate>
+                </TwoCandidatePreferred>
+              </PollingPlace>
+            </PollingPlaces>
+          </Contest>
+        </Contests>
+      </House>
+    </Election>
+  </Results>
+</MediaFeed>
