@@ -6,6 +6,10 @@ on:
     - cron: '*/5 * * * *'
   workflow_dispatch:
 
+concurrency:
+  group: aec-feed
+  cancel-in-progress: true
+
 jobs:
   fetch:
     runs-on: ubuntu-latest
@@ -20,7 +24,7 @@ jobs:
           FTP_DIR="ftp://mediafeedarchive.aec.gov.au/${ELECTION_ID}/Detailed/Verbose/"
 
           # List directory and pick the most recent zip (filenames sort chronologically)
-          LATEST=$(curl --silent --list-only "${FTP_DIR}" | grep '\.zip$' | sort | tail -1)
+          LATEST=$(curl -fL --retry 5 --retry-delay 10 --silent --list-only "${FTP_DIR}" | grep '\.zip$' | sort | tail -1)
 
           if [ -z "$LATEST" ]; then
             echo "No zip file found on FTP server"
@@ -30,17 +34,24 @@ jobs:
           echo "Latest file: $LATEST"
           echo "LATEST=$LATEST" >> "$GITHUB_ENV"
 
-          curl --silent --output feed.zip "${FTP_DIR}${LATEST}"
+          curl -fL --retry 5 --retry-delay 10 --silent --output feed.zip "${FTP_DIR}${LATEST}"
 
       - name: Extract XML from zip
         run: |
           ELECTION_ID="29807"
-          # The zip contains an xml/ subdirectory — extract just that, flat into ./extracted/
+
+          mkdir -p extracted docs/data
           unzip -j feed.zip "xml/*.xml" -d extracted/
-          cp extracted/*.xml "docs/data/aec-mediafeed-results-detailed-verbose-${ELECTION_ID}.xml"
+          FILE=$(ls extracted/*.xml 2>/dev/null | head -1)
+          if [ -z "$FILE" ]; then
+            echo "No XML extracted"
+            exit 1
+          fi
+          cp "$FILE" "docs/data/aec-mediafeed-results-detailed-verbose-${ELECTION_ID}.xml"
 
       - name: Commit and push if data changed
         run: |
+          source $GITHUB_ENV
           ELECTION_ID="29807"
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
