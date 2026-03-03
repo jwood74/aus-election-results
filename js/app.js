@@ -5,6 +5,52 @@
  * renders the results table.
  */
 
+// ── Sort State ───────────────────────────────────────────────────────────────
+
+let allRowsData = [];
+let sortState = { key: null, direction: null };
+
+function getSortedRows(rows) {
+  if (!sortState.key || !sortState.direction) return rows;
+  return [...rows].sort((a, b) => {
+    const va = a[sortState.key];
+    const vb = b[sortState.key];
+    if (va === null && vb === null) return 0;
+    if (va === null) return 1;
+    if (vb === null) return -1;
+    const cmp = typeof va === "string" ? va.localeCompare(vb, "en-AU") : va - vb;
+    return sortState.direction === "desc" ? -cmp : cmp;
+  });
+}
+
+function updateSortIndicators() {
+  document.querySelectorAll("thead th[data-sort-key]").forEach(th => {
+    th.classList.remove("sort-asc", "sort-desc");
+    if (th.dataset.sortKey === sortState.key && sortState.direction) {
+      th.classList.add("sort-" + sortState.direction);
+    }
+  });
+}
+
+function initSorting() {
+  document.querySelectorAll("thead th[data-sort-key]").forEach(th => {
+    th.addEventListener("click", () => {
+      const key = th.dataset.sortKey;
+      if (sortState.key !== key) {
+        sortState.key = key;
+        sortState.direction = "asc";
+      } else if (sortState.direction === "asc") {
+        sortState.direction = "desc";
+      } else {
+        sortState.key = null;
+        sortState.direction = null;
+      }
+      updateSortIndicators();
+      renderTable(getSortedRows(allRowsData));
+    });
+  });
+}
+
 // ── XML namespace URIs ──────────────────────────────────────────────────────
 const NS_FEED = "http://www.aec.gov.au/xml/schema/mediafeed";
 const NS_EML  = "urn:oasis:names:tc:evs:schema:eml";
@@ -378,7 +424,8 @@ async function loadElectionData() {
     }
 
     // 3. Render
-    renderTable(allRows);
+    allRowsData = allRows;
+    renderTable(getSortedRows(allRowsData));
 
     const contestWord = allRows.length === 1 ? "contest" : "contests";
     statusEl.textContent = `Showing ${allRows.length} ${contestWord}.`;
@@ -390,4 +437,7 @@ async function loadElectionData() {
   }
 }
 
-document.addEventListener("DOMContentLoaded", loadElectionData);
+document.addEventListener("DOMContentLoaded", () => {
+  initSorting();
+  loadElectionData();
+});

@@ -316,6 +316,32 @@ thead tr:last-child  th.group-flow  { background: #0d3560; }
 /* ── Utility ── */
 .hidden { display: none; }
 
+/* ── Sortable column headers ── */
+thead th[data-sort-key] {
+  cursor: pointer;
+  user-select: none;
+}
+
+thead th[data-sort-key]:hover {
+  filter: brightness(1.15);
+}
+
+thead th[data-sort-key]::after {
+  content: ' ⇅';
+  opacity: 0.35;
+  font-size: 10px;
+}
+
+thead th[data-sort-key].sort-asc::after {
+  content: ' ↑';
+  opacity: 1;
+}
+
+thead th[data-sort-key].sort-desc::after {
+  content: ' ↓';
+  opacity: 1;
+}
+
 /* ── Footer ── */
 footer {
   background: #e8eaed;
