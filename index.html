@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AEC Election Results</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <header>
+    <h1>Australian Election Results</h1>
+    <p id="election-label" class="election-label"></p>
+  </header>
+
+  <main>
+    <div id="status" class="status">Loading results…</div>
+
+    <div class="table-wrapper">
+      <table id="results-table" aria-label="House of Representatives Contest Results">
+        <thead>
+          <tr>
+            <th rowspan="2" class="col-contest sticky-col">Contest</th>
+            <th rowspan="2" class="col-state">State</th>
+            <th rowspan="2" class="col-enrolment">Enrolment</th>
+            <th colspan="2" class="group-tcp">ALP TCP</th>
+            <th colspan="5" class="group-primary-pct">Primary %</th>
+            <th colspan="4" class="group-swing">Primary Swing</th>
+            <th colspan="3" class="group-booths">Booths</th>
+          </tr>
+          <tr>
+            <!-- ALP TCP -->
+            <th class="col-num group-tcp col-party-alp">%</th>
+            <th class="col-num group-tcp col-party-alp">Swing</th>
+            <!-- Primary % -->
+            <th class="col-num group-primary-pct col-party-alp">ALP</th>
+            <th class="col-num group-primary-pct col-party-lnp">L/NP</th>
+            <th class="col-num group-primary-pct col-party-grn">GRN</th>
+            <th class="col-num group-primary-pct col-party-onp">ONP</th>
+            <th class="col-num group-primary-pct col-party-oth">OTH</th>
+            <!-- Primary Swing -->
+            <th class="col-num group-swing col-party-alp">ALP</th>
+            <th class="col-num group-swing col-party-lnp">L/NP</th>
+            <th class="col-num group-swing col-party-grn">GRN</th>
+            <th class="col-num group-swing col-party-onp">ONP</th>
+            <!-- Booths -->
+            <th class="col-num group-booths">Total</th>
+            <th class="col-num group-booths">Primary</th>
+            <th class="col-num group-booths">TCP</th>
+          </tr>
+        </thead>
+        <tbody id="results-body">
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <footer>
+    <p>Source: Australian Electoral Commission media feed data. Code: <a href="https://github.com/jwood74/aus-election-results">GitHub</a></p>
+  </footer>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

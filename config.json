@@ -1,0 +1,11 @@
+{
+  "elections": [
+    {
+      "id": "17552",
+      "name": "2014 Griffith By-election",
+      "files": [
+        "docs/data/aec-mediafeed-results-detailed-verbose-17552.xml"
+      ]
+    }
+  ]
+}

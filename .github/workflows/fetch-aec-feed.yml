@@ -1,0 +1,55 @@
+name: Fetch AEC Media Feed
+
+on:
+  schedule:
+    # GitHub Actions minimum interval is 5 minutes
+    - cron: '*/5 * * * *'
+  workflow_dispatch:
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download latest AEC feed zip
+        run: |
+          ELECTION_ID="29807"
+          FTP_DIR="ftp://mediafeedarchive.aec.gov.au/${ELECTION_ID}/Detailed/Verbose/"
+
+          # List directory and pick the most recent zip (filenames sort chronologically)
+          LATEST=$(curl --silent --list-only "${FTP_DIR}" | grep '\.zip$' | sort | tail -1)
+
+          if [ -z "$LATEST" ]; then
+            echo "No zip file found on FTP server"
+            exit 1
+          fi
+
+          echo "Latest file: $LATEST"
+          echo "LATEST=$LATEST" >> "$GITHUB_ENV"
+
+          curl --silent --output feed.zip "${FTP_DIR}${LATEST}"
+
+      - name: Extract XML from zip
+        run: |
+          ELECTION_ID="29807"
+          # The zip contains an xml/ subdirectory — extract just that, flat into ./extracted/
+          unzip -j feed.zip "xml/*.xml" -d extracted/
+          cp extracted/*.xml "docs/data/aec-mediafeed-results-detailed-verbose-${ELECTION_ID}.xml"
+
+      - name: Commit and push if data changed
+        run: |
+          ELECTION_ID="29807"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add "docs/data/aec-mediafeed-results-detailed-verbose-${ELECTION_ID}.xml"
+
+          if git diff --staged --quiet; then
+            echo "Feed unchanged — nothing to commit"
+          else
+            git commit -m "chore: update AEC feed ${ELECTION_ID} (${LATEST}) [skip ci]"
+            git push
+          fi
