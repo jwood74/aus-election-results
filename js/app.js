@@ -314,8 +314,10 @@ function parseContest(contestEl, electionId) {
  * Returns an array of contest row objects.
  */
 function parseXML(xmlDoc, electionId) {
-  const contests = xmlDoc.getElementsByTagNameNS(NS_FEED, "Contest");
-  const fallback = xmlDoc.getElementsByTagName("Contest");
+  const house = xmlDoc.getElementsByTagName("House")[0];
+  if (!house) return [];
+  const contests = house.getElementsByTagNameNS(NS_FEED, "Contest");
+  const fallback = house.getElementsByTagName("Contest");
   const list = contests.length > 0 ? Array.from(contests) : Array.from(fallback);
   return list.map(c => parseContest(c, electionId));
 }
