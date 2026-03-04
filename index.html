@@ -47,6 +47,25 @@
             <th class="col-num group-booths" data-sort-key="primaryBooths">Primary</th>
             <th class="col-num group-booths" data-sort-key="tcpBooths">TCP</th>
           </tr>
+          <tr id="filter-row">
+            <td class="col-contest sticky-col"><input id="filter-contest" type="text" placeholder="Search contest" autocomplete="off" /></td>
+            <td class="col-state"><input id="filter-state" type="text" placeholder="State" autocomplete="off" /></td>
+            <td class="col-enrolment"></td>
+            <td class="col-num group-tcp col-party-alp" id="total-alpTcpPct"></td>
+            <td class="col-num group-tcp col-party-alp" id="total-alpTcpSwing"></td>
+            <td class="col-num group-primary-pct col-party-alp" id="total-alpPct"></td>
+            <td class="col-num group-primary-pct col-party-lnp" id="total-lnpPct"></td>
+            <td class="col-num group-primary-pct col-party-grn" id="total-grnPct"></td>
+            <td class="col-num group-primary-pct col-party-onp" id="total-onpPct"></td>
+            <td class="col-num group-primary-pct col-party-oth" id="total-othPct"></td>
+            <td class="col-num group-swing col-party-alp" id="total-alpSwing"></td>
+            <td class="col-num group-swing col-party-lnp" id="total-lnpSwing"></td>
+            <td class="col-num group-swing col-party-grn" id="total-grnSwing"></td>
+            <td class="col-num group-swing col-party-onp" id="total-onpSwing"></td>
+            <td class="col-num group-booths" id="total-totalBooths"></td>
+            <td class="col-num group-booths" id="total-primaryBooths"></td>
+            <td class="col-num group-booths" id="total-tcpBooths"></td>
+          </tr>
         </thead>
         <tbody id="results-body">
         </tbody>

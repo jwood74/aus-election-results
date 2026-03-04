@@ -390,6 +390,78 @@ function renderTable(rows) {
   }
 }
 
+function filterRows(rows, contestFilter, stateFilter) {
+  const contest = contestFilter.trim().toLowerCase();
+  const state = stateFilter.trim().toLowerCase();
+  return rows.filter(row => {
+    const matchContest = !contest || (row.contestName && row.contestName.toLowerCase().includes(contest));
+    const matchState = !state || (row.state && row.state.toLowerCase().includes(state));
+    return matchContest && matchState;
+  });
+}
+
+function updateTableWithFilters() {
+  const contestInput = document.getElementById("filter-contest");
+  const stateInput = document.getElementById("filter-state");
+  const contestFilter = contestInput ? contestInput.value : "";
+  const stateFilter = stateInput ? stateInput.value : "";
+  const filteredRows = filterRows(getSortedRows(allRowsData), contestFilter, stateFilter);
+  renderTable(filteredRows);
+  updateTotalsRow(filteredRows);
+}
+
+function sum(values) {
+  let total = 0, count = 0;
+  for (const v of values) {
+    if (typeof v === 'number' && !isNaN(v)) {
+      total += v;
+      count++;
+    }
+  }
+  return { total, count };
+}
+
+function avg(values) {
+  const { total, count } = sum(values);
+  return count > 0 ? total / count : null;
+}
+
+function updateTotalsRow(rows) {
+  // Percent columns: average, Booths: sum, Swings: average
+  const percentFields = [
+    'alpTcpPct', 'alpPct', 'lnpPct', 'grnPct', 'onpPct', 'othPct'
+  ];
+  const swingFields = [
+    'alpTcpSwing', 'alpSwing', 'lnpSwing', 'grnSwing', 'onpSwing'
+  ];
+  const boothFields = [
+    'totalBooths', 'primaryBooths', 'tcpBooths'
+  ];
+  for (const field of percentFields) {
+    const avgVal = avg(rows.map(r => r[field]));
+    const el = document.getElementById('total-' + field);
+    if (el) el.textContent = avgVal !== null ? avgVal.toFixed(2) : '—';
+  }
+  for (const field of swingFields) {
+    const avgVal = avg(rows.map(r => r[field]));
+    const el = document.getElementById('total-' + field);
+    if (el) el.textContent = avgVal !== null ? (avgVal > 0 ? '+' : '') + avgVal.toFixed(2) : '—';
+  }
+  for (const field of boothFields) {
+    const { total, count } = sum(rows.map(r => r[field]));
+    const el = document.getElementById('total-' + field);
+    if (el) el.textContent = count > 0 ? Math.round(total).toLocaleString('en-AU') : '—';
+  }
+}
+
+function addFilterListeners() {
+  const contestInput = document.getElementById("filter-contest");
+  const stateInput = document.getElementById("filter-state");
+  if (contestInput) contestInput.addEventListener("input", updateTableWithFilters);
+  if (stateInput) stateInput.addEventListener("input", updateTableWithFilters);
+}
+
+
 // ── Main ─────────────────────────────────────────────────────────────────────
 
 async function loadElectionData() {
@@ -439,5 +511,11 @@ async function loadElectionData() {
 
 document.addEventListener("DOMContentLoaded", () => {
   initSorting();
-  loadElectionData();
+  loadElectionData().then(() => {
+    addFilterListeners();
+    // Focus the Contest filter input on page load
+    const contestInput = document.getElementById("filter-contest");
+    if (contestInput) contestInput.focus();
+    updateTableWithFilters();
+  });
 });

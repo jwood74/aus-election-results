@@ -309,6 +309,42 @@ thead tr:first-child th.group-flow  { background: #0d3560; }
 thead tr:nth-child(2) th.group-flow  { background: #0d3560; }
 
 /* ── Contest totals row (3rd row in thead) ── */
+thead tr#filter-row {
+  position: sticky;
+  top: 108px; /* below both header rows */
+  z-index: 10;
+}
+thead tr#filter-row td {
+  background: #fff;
+  color: #1a1a1a;
+  font-weight: 400;
+  font-size: 13px;
+  text-align: right;
+  padding: 0.3rem 0.5rem;
+  border-right: 1px solid #e8eaed;
+  position: relative;
+}
+thead tr#filter-row td.col-contest,
+thead tr#filter-row td.col-state {
+  text-align: left;
+}
+thead tr#filter-row input[type="text"] {
+  width: 100%;
+  padding: 0.2em 0.4em;
+  font-size: 13px;
+  border: 1px solid #c8cdd5;
+  border-radius: 3px;
+  background: #f8f9fb;
+  color: #222;
+  outline: none;
+  box-sizing: border-box;
+  transition: border 0.15s;
+}
+thead tr#filter-row input[type="text"]:focus {
+  border: 1.5px solid #00529b;
+  background: #fff;
+}
+
 thead tr.totals-row {
   position: sticky;
   top: 54px; /* height of both header rows above, adjust if needed */
