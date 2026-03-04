@@ -788,11 +788,26 @@ function renderTotalsRow(row) {
   tr.appendChild(td(row.votesCast === null || row.votesCast === 0 ? "—" : fmtInt(row.votesCast), "col-num"));
 
   const tcpTd = document.createElement("td");
-  tcpTd.className = "col-num col-party-alp";
-  tcpTd.textContent = hasVotes ? fmt(row.alpTcpPct) : "—";
+  let tcpPartyClass = "col-party-alp";
+  if (row.tcpPctById && selectedTcpCandidateId && row.tcpPctById[selectedTcpCandidateId] !== undefined) {
+    tcpTd.textContent = hasVotes ? fmt(row.tcpPctById[selectedTcpCandidateId]) : "—";
+    const cand = tcpCandidates.find(c => c.id === selectedTcpCandidateId);
+    if (cand && cand.code) tcpPartyClass = `col-party-${cand.code.toLowerCase()}`;
+  } else {
+    tcpTd.textContent = hasVotes ? fmt(row.alpTcpPct) : "—";
+  }
+  tcpTd.className = `col-num ${tcpPartyClass}`;
   tr.appendChild(tcpTd);
 
-  tr.appendChild(swing(row.alpTcpSwing, "col-party-alp"));
+  // TCP Swing for selected candidate
+  let tcpSwingPartyClass = "col-party-alp";
+  if (row.tcpSwingById && selectedTcpCandidateId && row.tcpSwingById[selectedTcpCandidateId] !== undefined) {
+    const cand = tcpCandidates.find(c => c.id === selectedTcpCandidateId);
+    if (cand && cand.code) tcpSwingPartyClass = `col-party-${cand.code.toLowerCase()}`;
+    tr.appendChild(swing(row.tcpSwingById[selectedTcpCandidateId], tcpSwingPartyClass));
+  } else {
+    tr.appendChild(swing(row.alpTcpSwing, "col-party-alp"));
+  }
 
   tr.appendChild(pct(row.alpPct, "col-party-alp"));
   tr.appendChild(pct(row.lnpPct, "col-party-lnp"));
@@ -897,10 +912,16 @@ function renderRow(row) {
 
   // For special vote rows, also update TCP colour
   if (row.isVoteType) {
+    // Update TCP columns to use selected TCP candidate's party class, matching normal row logic
     const tds = tr.querySelectorAll('td');
+    let tcpClass = "col-party-alp";
+    if (selectedTcpCandidateId) {
+      const cand = tcpCandidates.find(c => c.id === selectedTcpCandidateId);
+      if (cand && cand.code) tcpClass = `col-party-${cand.code.toLowerCase()}`;
+    }
     if (tds.length > 3) {
-      tds[3].className = `col-num ${tcpPartyClass}`;
-      tds[4].className = `col-num ${tcpPartyClass}`;
+      tds[3].className = `col-num ${tcpClass}`;
+      tds[4].className = `col-num ${tcpClass} col-swing`;
     }
   }
 

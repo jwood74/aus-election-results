@@ -197,6 +197,7 @@ td.col-num {
 /* ── Party column colour tints ── */
 .col-party-alp { background-color: rgba(200, 0, 30,  0.07); }
 .col-party-lnp { background-color: rgba(0,  71, 171, 0.07); }
+.col-party-lp { background-color: rgba(0,  71, 171, 0.07); }
 .col-party-grn { background-color: rgba(0, 130,  50, 0.07); }
 .col-party-onp { background-color: rgba(220, 100,  0, 0.07); }
 .col-party-oth { background-color: rgba(100, 100, 100, 0.07); }
@@ -204,6 +205,7 @@ td.col-num {
 /* Swing columns: slightly darker tint */
 .col-party-alp.col-swing { background-color: rgba(200, 0, 30,  0.14); }
 .col-party-lnp.col-swing { background-color: rgba(0,  71, 171, 0.14); }
+.col-party-lp.col-swing { background-color: rgba(0,  71, 171, 0.14); }
 .col-party-grn.col-swing { background-color: rgba(0, 130,  50, 0.14); }
 .col-party-onp.col-swing { background-color: rgba(220, 100,  0, 0.14); }
 .col-party-oth.col-swing { background-color: rgba(100, 100, 100, 0.14); }
@@ -211,12 +213,14 @@ td.col-num {
 /* Keep tint visible on even rows */
 tbody tr:nth-child(even) td.col-party-alp { background-color: rgba(200, 0,  30,  0.10); }
 tbody tr:nth-child(even) td.col-party-lnp { background-color: rgba(0,  71, 171, 0.10); }
+tbody tr:nth-child(even) td.col-party-lp { background-color: rgba(0,  71, 171, 0.10); }
 tbody tr:nth-child(even) td.col-party-grn { background-color: rgba(0, 130,  50, 0.10); }
 tbody tr:nth-child(even) td.col-party-onp { background-color: rgba(220, 100,  0, 0.10); }
 tbody tr:nth-child(even) td.col-party-oth { background-color: rgba(100, 100, 100, 0.10); }
 
 tbody tr:nth-child(even) td.col-party-alp.col-swing { background-color: rgba(200, 0,  30,  0.17); }
 tbody tr:nth-child(even) td.col-party-lnp.col-swing { background-color: rgba(0,  71, 171, 0.17); }
+tbody tr:nth-child(even) td.col-party-lp.col-swing { background-color: rgba(0,  71, 171, 0.17); }
 tbody tr:nth-child(even) td.col-party-grn.col-swing { background-color: rgba(0, 130,  50, 0.17); }
 tbody tr:nth-child(even) td.col-party-onp.col-swing { background-color: rgba(220, 100,  0, 0.17); }
 tbody tr:nth-child(even) td.col-party-oth.col-swing { background-color: rgba(100, 100, 100, 0.17); }
@@ -373,6 +377,114 @@ thead th[data-sort-key].sort-asc::after {
 thead th[data-sort-key].sort-desc::after {
   content: ' ↓';
   opacity: 1;
+}
+
+.tcp-menu {
+  min-width: 180px;
+  background: #fff;
+  border: 1px solid #bbb;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.13);
+  padding: 0.25rem 0;
+  font-size: 14px;
+  outline: none;
+}
+.tcp-menu[aria-hidden="true"] { display: none; }
+.tcp-menu[aria-hidden="false"] { display: block; }
+.tcp-menu button {
+  display: block;
+  width: 100%;
+  background: none;
+  border: none;
+  text-align: left;
+  padding: 0.5rem 1rem;
+  font-size: 14px;
+  color: #1a1a1a;
+  cursor: pointer;
+}
+.tcp-menu button[aria-checked="true"] {
+  background: #e8eaed;
+  font-weight: 600;
+}
+.tcp-menu button:focus {
+  background: #d0e3fa;
+  outline: 2px solid #00529b;
+}
+
+/* TCP Picker Button and Menu */
+.tcp-picker-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 2.2em;
+  background: none;
+  border: none;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  padding: 0.2em 0.5em;
+  border-radius: 4px;
+  transition: background 0.15s;
+  position: relative;
+  z-index: 11;
+}
+.tcp-picker-btn:focus {
+  outline: 2px solid #00529b;
+  background: #e6eaf0;
+}
+.tcp-picker-btn[aria-expanded="true"] {
+  background: #e6eaf0;
+}
+.tcp-picker-btn .tcp-party-dot {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+  margin-right: 0.5em;
+  vertical-align: middle;
+}
+.tcp-picker-btn .tcp-caret {
+  margin-left: 0.5em;
+  font-size: 1em;
+  opacity: 0.7;
+}
+
+.tcp-menu {
+  min-width: 180px;
+  background: #fff;
+  border: 1px solid #bbb;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.13);
+  padding: 0.25rem 0;
+  font-size: 14px;
+  outline: none;
+  position: absolute;
+  left: 0;
+  top: 100%;
+  margin-top: 2px;
+  z-index: 100;
+}
+.tcp-menu[aria-hidden="true"] { display: none; }
+.tcp-menu[aria-hidden="false"] { display: block; }
+.tcp-menu button {
+  display: block;
+  width: 100%;
+  background: none;
+  border: none;
+  text-align: left;
+  padding: 0.5rem 1rem;
+  font-size: 14px;
+  color: #1a1a1a;
+  cursor: pointer;
+}
+.tcp-menu button[aria-checked="true"] {
+  background: #e8eaed;
+  font-weight: 600;
+}
+.tcp-menu button:focus {
+  background: #d0e3fa;
+  outline: 2px solid #00529b;
 }
 
 /* ── Footer ── */
