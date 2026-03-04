@@ -249,6 +249,7 @@ function parsePollingPlace(ppEl, candidateMap, tcpAlpCandId, tcpLnpCandId) {
 
   let alpTcpPct = null, alpTcpSwing = null, alpTcpVotes = 0;
   let lnpTcpVotes = 0;
+  let tcpPctById = {}, tcpSwingById = {};
 
   if (tcpEl) {
     const tcpCands = Array.from(tcpEl.children).filter(n => n.localName === "Candidate");
@@ -269,6 +270,8 @@ function parsePollingPlace(ppEl, candidateMap, tcpAlpCandId, tcpLnpCandId) {
         ? xmlSwing
         : (historicFormal > 0 ? pct - (historicVotes / historicFormal) * 100 : null);
 
+      tcpPctById[cid] = pct;
+      tcpSwingById[cid] = swing;
       if (tcpAlpCandId && cid === tcpAlpCandId) {
         alpTcpPct   = pct;
         alpTcpSwing = swing;
@@ -299,6 +302,8 @@ function parsePollingPlace(ppEl, candidateMap, tcpAlpCandId, tcpLnpCandId) {
     votesCast,
     alpTcpPct,
     alpTcpSwing,
+    tcpPctById,
+    tcpSwingById,
     alpPct:   primary.alp.pct,
     lnpPct:   primary.lnp.pct === 0 && !primary.lnp.found ? null : primary.lnp.pct,
     grnPct:   primary.grn.pct,
@@ -575,6 +580,7 @@ function parseContestTotalsRow(contestEl, name, candidateMap, tcpAlpCandId, tcpL
 
   // ALP TCP from contest-level TwoCandidatePreferred
   let alpTcpPct = null, alpTcpSwing = null, alpTcpVotes = 0, lnpTcpVotes = 0;
+  let tcpPctById = {}, tcpSwingById = {};
   const tcpEl = contestEl.getElementsByTagNameNS(NS_FEED, "TwoCandidatePreferred")[0] ||
                 contestEl.getElementsByTagName("TwoCandidatePreferred")[0];
   if (tcpEl) {
@@ -595,6 +601,8 @@ function parseContestTotalsRow(contestEl, name, candidateMap, tcpAlpCandId, tcpL
         ? xmlSwing
         : (historicFormal > 0 ? pct - (historicVotes / historicFormal) * 100 : null);
 
+      tcpPctById[cid] = pct;
+      tcpSwingById[cid] = swing;
       if (tcpAlpCandId && cid === tcpAlpCandId) {
         alpTcpPct   = pct;  alpTcpSwing = swing;  alpTcpVotes = votes;
       }
@@ -620,6 +628,8 @@ function parseContestTotalsRow(contestEl, name, candidateMap, tcpAlpCandId, tcpL
     votesCast,
     alpTcpPct,
     alpTcpSwing,
+    tcpPctById,
+    tcpSwingById,
     alpPct:   primary.alp.pct,
     lnpPct:   primary.lnp.pct === 0 && !primary.lnp.found ? null : primary.lnp.pct,
     grnPct:   primary.grn.pct,
@@ -637,6 +647,114 @@ function parseContestTotalsRow(contestEl, name, candidateMap, tcpAlpCandId, tcpL
 /**
  * Render the contest totals row into the #totals-row <tr> in <thead>.
  */
+function renderTcpCandidateDropdown() {
+  const pickerBtn = document.getElementById("tcp-candidate-picker");
+  const menu = document.getElementById("tcp-candidate-menu");
+  if (!pickerBtn || !menu) return;
+  menu.innerHTML = "";
+  // Position menu overlapping the picker button (popover style), accounting for sticky headers
+  const btnRect = pickerBtn.getBoundingClientRect();
+  const parentRect = pickerBtn.offsetParent ? pickerBtn.offsetParent.getBoundingClientRect() : {left:0,top:0};
+  menu.style.position = "absolute";
+  menu.style.left = `${btnRect.left - parentRect.left}px`;
+  menu.style.top = `${btnRect.top - parentRect.top}px`;
+  menu.style.zIndex = 1000;
+  // Build menu items
+  tcpCandidates.forEach(cand => {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.role = "option";
+    btn.setAttribute("data-candidate-id", cand.id);
+    btn.setAttribute("aria-checked", cand.id === selectedTcpCandidateId ? "true" : "false");
+    btn.tabIndex = -1;
+    btn.innerHTML = `<span class="tcp-party-dot col-party-${cand.code.toLowerCase()}"></span>${cand.name}`;
+    btn.onclick = function() {
+      selectTcpCandidate(cand.id);
+      closeTcpMenu();
+    };
+    menu.appendChild(btn);
+  });
+  menu.setAttribute("aria-hidden", "true");
+  menu.style.display = "none";
+
+  // Set picker button label
+  const selected = tcpCandidates.find(c => c.id === selectedTcpCandidateId);
+  pickerBtn.innerHTML = selected
+    ? `<span class="tcp-party-dot col-party-${selected.code.toLowerCase()}"></span>${selected.name}<span class="tcp-caret">▼</span>`
+    : 'Select TCP <span class="tcp-caret">▼</span>';
+  pickerBtn.setAttribute("aria-expanded", "false");
+
+  // Picker button click opens menu
+  pickerBtn.onclick = function(e) {
+    e.stopPropagation();
+    openTcpMenu();
+  };
+
+  // Keyboard navigation
+  pickerBtn.onkeydown = function(e) {
+    if (e.key === "ArrowDown" || e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      openTcpMenu();
+      const firstBtn = menu.querySelector("button");
+      if (firstBtn) firstBtn.focus();
+    }
+  };
+
+  function openTcpMenu() {
+    menu.setAttribute("aria-hidden", "false");
+    menu.style.display = "block";
+    pickerBtn.setAttribute("aria-expanded", "true");
+    // Focus selected
+    const selectedBtn = menu.querySelector(`button[data-candidate-id='${selectedTcpCandidateId}']`);
+    if (selectedBtn) selectedBtn.focus();
+    // Close on outside click
+    document.addEventListener("mousedown", outsideClick, { once: true });
+  }
+  function closeTcpMenu() {
+    menu.setAttribute("aria-hidden", "true");
+    menu.style.display = "none";
+    pickerBtn.setAttribute("aria-expanded", "false");
+    pickerBtn.focus();
+  }
+  function outsideClick(e) {
+    if (!menu.contains(e.target) && e.target !== pickerBtn) closeTcpMenu();
+  }
+  menu.onkeydown = function(e) {
+    const btns = Array.from(menu.querySelectorAll("button"));
+    const idx = btns.indexOf(document.activeElement);
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      if (idx < btns.length - 1) btns[idx + 1].focus();
+    } else if (e.key === "ArrowUp") {
+      e.preventDefault();
+      if (idx > 0) btns[idx - 1].focus();
+    } else if (e.key === "Escape") {
+      closeTcpMenu();
+    }
+  };
+}
+
+function selectTcpCandidate(candidateId) {
+  const params = new URLSearchParams(window.location.search);
+  const contestId = params.get("contestId");
+  const storageKey = getTcpStorageKey(contestId);
+  selectedTcpCandidateId = candidateId;
+  localStorage.setItem(storageKey, candidateId);
+  rerenderTcpColumns();
+}
+
+
+
+function rerenderTcpColumns() {
+  // Re-render totals and table with new TCP candidate
+  const params = new URLSearchParams(window.location.search);
+  const electionId = params.get("electionId");
+  const contestId = params.get("contestId");
+  // For simplicity, reload the page (could optimize by caching contestEl)
+  loadContestDetail();
+}
+
+
 function renderTotalsRow(row) {
   const tr = document.getElementById("totals-row");
   tr.innerHTML = "";
@@ -713,6 +831,8 @@ function swingCell(value, isAlpPerspective = false, partyClass = "") {
 }
 
 function renderRow(row) {
+  // Use selectedTcpCandidateId for TCP columns
+
   const tr = document.createElement("tr");
   if (row.isVoteType) tr.classList.add("is-vote-type");
 
@@ -745,13 +865,44 @@ function renderRow(row) {
   tr.appendChild(td(fmtInt(row.expectedVotes), "col-num"));
   tr.appendChild(td(row.votesCast === null || row.votesCast === 0 ? "—" : fmtInt(row.votesCast), "col-num"));
 
-  // ALP TCP %
+  // TCP % for selected candidate
   const tcpPctTd = document.createElement("td");
-  tcpPctTd.className = "col-num col-party-alp";
-  tcpPctTd.textContent = hasVotes ? fmt(row.alpTcpPct) : "—";
+  let tcpPartyClass = "col-party-alp";
+  if (row.tcpPctById && selectedTcpCandidateId && row.tcpPctById[selectedTcpCandidateId] !== undefined) {
+    tcpPctTd.textContent = hasVotes ? fmt(row.tcpPctById[selectedTcpCandidateId]) : "—";
+    // Find party code for selected candidate
+    const cand = tcpCandidates.find(c => c.id === selectedTcpCandidateId);
+    if (cand && cand.code) tcpPartyClass = `col-party-${cand.code.toLowerCase()}`;
+  } else {
+    tcpPctTd.textContent = hasVotes ? fmt(row.alpTcpPct) : "—";
+  }
+  tcpPctTd.className = `col-num ${tcpPartyClass}`;
   tr.appendChild(tcpPctTd);
 
-  tr.appendChild(swing(row.alpTcpSwing, true, "col-party-alp"));
+  // TCP Swing for selected candidate
+  if (row.tcpSwingById && selectedTcpCandidateId && row.tcpSwingById[selectedTcpCandidateId] !== undefined) {
+    tr.appendChild(swing(row.tcpSwingById[selectedTcpCandidateId], true, tcpPartyClass));
+  } else {
+    tr.appendChild(swing(row.alpTcpSwing, true, tcpPartyClass));
+  }
+
+  // Update header TCP colour if this is the first row (totals)
+  if (row.isTotals) {
+    const tcpHeaderCells = document.querySelectorAll('.group-tcp.col-party-alp, .group-tcp.col-party-lnp, .group-tcp.col-party-lp, .group-tcp.col-party-grn, .group-tcp.col-party-onp, .group-tcp.col-party-oth');
+    tcpHeaderCells.forEach(cell => {
+      cell.classList.remove('col-party-alp', 'col-party-lnp', 'col-party-grn', 'col-party-onp', 'col-party-oth');
+      cell.classList.add(tcpPartyClass);
+    });
+  }
+
+  // For special vote rows, also update TCP colour
+  if (row.isVoteType) {
+    const tds = tr.querySelectorAll('td');
+    if (tds.length > 3) {
+      tds[3].className = `col-num ${tcpPartyClass}`;
+      tds[4].className = `col-num ${tcpPartyClass}`;
+    }
+  }
 
   // Primary %
   tr.appendChild(pct(row.alpPct, "col-party-alp"));
@@ -783,10 +934,20 @@ function renderTable(rows) {
 
 // ── Main ─────────────────────────────────────────────────────────────────────
 
+let tcpCandidates = [];
+let selectedTcpCandidateId = null;
+
+function getTcpStorageKey(contestId) {
+  return `tcp-candidate-${contestId}`;
+}
+
 async function loadContestDetail() {
   const params     = new URLSearchParams(window.location.search);
   const electionId = params.get("electionId");
   const contestId  = params.get("contestId");
+
+  // Reset selectedTcpCandidateId for each contest
+  selectedTcpCandidateId = null;
 
   const statusEl  = document.getElementById("status");
   const labelEl   = document.getElementById("election-label");
@@ -858,8 +1019,37 @@ async function loadContestDetail() {
 
     const contestLabel = `${contestNameEl?.textContent?.trim() ?? "Contest"} (${attr(stateIdEl, "Id") ?? "—"})`;
     document.getElementById("contest-label").textContent = contestLabel;
-    const { tcpAlpCandId: alpId, tcpLnpCandId: lnpId } = findTcpCandidateIds(contestEl, buildCandidateMap(contestEl));
-    const totalsRow = parseContestTotalsRow(contestEl, "", buildCandidateMap(contestEl), alpId, lnpId);
+    // Find all TCP candidates for dropdown
+    const candidateMap = buildCandidateMap(contestEl);
+    const tcpEl = contestEl.getElementsByTagNameNS(NS_FEED, "TwoCandidatePreferred")[0] ||
+                  contestEl.getElementsByTagName("TwoCandidatePreferred")[0];
+    tcpCandidates = [];
+    if (tcpEl) {
+      tcpCandidates = Array.from(tcpEl.children)
+        .filter(n => n.localName === "Candidate")
+        .map(cand => {
+          const cidEl = childEML(cand, "CandidateIdentifier");
+          const cid = attr(cidEl, "Id");
+          const code = candidateMap[cid];
+          const nameEl = childEML(cand, "CandidateName");
+          const name = nameEl ? nameEl.textContent.trim() : code || cid;
+          return { id: cid, code, name };
+        });
+    }
+    // Default to ALP if present, else first TCP candidate
+    // Use contestId from outer scope, do not redeclare
+    const storageKey = getTcpStorageKey(contestId);
+    let stored = localStorage.getItem(storageKey);
+    if (!stored && tcpCandidates.length) {
+      const alp = tcpCandidates.find(c => c.code === "ALP");
+      stored = alp ? alp.id : tcpCandidates[0].id;
+      localStorage.setItem(storageKey, stored);
+    }
+    selectedTcpCandidateId = stored;
+    renderTcpCandidateDropdown();
+
+    // Use selected TCP candidate for rendering
+    const totalsRow = parseContestTotalsRow(contestEl, "", candidateMap, selectedTcpCandidateId, null);
     renderTotalsRow(totalsRow);
 
     renderTable(getSortedRows(allRowsData));

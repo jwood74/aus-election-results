@@ -28,7 +28,11 @@
             <th rowspan="2" class="col-contest sticky-col" data-sort-key="name">Polling Place</th>
             <th rowspan="2" class="col-num" data-sort-key="expectedVotes">Expected<br>Votes</th>
             <th rowspan="2" class="col-num" data-sort-key="votesCast">Votes<br>Cast</th>
-            <th colspan="2" class="group-tcp">ALP TCP</th>
+            <th colspan="2" class="group-tcp" id="tcp-header-cell">
+              <label for="tcp-candidate-select" class="visually-hidden">TCP Candidate</label>
+              <button id="tcp-candidate-picker" class="tcp-picker-btn" aria-haspopup="listbox" aria-expanded="false" aria-label="TCP Candidate" type="button"></button>
+<div id="tcp-candidate-menu" class="tcp-menu" role="listbox" tabindex="-1" aria-hidden="true"></div>
+            </th>
             <th colspan="5" class="group-primary-pct">Primary %</th>
             <th colspan="4" class="group-swing">Primary Swing</th>
             <th colspan="2" class="group-flow">Pref Flow</th>
