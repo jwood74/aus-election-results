@@ -175,9 +175,11 @@ function parsePollingPlace(ppEl, candidateMap, tcpAlpCandId, tcpLnpCandId) {
   const votesCast  = totalVotes ? parseInt(totalVotes.textContent, 10) : null;
   const expectedVotes = totalVotes ? parseInt(attr(totalVotes, "Historic"), 10) : null;
 
-  // Formal votes (used for preference flow calculation)
-  const formalEl    = getFirst(fpEl, "Formal");
-  const formalVotes = formalEl ? parseInt(getFirst(formalEl, "Votes")?.textContent ?? "0", 10) : 0;
+  // Formal votes (used for percentage/swing calculation and preference flow)
+  const formalEl         = getFirst(fpEl, "Formal");
+  const formalVotesEl    = formalEl ? getFirst(formalEl, "Votes") : null;
+  const formalVotes      = formalVotesEl ? parseInt(formalVotesEl.textContent ?? "0", 10) : 0;
+  const historicFormal   = formalVotesEl ? parseInt(attr(formalVotesEl, "Historic") ?? "0", 10) : 0;
 
   // Per-party accumulators
   const primary = {
@@ -202,9 +204,18 @@ function parsePollingPlace(ppEl, candidateMap, tcpAlpCandId, tcpLnpCandId) {
       const votesEl = getVotesEl(cand);
       if (!votesEl) continue;
 
-      const pct   = floatAttr(votesEl, "Percentage") ?? 0;
-      const swing = floatAttr(votesEl, "Swing");
-      const votes = parseInt(votesEl.textContent, 10) || 0;
+      const votes        = parseInt(votesEl.textContent, 10) || 0;
+      const historicVotes = parseInt(attr(votesEl, "Historic") ?? "0", 10) || 0;
+      const xmlPct = floatAttr(votesEl, "Percentage");
+      // Booth-level XML always has Percentage="0"; fall back to calculating from formal votes.
+      const pct    = (xmlPct !== null && xmlPct !== 0)
+        ? xmlPct
+        : (formalVotes > 0 ? (votes / formalVotes) * 100 : 0);
+      const xmlSwing = floatAttr(votesEl, "Swing");
+      // Booth-level XML always has Swing="0"; calculate as pct - (historicVotes / historicFormal).
+      const swing    = (xmlSwing !== null && xmlSwing !== 0)
+        ? xmlSwing
+        : (historicFormal > 0 ? pct - (historicVotes / historicFormal) * 100 : null);
 
       if (group === "alp") {
         primary.alp.pct   = pct;
@@ -247,13 +258,24 @@ function parsePollingPlace(ppEl, candidateMap, tcpAlpCandId, tcpLnpCandId) {
       const votesEl = getVotesEl(cand);
       if (!votesEl) continue;
 
+      const votes        = parseInt(votesEl.textContent, 10) || 0;
+      const historicVotes = parseInt(attr(votesEl, "Historic") ?? "0", 10) || 0;
+      const xmlPct = floatAttr(votesEl, "Percentage");
+      const pct    = (xmlPct !== null && xmlPct !== 0)
+        ? xmlPct
+        : (formalVotes > 0 ? (votes / formalVotes) * 100 : 0);
+      const xmlSwing = floatAttr(votesEl, "Swing");
+      const swing    = (xmlSwing !== null && xmlSwing !== 0)
+        ? xmlSwing
+        : (historicFormal > 0 ? pct - (historicVotes / historicFormal) * 100 : null);
+
       if (tcpAlpCandId && cid === tcpAlpCandId) {
-        alpTcpPct   = floatAttr(votesEl, "Percentage");
-        alpTcpSwing = floatAttr(votesEl, "Swing");
-        alpTcpVotes = parseInt(votesEl.textContent, 10) || 0;
+        alpTcpPct   = pct;
+        alpTcpSwing = swing;
+        alpTcpVotes = votes;
       }
       if (tcpLnpCandId && cid === tcpLnpCandId) {
-        lnpTcpVotes = parseInt(votesEl.textContent, 10) || 0;
+        lnpTcpVotes = votes;
       }
     }
   }
@@ -481,7 +503,195 @@ function parseVoteTypeRows(contestEl, candidateMap, tcpAlpCandId, tcpLnpCandId) 
   );
 }
 
-// ── Table Rendering ──────────────────────────────────────────────────────────
+// ── Contest-level Totals Row ─────────────────────────────────────────────────
+
+/**
+ * Parse contest-level aggregate data into a totals row object.
+ * At contest level, Percentage and Swing attributes are accurate (unlike booth level).
+ */
+function parseContestTotalsRow(contestEl, name, candidateMap, tcpAlpCandId, tcpLnpCandId) {
+  const fpEl = contestEl.getElementsByTagNameNS(NS_FEED, "FirstPreferences")[0] ||
+               contestEl.getElementsByTagName("FirstPreferences")[0];
+
+  // Total votes cast
+  const totalEl       = getFirst(fpEl, "Total");
+  const totalVotesEl  = totalEl ? getFirst(totalEl, "Votes") : null;
+  const votesCast     = totalVotesEl ? parseInt(totalVotesEl.textContent, 10) : null;
+  const expectedVotes = totalVotesEl ? parseInt(attr(totalVotesEl, "Historic"), 10) : null;
+
+  const formalEl      = getFirst(fpEl, "Formal");
+  const formalVotesEl = formalEl ? getFirst(formalEl, "Votes") : null;
+  const formalVotes   = formalVotesEl ? parseInt(formalVotesEl.textContent, 10) : 0;
+  const historicFormal = formalVotesEl ? parseInt(attr(formalVotesEl, "Historic") ?? "0", 10) : 0;
+
+  const primary = {
+    alp: { pct: null, swing: null, votes: 0 },
+    lnp: { pct: 0,    swing: null, votes: 0, found: false },
+    grn: { pct: null, swing: null, votes: 0 },
+    onp: { pct: null, swing: null, votes: 0 },
+    oth: { pct: 0,    votes: 0 },
+  };
+
+  if (fpEl) {
+    const allCandidates = Array.from(fpEl.children).filter(
+      n => n.localName === "Candidate" || n.localName === "Ghost"
+    );
+    for (const cand of allCandidates) {
+      const isGhost = cand.localName === "Ghost";
+      const cidEl   = childEML(cand, "CandidateIdentifier");
+      const cid     = attr(cidEl, "Id");
+      const code    = candidateMap[cid];
+      const group   = partyGroup(code);
+      const votesEl = getVotesEl(cand);
+      if (!votesEl) continue;
+
+      const votes         = parseInt(votesEl.textContent, 10) || 0;
+      const historicVotes = parseInt(attr(votesEl, "Historic") ?? "0", 10) || 0;
+      const xmlPct        = floatAttr(votesEl, "Percentage");
+      const pct           = (xmlPct !== null && xmlPct !== 0)
+        ? xmlPct
+        : (formalVotes > 0 ? (votes / formalVotes) * 100 : 0);
+      const xmlSwing      = floatAttr(votesEl, "Swing");
+      const swing         = (xmlSwing !== null && xmlSwing !== 0)
+        ? xmlSwing
+        : (historicFormal > 0 ? pct - (historicVotes / historicFormal) * 100 : null);
+
+      if (group === "alp") {
+        primary.alp.pct   = pct;   primary.alp.swing = swing;  primary.alp.votes = votes;
+      } else if (group === "lnp") {
+        primary.lnp.pct   = (primary.lnp.pct ?? 0) + pct;
+        primary.lnp.votes += votes;
+        if (swing !== null && !primary.lnp.found) { primary.lnp.swing = swing; primary.lnp.found = true; }
+      } else if (group === "grn") {
+        primary.grn.pct   = pct;   primary.grn.swing = swing;  primary.grn.votes = votes;
+      } else if (group === "onp") {
+        primary.onp.pct   = pct;   primary.onp.swing = swing;  primary.onp.votes = votes;
+      } else if (!isGhost) {
+        primary.oth.pct   = (primary.oth.pct ?? 0) + pct;
+        primary.oth.votes += votes;
+      }
+    }
+  }
+
+  // ALP TCP from contest-level TwoCandidatePreferred
+  let alpTcpPct = null, alpTcpSwing = null, alpTcpVotes = 0, lnpTcpVotes = 0;
+  const tcpEl = contestEl.getElementsByTagNameNS(NS_FEED, "TwoCandidatePreferred")[0] ||
+                contestEl.getElementsByTagName("TwoCandidatePreferred")[0];
+  if (tcpEl) {
+    const tcpCands = Array.from(tcpEl.children).filter(n => n.localName === "Candidate");
+    for (const cand of tcpCands) {
+      const cidEl  = childEML(cand, "CandidateIdentifier");
+      const cid    = attr(cidEl, "Id");
+      const votesEl = getVotesEl(cand);
+      if (!votesEl) continue;
+      const votes         = parseInt(votesEl.textContent, 10) || 0;
+      const historicVotes = parseInt(attr(votesEl, "Historic") ?? "0", 10) || 0;
+      const xmlPct        = floatAttr(votesEl, "Percentage");
+      const pct           = (xmlPct !== null && xmlPct !== 0)
+        ? xmlPct
+        : (formalVotes > 0 ? (votes / formalVotes) * 100 : 0);
+      const xmlSwing      = floatAttr(votesEl, "Swing");
+      const swing         = (xmlSwing !== null && xmlSwing !== 0)
+        ? xmlSwing
+        : (historicFormal > 0 ? pct - (historicVotes / historicFormal) * 100 : null);
+
+      if (tcpAlpCandId && cid === tcpAlpCandId) {
+        alpTcpPct   = pct;  alpTcpSwing = swing;  alpTcpVotes = votes;
+      }
+      if (tcpLnpCandId && cid === tcpLnpCandId) {
+        lnpTcpVotes = votes;
+      }
+    }
+  }
+
+  let flowAlp = null, flowLnp = null;
+  if (tcpAlpCandId) {
+    const othFormal = formalVotes - (primary.alp.votes ?? 0) - (primary.lnp.votes ?? 0);
+    if (othFormal > 0) {
+      flowAlp = ((alpTcpVotes - primary.alp.votes) / othFormal) * 100;
+      flowLnp = ((lnpTcpVotes - primary.lnp.votes) / othFormal) * 100;
+    }
+  }
+
+  return {
+    name,
+    isTotals: true,
+    expectedVotes,
+    votesCast,
+    alpTcpPct,
+    alpTcpSwing,
+    alpPct:   primary.alp.pct,
+    lnpPct:   primary.lnp.pct === 0 && !primary.lnp.found ? null : primary.lnp.pct,
+    grnPct:   primary.grn.pct,
+    onpPct:   primary.onp.pct,
+    othPct:   primary.oth.pct,
+    alpSwing: primary.alp.swing,
+    lnpSwing: primary.lnp.swing,
+    grnSwing: primary.grn.swing,
+    onpSwing: primary.onp.swing,
+    flowAlp,
+    flowLnp,
+  };
+}
+
+/**
+ * Render the contest totals row into the #totals-row <tr> in <thead>.
+ */
+function renderTotalsRow(row) {
+  const tr = document.getElementById("totals-row");
+  tr.innerHTML = "";
+
+  const hasVotes = row.votesCast !== null && row.votesCast > 0;
+
+  const td = (text, cls) => {
+    const cell = document.createElement("td");
+    cell.textContent = text;
+    if (cls) cell.className = cls;
+    return cell;
+  };
+  const pct = (v, party) => {
+    const cell = document.createElement("td");
+    cell.className = `col-num${party ? " " + party : ""}`;
+    cell.textContent = hasVotes ? fmt(v) : "—";
+    return cell;
+  };
+  const swing = (v, party = "") => {
+    if (!hasVotes) {
+      const c = document.createElement("td");
+      c.className = `col-num swing-zero${party ? " " + party + " col-swing" : ""}`;
+      c.textContent = "—";
+      return c;
+    }
+    return swingCell(v, false, party);
+  };
+
+  tr.appendChild(td(row.name, "col-contest sticky-col totals-name"));
+  tr.appendChild(td(fmtInt(row.expectedVotes), "col-num"));
+  tr.appendChild(td(row.votesCast === null || row.votesCast === 0 ? "—" : fmtInt(row.votesCast), "col-num"));
+
+  const tcpTd = document.createElement("td");
+  tcpTd.className = "col-num col-party-alp";
+  tcpTd.textContent = hasVotes ? fmt(row.alpTcpPct) : "—";
+  tr.appendChild(tcpTd);
+
+  tr.appendChild(swing(row.alpTcpSwing, "col-party-alp"));
+
+  tr.appendChild(pct(row.alpPct, "col-party-alp"));
+  tr.appendChild(pct(row.lnpPct, "col-party-lnp"));
+  tr.appendChild(pct(row.grnPct, "col-party-grn"));
+  tr.appendChild(pct(row.onpPct, "col-party-onp"));
+  tr.appendChild(pct(row.othPct, "col-party-oth"));
+
+  tr.appendChild(swing(row.alpSwing, "col-party-alp"));
+  tr.appendChild(swing(row.lnpSwing, "col-party-lnp"));
+  tr.appendChild(swing(row.grnSwing, "col-party-grn"));
+  tr.appendChild(swing(row.onpSwing, "col-party-onp"));
+
+  tr.appendChild(pct(row.flowAlp, "col-party-alp"));
+  tr.appendChild(pct(row.flowLnp, "col-party-lnp"));
+}
+
+
 
 function swingCell(value, isAlpPerspective = false, partyClass = "") {
   const td = document.createElement("td");
@@ -496,8 +706,6 @@ function swingCell(value, isAlpPerspective = false, partyClass = "") {
   td.textContent = sign + fmt(value);
   if (value === 0) {
     td.classList.add("swing-zero");
-  } else if (isAlpPerspective) {
-    td.classList.add(value > 0 ? "alp-swing-pos" : "alp-swing-neg");
   } else {
     td.classList.add(value > 0 ? "swing-pos" : "swing-neg");
   }
@@ -535,7 +743,7 @@ function renderRow(row) {
 
   tr.appendChild(td(row.name, "col-contest sticky-col"));
   tr.appendChild(td(fmtInt(row.expectedVotes), "col-num"));
-  tr.appendChild(td(fmtInt(row.votesCast), "col-num"));
+  tr.appendChild(td(row.votesCast === null || row.votesCast === 0 ? "—" : fmtInt(row.votesCast), "col-num"));
 
   // ALP TCP %
   const tcpPctTd = document.createElement("td");
@@ -643,19 +851,20 @@ async function loadContestDetail() {
     const enrolEl2      = contestEl.getElementsByTagNameNS(NS_FEED, "Enrolment")[0] ||
                           contestEl.getElementsByTagName("Enrolment")[0];
 
-    titleEl.textContent = contestNameEl?.textContent?.trim() ?? "Contest";
-    stateEl.textContent = attr(stateIdEl, "Id") ?? "—";
-    enrolEl.textContent = parseInt(enrolEl2?.textContent ?? "0", 10).toLocaleString("en-AU");
-    document.title      = `${titleEl.textContent} — AEC Election Results`;
-    headerEl.classList.remove("hidden");
+    document.title = `${contestNameEl?.textContent?.trim() ?? "Contest"} — AEC Election Results`;
 
-    // 4. Parse polling places (+ vote-type rows) and render
+    // 4. Parse polling places (+ vote-type rows), render totals row, and render table
     allRowsData = parseAllPollingPlaces(contestEl);
+
+    const contestLabel = `${contestNameEl?.textContent?.trim() ?? "Contest"} (${attr(stateIdEl, "Id") ?? "—"})`;
+    document.getElementById("contest-label").textContent = contestLabel;
+    const { tcpAlpCandId: alpId, tcpLnpCandId: lnpId } = findTcpCandidateIds(contestEl, buildCandidateMap(contestEl));
+    const totalsRow = parseContestTotalsRow(contestEl, "", buildCandidateMap(contestEl), alpId, lnpId);
+    renderTotalsRow(totalsRow);
+
     renderTable(getSortedRows(allRowsData));
 
-    const ppCount = allRowsData.filter(r => !r.isVoteType).length;
-    const word = ppCount === 1 ? "polling place" : "polling places";
-    statusEl.textContent = `Showing ${ppCount} ${word} plus Absent, Provisional, Pre-Poll, and Postal vote breakdowns.`;
+    statusEl.textContent = "";
     statusEl.classList.remove("error");
   } catch (err) {
     console.error(err);

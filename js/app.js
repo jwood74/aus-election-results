@@ -131,8 +131,6 @@ function swingCell(value, isAlpPerspective = false, partyClass = "") {
   td.textContent = sign + fmt(value);
   if (value === 0) {
     td.classList.add("swing-zero");
-  } else if (isAlpPerspective) {
-    td.classList.add(value > 0 ? "alp-swing-pos" : "alp-swing-neg");
   } else {
     td.classList.add(value > 0 ? "swing-pos" : "swing-neg");
   }

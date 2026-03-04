@@ -13,17 +13,11 @@
   </header>
 
   <main>
-    <div class="breadcrumb">
+    <div class="breadcrumb" style="display: flex; align-items: center; justify-content: flex-start; gap: 1.5em;">
       <a href="index.html" class="back-link">← All Contests</a>
+      <span id="contest-label" style="flex: 1; text-align: center; font-size: 1.2em; font-weight: 500;"></span>
     </div>
 
-    <div id="contest-header" class="contest-header hidden">
-      <h2 id="contest-title"></h2>
-      <div class="contest-meta">
-        <span id="contest-state"></span>
-        <span id="contest-enrolment"></span>
-      </div>
-    </div>
 
     <div id="status" class="status">Loading results…</div>
 
@@ -58,6 +52,7 @@
             <th class="col-num group-flow col-party-alp" data-sort-key="flowAlp">→ ALP</th>
             <th class="col-num group-flow col-party-lnp" data-sort-key="flowLnp">→ L/NP</th>
           </tr>
+          <tr id="totals-row" class="totals-row"></tr>
         </thead>
         <tbody id="results-body">
         </tbody>
@@ -66,7 +61,7 @@
   </main>
 
   <footer>
-    <p>Source: Australian Electoral Commission media feed data. Code: <a href="https://github.com/jwood74/aus-election-results">GitHub</a></p>
+    <p>Source: <a href="https://results.aec.gov.au/">Australian Electoral Commission media feed data</a>. Code: <a href="https://github.com/jwood74/aus-election-results">GitHub</a></p>
   </footer>
 
   <script src="js/contest.js"></script>

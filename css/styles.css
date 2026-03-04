@@ -108,7 +108,7 @@ thead tr:first-child th {
   border-right: 1px solid #1a6abf;
 }
 
-thead tr:last-child th {
+thead tr:nth-child(2) th {
   background: #1a6abf;
   color: #fff;
   font-weight: 600;
@@ -120,10 +120,10 @@ thead tr:last-child th {
 }
 
 /* Column group colour accents in subheader */
-thead tr:last-child th.group-tcp       { background: #1a6abf; }
-thead tr:last-child th.group-primary-pct { background: #1a5ea5; }
-thead tr:last-child th.group-swing     { background: #155090; }
-thead tr:last-child th.group-booths    { background: #104278; }
+thead tr:nth-child(2) th.group-tcp       { background: #1a6abf; }
+thead tr:nth-child(2) th.group-primary-pct { background: #1a5ea5; }
+thead tr:nth-child(2) th.group-swing     { background: #155090; }
+thead tr:nth-child(2) th.group-booths    { background: #104278; }
 
 /* Top header group cells */
 thead tr:first-child th.group-tcp         { background: #1a6abf; }
@@ -182,20 +182,11 @@ td.col-num {
 
 /* ── Swing colour coding ── */
 .swing-pos {
-  color: #c8001e;  /* AEC red for L/NP gain / swing to right */
+  color: #0047ab;  /* AEC blue for against */
 }
 
 .swing-neg {
-  color: #0047ab;  /* AEC blue for ALP gain / swing to left */
-}
-
-/* For ALP-specific swing: positive = good for ALP */
-.alp-swing-pos {
-  color: #0047ab;
-}
-
-.alp-swing-neg {
-  color: #c8001e;
+  color: #c8001e;  /* AEC red for gain */
 }
 
 /* Neutral (zero or N/A) */
@@ -311,10 +302,52 @@ a.contest-link:hover {
 
 /* ── Preference flow column group ── */
 thead tr:first-child th.group-flow  { background: #0d3560; }
-thead tr:last-child  th.group-flow  { background: #0d3560; }
+thead tr:nth-child(2) th.group-flow  { background: #0d3560; }
 
-/* ── Utility ── */
-.hidden { display: none; }
+/* ── Contest totals row (3rd row in thead) ── */
+thead tr.totals-row {
+  position: sticky;
+  top: 54px; /* height of both header rows above, adjust if needed */
+  z-index: 10;
+}
+thead tr.totals-row td {
+  background: #fff;
+  color: #1a1a1a;
+  font-weight: 700;
+  font-size: 12px;
+  text-align: right;
+  padding: 0.45rem 0.6rem;
+  border-right: 1px solid #e8eaed;
+  position: relative;
+}
+thead tr.totals-row td::after {
+  content: "";
+  display: block;
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 3px;
+  background: #000;
+  z-index: 20;
+}
+
+thead tr.totals-row td.totals-name {
+  text-align: left;
+  background: #fff;
+  z-index: 6;
+}
+
+/* Party column tints in totals row — opaque (white blended with tint, no transparency) */
+thead tr.totals-row td.col-party-alp { background-color: #fbeeef; }
+thead tr.totals-row td.col-party-lnp { background-color: #edf2fa; }
+thead tr.totals-row td.col-party-grn { background-color: #edf6f0; }
+thead tr.totals-row td.col-party-onp { background-color: #fdf3ea; }
+thead tr.totals-row td.col-party-oth { background-color: #f4f4f4; }
+thead tr.totals-row td.col-party-alp.col-swing { background-color: #f8dde0; }
+thead tr.totals-row td.col-party-lnp.col-swing { background-color: #dce8f5; }
+thead tr.totals-row td.col-party-grn.col-swing { background-color: #daeee0; }
+thead tr.totals-row td.col-party-onp.col-swing { background-color: #fae7d5; }
+
+
 
 /* ── Sortable column headers ── */
 thead th[data-sort-key] {
