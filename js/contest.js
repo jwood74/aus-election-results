@@ -5,6 +5,55 @@
  * XML file, and renders a per-polling-place results table.
  */
 
+// ── Sort State ───────────────────────────────────────────────────────────────
+
+let allRowsData = [];
+let sortState = { key: null, direction: null };
+
+function getSortedRows(rows) {
+  const normal    = rows.filter(r => !r.isVoteType);
+  const voteTypes = rows.filter(r =>  r.isVoteType);
+  if (!sortState.key || !sortState.direction) return [...normal, ...voteTypes];
+  const sorted = [...normal].sort((a, b) => {
+    const va = a[sortState.key];
+    const vb = b[sortState.key];
+    if (va === null && vb === null) return 0;
+    if (va === null) return 1;
+    if (vb === null) return -1;
+    const cmp = typeof va === "string" ? va.localeCompare(vb, "en-AU") : va - vb;
+    return sortState.direction === "desc" ? -cmp : cmp;
+  });
+  return [...sorted, ...voteTypes];
+}
+
+function updateSortIndicators() {
+  document.querySelectorAll("thead th[data-sort-key]").forEach(th => {
+    th.classList.remove("sort-asc", "sort-desc");
+    if (th.dataset.sortKey === sortState.key && sortState.direction) {
+      th.classList.add("sort-" + sortState.direction);
+    }
+  });
+}
+
+function initSorting() {
+  document.querySelectorAll("thead th[data-sort-key]").forEach(th => {
+    th.addEventListener("click", () => {
+      const key = th.dataset.sortKey;
+      if (sortState.key !== key) {
+        sortState.key = key;
+        sortState.direction = "asc";
+      } else if (sortState.direction === "asc") {
+        sortState.direction = "desc";
+      } else {
+        sortState.key = null;
+        sortState.direction = null;
+      }
+      updateSortIndicators();
+      renderTable(getSortedRows(allRowsData));
+    });
+  });
+}
+
 // ── XML namespace URIs (same as app.js) ─────────────────────────────────────
 const NS_FEED = "http://www.aec.gov.au/xml/schema/mediafeed";
 const NS_EML  = "urn:oasis:names:tc:evs:schema:eml";
@@ -601,10 +650,10 @@ async function loadContestDetail() {
     headerEl.classList.remove("hidden");
 
     // 4. Parse polling places (+ vote-type rows) and render
-    const rows = parseAllPollingPlaces(contestEl);
-    renderTable(rows);
+    allRowsData = parseAllPollingPlaces(contestEl);
+    renderTable(getSortedRows(allRowsData));
 
-    const ppCount = rows.filter(r => !r.isVoteType).length;
+    const ppCount = allRowsData.filter(r => !r.isVoteType).length;
     const word = ppCount === 1 ? "polling place" : "polling places";
     statusEl.textContent = `Showing ${ppCount} ${word} plus Absent, Provisional, Pre-Poll, and Postal vote breakdowns.`;
     statusEl.classList.remove("error");
@@ -615,4 +664,7 @@ async function loadContestDetail() {
   }
 }
 
-document.addEventListener("DOMContentLoaded", loadContestDetail);
+document.addEventListener("DOMContentLoaded", () => {
+  initSorting();
+  loadContestDetail();
+});
