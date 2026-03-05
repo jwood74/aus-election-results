@@ -19,7 +19,7 @@ body {
 header {
   background: #00529b;
   color: #fff;
-  padding: 1rem 1.5rem;
+  padding: 0.8rem 1.5rem;
   border-bottom: 4px solid #ffcd00;
 }
 
@@ -30,7 +30,7 @@ header h1 {
 }
 
 .election-label {
-  margin-top: 0.25rem;
+  margin-top: 0.2rem;
   font-size: 0.9rem;
   opacity: 0.85;
 }
@@ -38,15 +38,15 @@ header h1 {
 /* ── Main layout ── */
 main {
   flex: 1;
-  padding: 1rem 1.5rem 2rem;
+  padding: 0.75rem 1.5rem 2rem;
 }
 
 /* ── Status message ── */
 .status {
-  padding: 0.5rem 0;
+  padding: 0.2rem 0 0.1rem 0;
   color: #555;
   font-style: italic;
-  min-height: 1.5rem;
+  min-height: 1.2rem;
 }
 
 .status.error {
@@ -67,6 +67,10 @@ main {
   border-radius: 6px;
   box-shadow: 0 1px 4px rgba(0,0,0,0.12);
   background: #fff;
+}
+
+#results-table {
+  table-layout: fixed;
 }
 
 /* ── Table ── */
@@ -309,12 +313,23 @@ thead tr:first-child th.group-flow  { background: #0d3560; }
 thead tr:nth-child(2) th.group-flow  { background: #0d3560; }
 
 /* ── Contest totals row (3rd row in thead) ── */
-thead tr#filter-row {
+.table-filter-bar-wrapper {
+  width: 100%;
   position: sticky;
-  top: 108px; /* below both header rows */
-  z-index: 10;
+  bottom: 0;
+  left: 0;
+  z-index: 50;
+  background: #fff;
+  box-shadow: 0 -2px 8px rgba(0,0,0,0.10);
+  border-top: 2px solid #00529b;
 }
-thead tr#filter-row td {
+.table-filter-bar-wrapper table {
+  width: 100%;
+  border-collapse: separate;
+  table-layout: fixed;
+  background: #fff;
+}
+.table-filter-bar-wrapper #filter-row td {
   background: #fff;
   color: #1a1a1a;
   font-weight: 400;
@@ -323,13 +338,19 @@ thead tr#filter-row td {
   padding: 0.3rem 0.5rem;
   border-right: 1px solid #e8eaed;
   position: relative;
+  box-sizing: border-box;
+  overflow: hidden;
 }
-thead tr#filter-row td.col-contest,
-thead tr#filter-row td.col-state {
+.table-filter-bar-wrapper #filter-row td.col-contest,
+.table-filter-bar-wrapper #filter-row td.col-state {
   text-align: left;
+  overflow: hidden;
+  white-space: nowrap;
 }
-thead tr#filter-row input[type="text"] {
+.table-filter-bar-wrapper #filter-row input[type="text"] {
   width: 100%;
+  min-width: 0;
+  max-width: 100%;
   padding: 0.2em 0.4em;
   font-size: 13px;
   border: 1px solid #c8cdd5;
@@ -340,9 +361,13 @@ thead tr#filter-row input[type="text"] {
   box-sizing: border-box;
   transition: border 0.15s;
 }
-thead tr#filter-row input[type="text"]:focus {
+.table-filter-bar-wrapper #filter-row input[type="text"]:focus {
   border: 1.5px solid #00529b;
   background: #fff;
+}
+
+thead tr#filter-row {
+  display: none;
 }
 
 thead tr.totals-row {

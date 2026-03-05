@@ -324,6 +324,44 @@ function parseXML(xmlDoc, electionId) {
 
 // ── Table Rendering ──────────────────────────────────────────────────────────
 
+// Sync filter row column widths to match the main table columns.
+function syncFilterRowWidths() {
+  const mainTable = document.getElementById('results-table');
+  const filterTable = document.getElementById('filter-bar-table');
+  if (!mainTable || !filterTable) return;
+  // Use the last header row for column widths
+  const mainHeaderCells = mainTable.querySelectorAll('thead tr:last-child th');
+  const filterCells = filterTable.querySelectorAll('#filter-row td');
+  if (mainHeaderCells.length === filterCells.length) {
+    for (let i = 0; i < filterCells.length; i++) {
+      // Get computed width (including border/padding) from header cell
+      const computedStyle = window.getComputedStyle(mainHeaderCells[i]);
+      const width = mainHeaderCells[i].getBoundingClientRect().width;
+      filterCells[i].style.width = width + 'px';
+      filterCells[i].style.minWidth = width + 'px';
+      filterCells[i].style.maxWidth = width + 'px';
+      // Copy padding and border from header cell to filter cell
+      filterCells[i].style.paddingLeft = computedStyle.paddingLeft;
+      filterCells[i].style.paddingRight = computedStyle.paddingRight;
+      filterCells[i].style.borderRightWidth = computedStyle.borderRightWidth;
+      filterCells[i].style.borderLeftWidth = computedStyle.borderLeftWidth;
+      filterCells[i].style.boxSizing = computedStyle.boxSizing;
+    }
+  }
+  // Also set input width to 100% of cell
+  const filterInputs = filterTable.querySelectorAll('input[type="text"]');
+  filterInputs.forEach(input => {
+    input.style.width = '100%';
+    input.style.boxSizing = 'border-box';
+  });
+}
+window.addEventListener('resize', syncFilterRowWidths);
+document.addEventListener('DOMContentLoaded', () => {
+  setTimeout(syncFilterRowWidths, 0);
+  // Re-sync after table renders (in case of async data)
+  setTimeout(syncFilterRowWidths, 200);
+});
+
 function renderRow(row) {
   const tr = document.createElement("tr");
 
@@ -459,7 +497,15 @@ function addFilterListeners() {
   const stateInput = document.getElementById("filter-state");
   if (contestInput) contestInput.addEventListener("input", updateTableWithFilters);
   if (stateInput) stateInput.addEventListener("input", updateTableWithFilters);
+  // Also listen for Enter to focus table
+  if (contestInput) contestInput.addEventListener("keydown", e => {
+    if (e.key === "Enter") {
+      const firstRow = document.querySelector("#results-body tr");
+      if (firstRow) firstRow.focus();
+    }
+  });
 }
+
 
 
 // ── Main ─────────────────────────────────────────────────────────────────────
@@ -513,8 +559,8 @@ document.addEventListener("DOMContentLoaded", () => {
   initSorting();
   loadElectionData().then(() => {
     addFilterListeners();
-    // Focus the Contest filter input on page load
-    const contestInput = document.getElementById("filter-contest");
+    // Focus the Contest filter input in sticky bar on page load
+    const contestInput = document.querySelector(".table-filter-bar-wrapper #filter-contest");
     if (contestInput) contestInput.focus();
     updateTableWithFilters();
   });
