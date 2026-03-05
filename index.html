@@ -22,7 +22,10 @@
             <th rowspan="2" class="col-contest sticky-col" data-sort-key="contestName">Contest</th>
             <th rowspan="2" class="col-state" data-sort-key="state">State</th>
             <th rowspan="2" class="col-enrolment" data-sort-key="enrolment">Enrolment</th>
-            <th colspan="2" class="group-tcp">ALP TCP</th>
+            <th colspan="2" class="group-tcp" id="tcp-header-cell" style="position:relative;">
+              <button id="tcp-candidate-picker" class="tcp-picker-btn" aria-haspopup="listbox" aria-expanded="false" aria-label="TCP Candidate" type="button">ALP TCP <span class="tcp-caret">&#9660;</span></button>
+              <div id="tcp-candidate-menu" class="tcp-menu" role="listbox" tabindex="-1" aria-hidden="true"></div>
+            </th>
             <th colspan="5" class="group-primary-pct">Primary %</th>
             <th colspan="4" class="group-swing">Primary Swing</th>
             <th colspan="3" class="group-booths">Booths</th>

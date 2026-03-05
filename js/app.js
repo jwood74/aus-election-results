@@ -10,6 +10,43 @@
 let allRowsData = [];
 let sortState = { key: null, direction: null };
 
+// ── TCP Selection State ─────────────────────────────────────────────────────
+let globalTcpGroup = "alp";      // party group: "alp", "lnp", "grn", "onp", "oth"
+let contestTcpOverrides = {};    // { contestId: candidateId }
+const INDEX_TCP_STORAGE_KEY = "index-tcp-group";
+
+function loadTcpState() {
+  const stored = localStorage.getItem(INDEX_TCP_STORAGE_KEY);
+  if (stored) globalTcpGroup = stored;
+}
+
+function saveTcpState() {
+  localStorage.setItem(INDEX_TCP_STORAGE_KEY, globalTcpGroup);
+}
+
+/** Collect all distinct party groups that appear as TCP candidates across all rows. */
+function collectTcpPartyGroups(rows) {
+  const groups = new Map(); // group → { group, code, label }
+  for (const row of rows) {
+    if (!row.tcpCandidates) continue;
+    for (const c of row.tcpCandidates) {
+      if (!groups.has(c.group)) {
+        groups.set(c.group, { group: c.group, code: c.code, label: c.code });
+      }
+    }
+  }
+  return Array.from(groups.values());
+}
+
+function getEffectiveTcpCandidateId(row) {
+  if (contestTcpOverrides[row.contestId]) {
+    return contestTcpOverrides[row.contestId];
+  }
+  if (!row.tcpCandidates || row.tcpCandidates.length === 0) return null;
+  const match = row.tcpCandidates.find(c => c.group === globalTcpGroup);
+  return match ? match.id : row.tcpCandidates[0].id;
+}
+
 function getSortedRows(rows) {
   if (!sortState.key || !sortState.direction) return rows;
   return [...rows].sort((a, b) => {
@@ -60,6 +97,15 @@ const ALP_CODES = new Set(["ALP"]);
 const LNP_CODES = new Set(["LP", "NP", "LNP", "CLP", "NTA"]);
 const GRN_CODES = new Set(["GRN"]);
 const ONP_CODES = new Set(["ON"]);
+
+function partyGroup(code) {
+  if (!code) return "oth";
+  if (ALP_CODES.has(code)) return "alp";
+  if (LNP_CODES.has(code)) return "lnp";
+  if (GRN_CODES.has(code)) return "grn";
+  if (ONP_CODES.has(code)) return "onp";
+  return "oth";
+}
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -229,29 +275,45 @@ function parseFirstPreferences(contestEl) {
 }
 
 /**
- * Parse TwoCandidatePreferred (TCP) for the ALP candidate percentage & swing.
- * Returns { pct, swing } or { pct: null, swing: null } if ALP not in TCP.
+ * Parse TwoCandidatePreferred for ALL TCP candidates.
+ * Returns { tcpCandidates, tcpPctById, tcpSwingById, alpTcpPct, alpTcpSwing, booths }.
  */
-function parseAlpTCP(contestEl) {
+function parseTCP(contestEl) {
   const tcpEl = contestEl.getElementsByTagNameNS(NS_FEED, "TwoCandidatePreferred")[0] ||
                 contestEl.getElementsByTagName("TwoCandidatePreferred")[0];
-  if (!tcpEl) return { pct: null, swing: null, booths: null };
+  if (!tcpEl) return { tcpCandidates: [], tcpPctById: {}, tcpSwingById: {}, alpTcpPct: null, alpTcpSwing: null, booths: null };
 
   const tcpBooths = parseInt(attr(tcpEl, "PollingPlacesReturned"), 10) || null;
 
+  const tcpCandidates = [];
+  const tcpPctById = {};
+  const tcpSwingById = {};
+  let alpTcpPct = null, alpTcpSwing = null;
+
   const candidates = Array.from(tcpEl.children).filter(n => n.localName === "Candidate");
   for (const cand of candidates) {
+    const cidEl = childEML(cand, "CandidateIdentifier");
+    const cid = attr(cidEl, "Id");
     const code = getShortCode(cand);
+    const group = partyGroup(code);
+    const nameEl = childEML(cand, "CandidateName");
+    const name = nameEl ? nameEl.textContent.trim() : code || cid;
+    const votesEl = getVotesEl(cand);
+
+    const pct = floatAttr(votesEl, "Percentage");
+    const swing = floatAttr(votesEl, "Swing");
+
+    tcpCandidates.push({ id: cid, code: code || "IND", name, group });
+    tcpPctById[cid] = pct;
+    tcpSwingById[cid] = swing;
+
     if (ALP_CODES.has(code)) {
-      const votesEl = getVotesEl(cand);
-      return {
-        pct:    floatAttr(votesEl, "Percentage"),
-        swing:  floatAttr(votesEl, "Swing"),
-        booths: tcpBooths,
-      };
+      alpTcpPct = pct;
+      alpTcpSwing = swing;
     }
   }
-  return { pct: null, swing: null, booths: tcpBooths };
+
+  return { tcpCandidates, tcpPctById, tcpSwingById, alpTcpPct, alpTcpSwing, booths: tcpBooths };
 }
 
 /**
@@ -283,8 +345,8 @@ function parseContest(contestEl, electionId) {
   // First preferences
   const fp = parseFirstPreferences(contestEl);
 
-  // ALP TCP
-  const tcp = parseAlpTCP(contestEl);
+  // TCP (all candidates)
+  const tcp = parseTCP(contestEl);
 
   return {
     contestId,
@@ -292,8 +354,11 @@ function parseContest(contestEl, electionId) {
     contestName,
     state,
     enrolment,
-    alpTcpPct:    tcp.pct,
-    alpTcpSwing:  tcp.swing,
+    tcpCandidates: tcp.tcpCandidates,
+    tcpPctById:    tcp.tcpPctById,
+    tcpSwingById:  tcp.tcpSwingById,
+    alpTcpPct:    tcp.alpTcpPct,
+    alpTcpSwing:  tcp.alpTcpSwing,
     alpPct:       fp?.groups.alp.pct   ?? null,
     lnpPct:       fp?.groups.lnp.pct   ?? null,
     grnPct:       fp?.groups.grn.pct   ?? null,
@@ -362,6 +427,118 @@ document.addEventListener('DOMContentLoaded', () => {
   setTimeout(syncFilterRowWidths, 200);
 });
 
+// ── Global TCP Dropdown ──────────────────────────────────────────────────────
+ 
+/** Map party group to display label */
+const GROUP_LABELS = { alp: "ALP", lnp: "L/NP", grn: "GRN", onp: "ONP", oth: "OTH" };
+ 
+function updateGlobalTcpDisplay() {
+  const pickerBtn = document.getElementById("tcp-candidate-picker");
+  if (!pickerBtn) return;
+ 
+  const partyClass = `col-party-${globalTcpGroup}`;
+  const label = (GROUP_LABELS[globalTcpGroup] || globalTcpGroup.toUpperCase()) + " TCP";
+ 
+  pickerBtn.innerHTML = `<span class="tcp-party-dot ${partyClass}"></span>${label}<span class="tcp-caret">&#9660;</span>`;
+ 
+  const tcpSubHeaders = document.querySelectorAll("thead tr:nth-child(2) th.group-tcp");
+  tcpSubHeaders.forEach(th => {
+    th.classList.remove("col-party-alp", "col-party-lnp", "col-party-grn", "col-party-onp", "col-party-oth");
+    th.classList.add(partyClass);
+  });
+}
+ 
+function renderGlobalTcpDropdown() {
+  const pickerBtn = document.getElementById("tcp-candidate-picker");
+  const menu = document.getElementById("tcp-candidate-menu");
+  if (!pickerBtn || !menu) return;
+ 
+  menu.innerHTML = "";
+ 
+  const partyGroups = collectTcpPartyGroups(allRowsData);
+  // Sort so ALP comes first, then alphabetical
+  partyGroups.sort((a, b) => {
+    if (a.group === "alp") return -1;
+    if (b.group === "alp") return 1;
+    return a.label.localeCompare(b.label);
+  });
+ 
+  partyGroups.forEach(pg => {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.role = "option";
+    btn.setAttribute("data-group", pg.group);
+    btn.setAttribute("aria-checked", pg.group === globalTcpGroup ? "true" : "false");
+    btn.tabIndex = -1;
+    const displayLabel = (GROUP_LABELS[pg.group] || pg.label) + " TCP";
+    btn.innerHTML = `<span class="tcp-party-dot col-party-${pg.group}"></span>${displayLabel}`;
+    btn.onclick = function () {
+      globalTcpGroup = pg.group;
+      saveTcpState();
+      contestTcpOverrides = {};
+      closeTcpMenu();
+      updateGlobalTcpDisplay();
+      updateTableWithFilters();
+    };
+    menu.appendChild(btn);
+  });
+ 
+  menu.setAttribute("aria-hidden", "true");
+  menu.style.display = "none";
+ 
+  updateGlobalTcpDisplay();
+ 
+  pickerBtn.onclick = function (e) {
+    e.stopPropagation();
+    openTcpMenu();
+  };
+ 
+  pickerBtn.onkeydown = function (e) {
+    if (e.key === "ArrowDown" || e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      openTcpMenu();
+      const firstBtn = menu.querySelector("button");
+      if (firstBtn) firstBtn.focus();
+    }
+  };
+ 
+  function openTcpMenu() {
+    menu.setAttribute("aria-hidden", "false");
+    menu.style.display = "block";
+    pickerBtn.setAttribute("aria-expanded", "true");
+    const selectedBtn = menu.querySelector(`button[data-group='${globalTcpGroup}']`);
+    if (selectedBtn) selectedBtn.focus();
+    document.addEventListener("mousedown", outsideClick, { once: true });
+  }
+ 
+  function closeTcpMenu() {
+    menu.setAttribute("aria-hidden", "true");
+    menu.style.display = "none";
+    pickerBtn.setAttribute("aria-expanded", "false");
+    pickerBtn.focus();
+  }
+ 
+  function outsideClick(e) {
+    if (!menu.contains(e.target) && e.target !== pickerBtn) closeTcpMenu();
+  }
+ 
+  menu.onkeydown = function (e) {
+    const btns = Array.from(menu.querySelectorAll("button"));
+    const idx = btns.indexOf(document.activeElement);
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      if (idx < btns.length - 1) btns[idx + 1].focus();
+    } else if (e.key === "ArrowUp") {
+      e.preventDefault();
+      if (idx > 0) btns[idx - 1].focus();
+    } else if (e.key === "Escape") {
+      closeTcpMenu();
+    }
+  };
+}
+ 
+// ── Table Rendering ──────────────────────────────────────────────────────────
+
 function renderRow(row) {
   const tr = document.createElement("tr");
 
@@ -390,14 +567,44 @@ function renderRow(row) {
   const enrolTd = td(fmtInt(row.enrolment), "col-num col-enrolment");
   tr.appendChild(enrolTd);
 
-  // ALP TCP % — plain percentage, no swing colour
+  // TCP % and Swing — dynamic based on selected candidate
+  const effectiveTcpId = getEffectiveTcpCandidateId(row);
+  const effectiveTcpCandidate = row.tcpCandidates?.find(c => c.id === effectiveTcpId);
+  const tcpPartyClass = effectiveTcpCandidate
+    ? `col-party-${effectiveTcpCandidate.group}`
+    : "col-party-alp";
+
   const tcpPctTd = document.createElement("td");
-  tcpPctTd.className = "col-num col-party-alp";
-  tcpPctTd.textContent = fmt(row.alpTcpPct);
+  tcpPctTd.className = `col-num ${tcpPartyClass}`;
+  if (effectiveTcpId && row.tcpPctById && row.tcpPctById[effectiveTcpId] !== undefined) {
+    tcpPctTd.textContent = fmt(row.tcpPctById[effectiveTcpId]);
+  } else {
+    tcpPctTd.textContent = fmt(row.alpTcpPct);
+  }
+
+  // Per-contest cycling on click
+  if (row.tcpCandidates && row.tcpCandidates.length > 1) {
+    tcpPctTd.classList.add("tcp-clickable");
+    tcpPctTd.title = "Click to switch TCP candidate";
+    tcpPctTd.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const currentId = getEffectiveTcpCandidateId(row);
+      const currentIdx = row.tcpCandidates.findIndex(c => c.id === currentId);
+      const nextIdx = (currentIdx + 1) % row.tcpCandidates.length;
+      contestTcpOverrides[row.contestId] = row.tcpCandidates[nextIdx].id;
+      updateTableWithFilters();
+    });
+  }
   tr.appendChild(tcpPctTd);
 
-  // ALP TCP Swing — ALP perspective (positive = ALP gain)
-  tr.appendChild(swingCell(row.alpTcpSwing, true, "col-party-alp"));
+  // TCP Swing
+  let tcpSwingValue;
+  if (effectiveTcpId && row.tcpSwingById && row.tcpSwingById[effectiveTcpId] !== undefined) {
+    tcpSwingValue = row.tcpSwingById[effectiveTcpId];
+  } else {
+    tcpSwingValue = row.alpTcpSwing;
+  }
+  tr.appendChild(swingCell(tcpSwingValue, true, tcpPartyClass));
 
   // Primary percentages
   tr.appendChild(td(fmt(row.alpPct), "col-num col-party-alp"));
@@ -465,12 +672,32 @@ function avg(values) {
 }
 
 function updateTotalsRow(rows) {
-  // Percent columns: average, Booths: sum, Swings: average
+  // TCP values: compute from effective selection per row
+  const tcpPctValues = rows.map(r => {
+    const id = getEffectiveTcpCandidateId(r);
+    if (id && r.tcpPctById && r.tcpPctById[id] !== undefined) return r.tcpPctById[id];
+    return r.alpTcpPct;
+  });
+  const tcpSwingValues = rows.map(r => {
+    const id = getEffectiveTcpCandidateId(r);
+    if (id && r.tcpSwingById && r.tcpSwingById[id] !== undefined) return r.tcpSwingById[id];
+    return r.alpTcpSwing;
+  });
+ 
+  const tcpPctAvg = avg(tcpPctValues);
+  const tcpPctEl = document.getElementById('total-alpTcpPct');
+  if (tcpPctEl) tcpPctEl.textContent = tcpPctAvg !== null ? tcpPctAvg.toFixed(2) : '—';
+ 
+  const tcpSwingAvg = avg(tcpSwingValues);
+  const tcpSwingEl = document.getElementById('total-alpTcpSwing');
+  if (tcpSwingEl) tcpSwingEl.textContent = tcpSwingAvg !== null ? (tcpSwingAvg > 0 ? '+' : '') + tcpSwingAvg.toFixed(2) : '—';
+ 
+  // Non-TCP percent columns: average
   const percentFields = [
-    'alpTcpPct', 'alpPct', 'lnpPct', 'grnPct', 'onpPct', 'othPct'
+    'alpPct', 'lnpPct', 'grnPct', 'onpPct', 'othPct'
   ];
   const swingFields = [
-    'alpTcpSwing', 'alpSwing', 'lnpSwing', 'grnSwing', 'onpSwing'
+    'alpSwing', 'lnpSwing', 'grnSwing', 'onpSwing'
   ];
   const boothFields = [
     'totalBooths', 'primaryBooths', 'tcpBooths'
@@ -490,6 +717,17 @@ function updateTotalsRow(rows) {
     const el = document.getElementById('total-' + field);
     if (el) el.textContent = count > 0 ? Math.round(total).toLocaleString('en-AU') : '—';
   }
+
+  // Update filter bar TCP cell party classes
+  const partyClasses = ["col-party-alp", "col-party-lnp", "col-party-grn", "col-party-onp", "col-party-oth"];
+  const tcpClass = `col-party-${globalTcpGroup}`;
+  ["total-alpTcpPct", "total-alpTcpSwing"].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) {
+      partyClasses.forEach(cls => el.classList.remove(cls));
+      el.classList.add(tcpClass);
+    }
+  });
 }
 
 function addFilterListeners() {
@@ -543,6 +781,8 @@ async function loadElectionData() {
 
     // 3. Render
     allRowsData = allRows;
+    loadTcpState();
+    renderGlobalTcpDropdown();
     renderTable(getSortedRows(allRowsData));
 
     const contestWord = allRows.length === 1 ? "contest" : "contests";

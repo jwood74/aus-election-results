@@ -718,6 +718,15 @@ thead th[data-sort-key].sort-desc::after {
   outline: 2px solid #00529b;
 }
 
+/* ── Clickable TCP cells (index page per-contest cycling) ── */
+td.tcp-clickable {
+  cursor: pointer;
+}
+
+td.tcp-clickable:hover {
+  filter: brightness(0.93);
+}
+
 /* ── Footer ── */
 footer {
   background: #e8eaed;
