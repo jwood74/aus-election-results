@@ -1,5 +1,7 @@
 /* ── Reset & Base ── */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -65,7 +67,7 @@ main {
   overflow-y: auto;
   max-height: 75vh;
   border-radius: 6px;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.12);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
   background: #fff;
 }
 
@@ -124,16 +126,38 @@ thead tr:nth-child(2) th {
 }
 
 /* Column group colour accents in subheader */
-thead tr:nth-child(2) th.group-tcp       { background: #1a6abf; }
-thead tr:nth-child(2) th.group-primary-pct { background: #1a5ea5; }
-thead tr:nth-child(2) th.group-swing     { background: #155090; }
-thead tr:nth-child(2) th.group-booths    { background: #104278; }
+thead tr:nth-child(2) th.group-tcp {
+  background: #1a6abf;
+}
+
+thead tr:nth-child(2) th.group-primary-pct {
+  background: #1a5ea5;
+}
+
+thead tr:nth-child(2) th.group-swing {
+  background: #155090;
+}
+
+thead tr:nth-child(2) th.group-booths {
+  background: #104278;
+}
 
 /* Top header group cells */
-thead tr:first-child th.group-tcp         { background: #1a6abf; }
-thead tr:first-child th.group-primary-pct { background: #1a5ea5; }
-thead tr:first-child th.group-swing       { background: #155090; }
-thead tr:first-child th.group-booths      { background: #104278; }
+thead tr:first-child th.group-tcp {
+  background: #1a6abf;
+}
+
+thead tr:first-child th.group-primary-pct {
+  background: #1a5ea5;
+}
+
+thead tr:first-child th.group-swing {
+  background: #155090;
+}
+
+thead tr:first-child th.group-booths {
+  background: #104278;
+}
 
 /* ── Body cells ── */
 tbody tr {
@@ -186,11 +210,13 @@ td.col-num {
 
 /* ── Swing colour coding ── */
 .swing-pos {
-  color: #0047ab;  /* AEC blue for against */
+  color: #0047ab;
+  /* AEC blue for against */
 }
 
 .swing-neg {
-  color: #c8001e;  /* AEC red for gain */
+  color: #c8001e;
+  /* AEC red for gain */
 }
 
 /* Neutral (zero or N/A) */
@@ -199,35 +225,103 @@ td.col-num {
 }
 
 /* ── Party column colour tints ── */
-.col-party-alp { background-color: rgba(200, 0, 30,  0.07); }
-.col-party-lnp { background-color: rgba(0,  71, 171, 0.07); }
-.col-party-lp { background-color: rgba(0,  71, 171, 0.07); }
-.col-party-grn { background-color: rgba(0, 130,  50, 0.07); }
-.col-party-onp { background-color: rgba(220, 100,  0, 0.07); }
-.col-party-oth { background-color: rgba(100, 100, 100, 0.07); }
+.col-party-alp {
+  background-color: rgba(200, 0, 30, 0.07);
+}
+
+.col-party-lnp {
+  background-color: rgba(0, 71, 171, 0.07);
+}
+
+.col-party-lp {
+  background-color: rgba(0, 71, 171, 0.07);
+}
+
+.col-party-grn {
+  background-color: rgba(0, 130, 50, 0.07);
+}
+
+.col-party-onp {
+  background-color: rgba(220, 100, 0, 0.07);
+}
+
+.col-party-oth {
+  background-color: rgba(100, 100, 100, 0.07);
+}
 
 /* Swing columns: slightly darker tint */
-.col-party-alp.col-swing { background-color: rgba(200, 0, 30,  0.14); }
-.col-party-lnp.col-swing { background-color: rgba(0,  71, 171, 0.14); }
-.col-party-lp.col-swing { background-color: rgba(0,  71, 171, 0.14); }
-.col-party-grn.col-swing { background-color: rgba(0, 130,  50, 0.14); }
-.col-party-onp.col-swing { background-color: rgba(220, 100,  0, 0.14); }
-.col-party-oth.col-swing { background-color: rgba(100, 100, 100, 0.14); }
+.col-party-alp.col-swing {
+  background-color: rgba(200, 0, 30, 0.14);
+}
+
+.col-party-lnp.col-swing {
+  background-color: rgba(0, 71, 171, 0.14);
+}
+
+.col-party-lp.col-swing {
+  background-color: rgba(0, 71, 171, 0.14);
+}
+
+.col-party-grn.col-swing {
+  background-color: rgba(0, 130, 50, 0.14);
+}
+
+.col-party-onp.col-swing {
+  background-color: rgba(220, 100, 0, 0.14);
+}
+
+.col-party-oth.col-swing {
+  background-color: rgba(100, 100, 100, 0.14);
+}
 
 /* Keep tint visible on even rows */
-tbody tr:nth-child(even) td.col-party-alp { background-color: rgba(200, 0,  30,  0.10); }
-tbody tr:nth-child(even) td.col-party-lnp { background-color: rgba(0,  71, 171, 0.10); }
-tbody tr:nth-child(even) td.col-party-lp { background-color: rgba(0,  71, 171, 0.10); }
-tbody tr:nth-child(even) td.col-party-grn { background-color: rgba(0, 130,  50, 0.10); }
-tbody tr:nth-child(even) td.col-party-onp { background-color: rgba(220, 100,  0, 0.10); }
-tbody tr:nth-child(even) td.col-party-oth { background-color: rgba(100, 100, 100, 0.10); }
+tbody tr:nth-child(even) td.col-party-alp {
+  background-color: rgba(200, 0, 30, 0.10);
+}
 
-tbody tr:nth-child(even) td.col-party-alp.col-swing { background-color: rgba(200, 0,  30,  0.17); }
-tbody tr:nth-child(even) td.col-party-lnp.col-swing { background-color: rgba(0,  71, 171, 0.17); }
-tbody tr:nth-child(even) td.col-party-lp.col-swing { background-color: rgba(0,  71, 171, 0.17); }
-tbody tr:nth-child(even) td.col-party-grn.col-swing { background-color: rgba(0, 130,  50, 0.17); }
-tbody tr:nth-child(even) td.col-party-onp.col-swing { background-color: rgba(220, 100,  0, 0.17); }
-tbody tr:nth-child(even) td.col-party-oth.col-swing { background-color: rgba(100, 100, 100, 0.17); }
+tbody tr:nth-child(even) td.col-party-lnp {
+  background-color: rgba(0, 71, 171, 0.10);
+}
+
+tbody tr:nth-child(even) td.col-party-lp {
+  background-color: rgba(0, 71, 171, 0.10);
+}
+
+tbody tr:nth-child(even) td.col-party-grn {
+  background-color: rgba(0, 130, 50, 0.10);
+}
+
+tbody tr:nth-child(even) td.col-party-onp {
+  background-color: rgba(220, 100, 0, 0.10);
+}
+
+tbody tr:nth-child(even) td.col-party-oth {
+  background-color: rgba(100, 100, 100, 0.10);
+}
+
+tbody tr:nth-child(even) td.col-party-alp.col-swing {
+  background-color: rgba(200, 0, 30, 0.17);
+}
+
+tbody tr:nth-child(even) td.col-party-lnp.col-swing {
+  background-color: rgba(0, 71, 171, 0.17);
+}
+
+tbody tr:nth-child(even) td.col-party-lp.col-swing {
+  background-color: rgba(0, 71, 171, 0.17);
+}
+
+tbody tr:nth-child(even) td.col-party-grn.col-swing {
+  background-color: rgba(0, 130, 50, 0.17);
+}
+
+tbody tr:nth-child(even) td.col-party-onp.col-swing {
+  background-color: rgba(220, 100, 0, 0.17);
+}
+
+tbody tr:nth-child(even) td.col-party-oth.col-swing {
+  background-color: rgba(100, 100, 100, 0.17);
+}
 
 /* ── Vote-type rows (Absent, Provisional, Pre-Poll, Postal) ── */
 tbody tr.is-vote-type {
@@ -305,12 +399,22 @@ a.contest-link:hover {
   color: #333;
 }
 
-#contest-state::before   { content: "State: "; }
-#contest-enrolment::before { content: "Enrolment: "; }
+#contest-state::before {
+  content: "State: ";
+}
+
+#contest-enrolment::before {
+  content: "Enrolment: ";
+}
 
 /* ── Preference flow column group ── */
-thead tr:first-child th.group-flow  { background: #0d3560; }
-thead tr:nth-child(2) th.group-flow  { background: #0d3560; }
+thead tr:first-child th.group-flow {
+  background: #0d3560;
+}
+
+thead tr:nth-child(2) th.group-flow {
+  background: #0d3560;
+}
 
 /* ── Contest totals row (3rd row in thead) ── */
 .table-filter-bar-wrapper {
@@ -320,15 +424,17 @@ thead tr:nth-child(2) th.group-flow  { background: #0d3560; }
   left: 0;
   z-index: 50;
   background: #fff;
-  box-shadow: 0 -2px 8px rgba(0,0,0,0.10);
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.10);
   border-top: 2px solid #00529b;
 }
+
 .table-filter-bar-wrapper table {
   width: 100%;
   border-collapse: separate;
   table-layout: fixed;
   background: #fff;
 }
+
 .table-filter-bar-wrapper #filter-row td {
   background: #fff;
   color: #1a1a1a;
@@ -341,12 +447,14 @@ thead tr:nth-child(2) th.group-flow  { background: #0d3560; }
   box-sizing: border-box;
   overflow: hidden;
 }
+
 .table-filter-bar-wrapper #filter-row td.col-contest,
 .table-filter-bar-wrapper #filter-row td.col-state {
   text-align: left;
   overflow: hidden;
   white-space: nowrap;
 }
+
 .table-filter-bar-wrapper #filter-row input[type="text"] {
   width: 100%;
   min-width: 0;
@@ -361,6 +469,7 @@ thead tr:nth-child(2) th.group-flow  { background: #0d3560; }
   box-sizing: border-box;
   transition: border 0.15s;
 }
+
 .table-filter-bar-wrapper #filter-row input[type="text"]:focus {
   border: 1.5px solid #00529b;
   background: #fff;
@@ -372,9 +481,11 @@ thead tr#filter-row {
 
 thead tr.totals-row {
   position: sticky;
-  top: 54px; /* height of both header rows above, adjust if needed */
+  top: 54px;
+  /* height of both header rows above, adjust if needed */
   z-index: 10;
 }
+
 thead tr.totals-row td {
   background: #fff;
   color: #1a1a1a;
@@ -385,11 +496,14 @@ thead tr.totals-row td {
   border-right: 1px solid #e8eaed;
   position: relative;
 }
+
 thead tr.totals-row td::after {
   content: "";
   display: block;
   position: absolute;
-  left: 0; right: 0; bottom: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   height: 3px;
   background: #000;
   z-index: 20;
@@ -402,15 +516,41 @@ thead tr.totals-row td.totals-name {
 }
 
 /* Party column tints in totals row — opaque (white blended with tint, no transparency) */
-thead tr.totals-row td.col-party-alp { background-color: #fbeeef; }
-thead tr.totals-row td.col-party-lnp { background-color: #edf2fa; }
-thead tr.totals-row td.col-party-grn { background-color: #edf6f0; }
-thead tr.totals-row td.col-party-onp { background-color: #fdf3ea; }
-thead tr.totals-row td.col-party-oth { background-color: #f4f4f4; }
-thead tr.totals-row td.col-party-alp.col-swing { background-color: #f8dde0; }
-thead tr.totals-row td.col-party-lnp.col-swing { background-color: #dce8f5; }
-thead tr.totals-row td.col-party-grn.col-swing { background-color: #daeee0; }
-thead tr.totals-row td.col-party-onp.col-swing { background-color: #fae7d5; }
+thead tr.totals-row td.col-party-alp {
+  background-color: #fbeeef;
+}
+
+thead tr.totals-row td.col-party-lnp {
+  background-color: #edf2fa;
+}
+
+thead tr.totals-row td.col-party-grn {
+  background-color: #edf6f0;
+}
+
+thead tr.totals-row td.col-party-onp {
+  background-color: #fdf3ea;
+}
+
+thead tr.totals-row td.col-party-oth {
+  background-color: #f4f4f4;
+}
+
+thead tr.totals-row td.col-party-alp.col-swing {
+  background-color: #f8dde0;
+}
+
+thead tr.totals-row td.col-party-lnp.col-swing {
+  background-color: #dce8f5;
+}
+
+thead tr.totals-row td.col-party-grn.col-swing {
+  background-color: #daeee0;
+}
+
+thead tr.totals-row td.col-party-onp.col-swing {
+  background-color: #fae7d5;
+}
 
 
 
@@ -445,13 +585,20 @@ thead th[data-sort-key].sort-desc::after {
   background: #fff;
   border: 1px solid #bbb;
   border-radius: 4px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.13);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.13);
   padding: 0.25rem 0;
   font-size: 14px;
   outline: none;
 }
-.tcp-menu[aria-hidden="true"] { display: none; }
-.tcp-menu[aria-hidden="false"] { display: block; }
+
+.tcp-menu[aria-hidden="true"] {
+  display: none;
+}
+
+.tcp-menu[aria-hidden="false"] {
+  display: block;
+}
+
 .tcp-menu button {
   display: block;
   width: 100%;
@@ -463,10 +610,12 @@ thead th[data-sort-key].sort-desc::after {
   color: #1a1a1a;
   cursor: pointer;
 }
+
 .tcp-menu button[aria-checked="true"] {
   background: #e8eaed;
   font-weight: 600;
 }
+
 .tcp-menu button:focus {
   background: #d0e3fa;
   outline: 2px solid #00529b;
@@ -490,13 +639,16 @@ thead th[data-sort-key].sort-desc::after {
   position: relative;
   z-index: 11;
 }
+
 .tcp-picker-btn:focus {
   outline: 2px solid #00529b;
   background: #e6eaf0;
 }
+
 .tcp-picker-btn[aria-expanded="true"] {
   background: #e6eaf0;
 }
+
 .tcp-picker-btn .tcp-party-dot {
   display: inline-block;
   width: 1em;
@@ -505,6 +657,7 @@ thead th[data-sort-key].sort-desc::after {
   margin-right: 0.5em;
   vertical-align: middle;
 }
+
 .tcp-picker-btn .tcp-caret {
   margin-left: 0.5em;
   font-size: 1em;
@@ -516,7 +669,7 @@ thead th[data-sort-key].sort-desc::after {
   background: #fff;
   border: 1px solid #bbb;
   border-radius: 4px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.13);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.13);
   padding: 0.25rem 0;
   font-size: 14px;
   outline: none;
@@ -526,8 +679,15 @@ thead th[data-sort-key].sort-desc::after {
   margin-top: 2px;
   z-index: 100;
 }
-.tcp-menu[aria-hidden="true"] { display: none; }
-.tcp-menu[aria-hidden="false"] { display: block; }
+
+.tcp-menu[aria-hidden="true"] {
+  display: none;
+}
+
+.tcp-menu[aria-hidden="false"] {
+  display: block;
+}
+
 .tcp-menu button {
   display: block;
   width: 100%;
@@ -539,10 +699,12 @@ thead th[data-sort-key].sort-desc::after {
   color: #1a1a1a;
   cursor: pointer;
 }
+
 .tcp-menu button[aria-checked="true"] {
   background: #e8eaed;
   font-weight: 600;
 }
+
 .tcp-menu button:focus {
   background: #d0e3fa;
   outline: 2px solid #00529b;
