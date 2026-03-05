@@ -524,6 +524,10 @@ thead tr.totals-row td.col-party-lnp {
   background-color: #edf2fa;
 }
 
+thead tr.totals-row td.col-party-lp {
+  background-color: #edf2fa;
+}
+
 thead tr.totals-row td.col-party-grn {
   background-color: #edf6f0;
 }
@@ -541,6 +545,10 @@ thead tr.totals-row td.col-party-alp.col-swing {
 }
 
 thead tr.totals-row td.col-party-lnp.col-swing {
+  background-color: #dce8f5;
+}
+
+thead tr.totals-row td.col-party-lp.col-swing {
   background-color: #dce8f5;
 }
 
