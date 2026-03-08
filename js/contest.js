@@ -26,95 +26,6 @@ function getSortedRows(rows) {
   return [...sorted, ...voteTypes];
 }
 
-function updateSortIndicators() {
-  document.querySelectorAll("thead th[data-sort-key]").forEach(th => {
-    th.classList.remove("sort-asc", "sort-desc");
-    if (th.dataset.sortKey === sortState.key && sortState.direction) {
-      th.classList.add("sort-" + sortState.direction);
-    }
-  });
-}
-
-function initSorting() {
-  document.querySelectorAll("thead th[data-sort-key]").forEach(th => {
-    th.addEventListener("click", () => {
-      const key = th.dataset.sortKey;
-      if (sortState.key !== key) {
-        sortState.key = key;
-        sortState.direction = "asc";
-      } else if (sortState.direction === "asc") {
-        sortState.direction = "desc";
-      } else {
-        sortState.key = null;
-        sortState.direction = null;
-      }
-      updateSortIndicators();
-      renderTable(getSortedRows(allRowsData));
-    });
-  });
-}
-
-// ── XML namespace URIs (same as app.js) ─────────────────────────────────────
-const NS_FEED = "http://www.aec.gov.au/xml/schema/mediafeed";
-const NS_EML  = "urn:oasis:names:tc:evs:schema:eml";
-
-// ── Party groupings ──────────────────────────────────────────────────────────
-const ALP_CODES = new Set(["ALP"]);
-const LNP_CODES = new Set(["LP", "NP", "LNP", "CLP", "NTA"]);
-const GRN_CODES = new Set(["GRN"]);
-const ONP_CODES = new Set(["ON"]);
-
-// ── Helpers ──────────────────────────────────────────────────────────────────
-
-function childEML(parent, localName) {
-  if (!parent) return null;
-  for (const node of parent.children) {
-    if (node.localName === localName && node.namespaceURI === NS_EML) return node;
-  }
-  return null;
-}
-
-function attr(el, name) {
-  return el ? el.getAttribute(name) : null;
-}
-
-function floatAttr(el, name) {
-  const v = attr(el, name);
-  return v !== null ? parseFloat(v) : null;
-}
-
-function fmt(v, decimals = 2) {
-  if (v === null || v === undefined || isNaN(v)) return "—";
-  return v.toFixed(decimals);
-}
-
-function fmtInt(v) {
-  if (v === null || v === undefined || isNaN(v)) return "—";
-  return Math.round(v).toLocaleString("en-AU");
-}
-
-/** Get the direct Votes child of a Candidate/Ghost element (not inside VotesByType). */
-function getVotesEl(candidateEl) {
-  for (const node of candidateEl.children) {
-    if (node.localName === "Votes" && (node.namespaceURI === NS_FEED || node.namespaceURI === null)) {
-      return node;
-    }
-  }
-  return null;
-}
-
-/** Get all elements by localName in feed/null namespace under parent. */
-function getAll(parent, localName) {
-  if (!parent) return [];
-  return Array.from(parent.children).filter(
-    n => n.localName === localName && (n.namespaceURI === NS_FEED || n.namespaceURI === null)
-  );
-}
-
-function getFirst(parent, localName) {
-  return getAll(parent, localName)[0] ?? null;
-}
-
 /**
  * Build a map of candidateId → partyCode from contest-level FirstPreferences.
  * Includes both active Candidates and Ghosts.
@@ -137,19 +48,6 @@ function buildCandidateMap(contestEl) {
     if (cid) map[cid] = code ?? "IND";
   }
   return map;
-}
-
-/**
- * Given a candidateId → partyCode map, determine the group for a code.
- * Returns "alp" | "lnp" | "grn" | "onp" | "oth" | "ind"
- */
-function partyGroup(code) {
-  if (!code) return "oth";
-  if (ALP_CODES.has(code)) return "alp";
-  if (LNP_CODES.has(code)) return "lnp";
-  if (GRN_CODES.has(code)) return "grn";
-  if (ONP_CODES.has(code)) return "onp";
-  return "oth";
 }
 
 // ── Polling Place Parsing ────────────────────────────────────────────────────
@@ -824,27 +722,6 @@ function renderTotalsRow(row) {
   tr.appendChild(pct(row.flowLnp, "col-party-lnp"));
 }
 
-
-
-function swingCell(value, isAlpPerspective = false, partyClass = "") {
-  const td = document.createElement("td");
-  td.className = "col-num";
-  if (partyClass) { td.classList.add(partyClass); td.classList.add("col-swing"); }
-  if (value === null || isNaN(value)) {
-    td.textContent = "—";
-    td.classList.add("swing-zero");
-    return td;
-  }
-  const sign = value > 0 ? "+" : "";
-  td.textContent = sign + fmt(value);
-  if (value === 0) {
-    td.classList.add("swing-zero");
-  } else {
-    td.classList.add(value > 0 ? "swing-pos" : "swing-neg");
-  }
-  return td;
-}
-
 function renderRow(row) {
   // Use selectedTcpCandidateId for TCP columns
 
@@ -943,14 +820,6 @@ function renderRow(row) {
   tr.appendChild(pct(row.flowLnp, "col-party-lnp"));
 
   return tr;
-}
-
-function renderTable(rows) {
-  const tbody = document.getElementById("results-body");
-  tbody.innerHTML = "";
-  for (const row of rows) {
-    tbody.appendChild(renderRow(row));
-  }
 }
 
 // ── Main ─────────────────────────────────────────────────────────────────────
