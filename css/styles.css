@@ -186,9 +186,12 @@ td {
   vertical-align: middle;
 }
 
+.col-contest {
+  width: 160px;
+}
+
 td.col-contest {
   font-weight: 600;
-  min-width: 130px;
   border-right: 2px solid #c8cdd5;
 }
 

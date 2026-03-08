@@ -276,19 +276,22 @@ function parseFirstPreferences(contestEl) {
 
 /**
  * Parse TwoCandidatePreferred for ALL TCP candidates.
- * Returns { tcpCandidates, tcpPctById, tcpSwingById, alpTcpPct, alpTcpSwing, booths }.
+ * Returns { tcpCandidates, tcpPctById, tcpSwingById, historicTcpPctById,
+ *           alpTcpPct, alpTcpSwing, alpHistoricTcpPct, booths }.
  */
 function parseTCP(contestEl) {
   const tcpEl = contestEl.getElementsByTagNameNS(NS_FEED, "TwoCandidatePreferred")[0] ||
                 contestEl.getElementsByTagName("TwoCandidatePreferred")[0];
-  if (!tcpEl) return { tcpCandidates: [], tcpPctById: {}, tcpSwingById: {}, alpTcpPct: null, alpTcpSwing: null, booths: null };
+  if (!tcpEl) return { tcpCandidates: [], tcpPctById: {}, tcpSwingById: {}, historicTcpPctById: {}, alpTcpPct: null, alpTcpSwing: null, alpHistoricTcpPct: null, booths: null };
 
   const tcpBooths = parseInt(attr(tcpEl, "PollingPlacesReturned"), 10) || null;
 
   const tcpCandidates = [];
   const tcpPctById = {};
   const tcpSwingById = {};
+  const historicVotesById = {};
   let alpTcpPct = null, alpTcpSwing = null;
+  let alpCandId = null;
 
   const candidates = Array.from(tcpEl.children).filter(n => n.localName === "Candidate");
   for (const cand of candidates) {
@@ -302,18 +305,34 @@ function parseTCP(contestEl) {
 
     const pct = floatAttr(votesEl, "Percentage");
     const swing = floatAttr(votesEl, "Swing");
+    const historicVotes = parseInt(attr(votesEl, "Historic") ?? "0", 10) || 0;
 
     tcpCandidates.push({ id: cid, code: code || "IND", name, group });
     tcpPctById[cid] = pct;
     tcpSwingById[cid] = swing;
+    historicVotesById[cid] = historicVotes;
 
     if (ALP_CODES.has(code)) {
       alpTcpPct = pct;
       alpTcpSwing = swing;
+      alpCandId = cid;
     }
   }
 
-  return { tcpCandidates, tcpPctById, tcpSwingById, alpTcpPct, alpTcpSwing, booths: tcpBooths };
+  // Compute historic TCP percentages from historic vote counts
+  const historicTcpPctById = {};
+  const totalHistoricVotes = Object.values(historicVotesById).reduce((s, v) => s + v, 0);
+  if (totalHistoricVotes > 0) {
+    for (const cid of Object.keys(historicVotesById)) {
+      historicTcpPctById[cid] = (historicVotesById[cid] / totalHistoricVotes) * 100;
+    }
+  }
+
+  const alpHistoricTcpPct = (alpCandId && historicTcpPctById[alpCandId] !== undefined)
+    ? historicTcpPctById[alpCandId]
+    : null;
+
+  return { tcpCandidates, tcpPctById, tcpSwingById, historicTcpPctById, alpTcpPct, alpTcpSwing, alpHistoricTcpPct, booths: tcpBooths };
 }
 
 /**
@@ -354,11 +373,16 @@ function parseContest(contestEl, electionId) {
     contestName,
     state,
     enrolment,
-    tcpCandidates: tcp.tcpCandidates,
-    tcpPctById:    tcp.tcpPctById,
-    tcpSwingById:  tcp.tcpSwingById,
-    alpTcpPct:    tcp.alpTcpPct,
-    alpTcpSwing:  tcp.alpTcpSwing,
+    tcpCandidates:      tcp.tcpCandidates,
+    tcpPctById:         tcp.tcpPctById,
+    tcpSwingById:       tcp.tcpSwingById,
+    historicTcpPctById: tcp.historicTcpPctById,
+    alpTcpPct:          tcp.alpTcpPct,
+    alpTcpSwing:        tcp.alpTcpSwing,
+    alpHistoricTcpPct:  tcp.alpHistoricTcpPct,
+    alpTcpPrediction:   (tcp.alpHistoricTcpPct !== null && tcp.alpTcpSwing !== null)
+      ? tcp.alpHistoricTcpPct + tcp.alpTcpSwing
+      : null,
     alpPct:       fp?.groups.alp.pct   ?? null,
     lnpPct:       fp?.groups.lnp.pct   ?? null,
     grnPct:       fp?.groups.grn.pct   ?? null,
@@ -606,6 +630,24 @@ function renderRow(row) {
   }
   tr.appendChild(swingCell(tcpSwingValue, true, tcpPartyClass));
 
+  // TCP Prediction = historic TCP % (full previous election) + current swing
+  let tcpPredictionValue = null;
+  {
+    let historicPct = null;
+    if (effectiveTcpId && row.historicTcpPctById && row.historicTcpPctById[effectiveTcpId] !== undefined) {
+      historicPct = row.historicTcpPctById[effectiveTcpId];
+    } else {
+      historicPct = row.alpHistoricTcpPct;
+    }
+    if (historicPct !== null && !isNaN(historicPct) && tcpSwingValue !== null && !isNaN(tcpSwingValue)) {
+      tcpPredictionValue = historicPct + tcpSwingValue;
+    }
+  }
+  const tcpPredTd = document.createElement("td");
+  tcpPredTd.className = `col-num ${tcpPartyClass}`;
+  tcpPredTd.textContent = fmt(tcpPredictionValue);
+  tr.appendChild(tcpPredTd);
+
   // Primary percentages
   tr.appendChild(td(fmt(row.alpPct), "col-num col-party-alp"));
   tr.appendChild(td(fmt(row.lnpPct), "col-num col-party-lnp"));
@@ -691,7 +733,26 @@ function updateTotalsRow(rows) {
   const tcpSwingAvg = avg(tcpSwingValues);
   const tcpSwingEl = document.getElementById('total-alpTcpSwing');
   if (tcpSwingEl) tcpSwingEl.textContent = tcpSwingAvg !== null ? (tcpSwingAvg > 0 ? '+' : '') + tcpSwingAvg.toFixed(2) : '—';
- 
+
+  // TCP Prediction: historic TCP % (full previous election) + current swing
+  const tcpPredictionValues = rows.map((r, i) => {
+    const id = getEffectiveTcpCandidateId(r);
+    let historicPct = null;
+    if (id && r.historicTcpPctById && r.historicTcpPctById[id] !== undefined) {
+      historicPct = r.historicTcpPctById[id];
+    } else {
+      historicPct = r.alpHistoricTcpPct;
+    }
+    const swing = tcpSwingValues[i];
+    if (historicPct !== null && !isNaN(historicPct) && swing !== null && !isNaN(swing)) {
+      return historicPct + swing;
+    }
+    return null;
+  });
+  const tcpPredAvg = avg(tcpPredictionValues);
+  const tcpPredEl = document.getElementById('total-alpTcpPrediction');
+  if (tcpPredEl) tcpPredEl.textContent = tcpPredAvg !== null ? tcpPredAvg.toFixed(2) : '—';
+
   // Non-TCP percent columns: average
   const percentFields = [
     'alpPct', 'lnpPct', 'grnPct', 'onpPct', 'othPct'
@@ -721,7 +782,7 @@ function updateTotalsRow(rows) {
   // Update filter bar TCP cell party classes
   const partyClasses = ["col-party-alp", "col-party-lnp", "col-party-grn", "col-party-onp", "col-party-oth"];
   const tcpClass = `col-party-${globalTcpGroup}`;
-  ["total-alpTcpPct", "total-alpTcpSwing"].forEach(id => {
+  ["total-alpTcpPct", "total-alpTcpSwing", "total-alpTcpPrediction"].forEach(id => {
     const el = document.getElementById(id);
     if (el) {
       partyClasses.forEach(cls => el.classList.remove(cls));

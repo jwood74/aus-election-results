@@ -22,7 +22,7 @@
             <th rowspan="2" class="col-contest sticky-col" data-sort-key="contestName">Contest</th>
             <th rowspan="2" class="col-state" data-sort-key="state">State</th>
             <th rowspan="2" class="col-enrolment" data-sort-key="enrolment">Enrolment</th>
-            <th colspan="2" class="group-tcp" id="tcp-header-cell" style="position:relative;">
+            <th colspan="3" class="group-tcp" id="tcp-header-cell" style="position:relative;">
               <button id="tcp-candidate-picker" class="tcp-picker-btn" aria-haspopup="listbox" aria-expanded="false" aria-label="TCP Candidate" type="button">ALP TCP <span class="tcp-caret">&#9660;</span></button>
               <div id="tcp-candidate-menu" class="tcp-menu" role="listbox" tabindex="-1" aria-hidden="true"></div>
             </th>
@@ -34,6 +34,7 @@
             <!-- ALP TCP -->
             <th class="col-num group-tcp col-party-alp" data-sort-key="alpTcpPct">%</th>
             <th class="col-num group-tcp col-party-alp" data-sort-key="alpTcpSwing">Swing</th>
+            <th class="col-num group-tcp col-party-alp" data-sort-key="alpTcpPrediction">Prediction</th>
             <!-- Primary % -->
             <th class="col-num group-primary-pct col-party-alp" data-sort-key="alpPct">ALP</th>
             <th class="col-num group-primary-pct col-party-lnp" data-sort-key="lnpPct">L/NP</th>
@@ -64,6 +65,7 @@
           <td class="col-enrolment"></td>
           <td class="col-num group-tcp col-party-alp" id="total-alpTcpPct"></td>
           <td class="col-num group-tcp col-party-alp" id="total-alpTcpSwing"></td>
+          <td class="col-num group-tcp col-party-alp" id="total-alpTcpPrediction"></td>
           <td class="col-num group-primary-pct col-party-alp" id="total-alpPct"></td>
           <td class="col-num group-primary-pct col-party-lnp" id="total-lnpPct"></td>
           <td class="col-num group-primary-pct col-party-grn" id="total-grnPct"></td>
