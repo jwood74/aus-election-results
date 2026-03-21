@@ -52,7 +52,7 @@ jobs:
             -H "Authorization: Bearer ${{ secrets.AEC_WORKER_UPLOAD_SECRET }}" \
             -H "Content-Type: application/xml" \
             --data-binary "@${XML_FILE}" \
-            "https://aec-election-feed.jaxenwood.workers.dev/upload/${ELECTION_ID}")
+            "https://aec-election-feed.jwood748787.workers.dev/upload/${ELECTION_ID}")
 
           echo "Response: $(cat response.json)"
 
