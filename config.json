@@ -4,7 +4,7 @@
       "id": "31496",
       "name": "2025 Federal Election",
       "files": [
-        "docs/data/aec-mediafeed-results-detailed-verbose-31496.xml"
+        "https://aec-election-feed.jaxenwood.workers.dev/feed/31496"
       ]
     }
   ]

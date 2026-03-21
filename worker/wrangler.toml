@@ -1,0 +1,16 @@
+name = "aec-election-feed"
+main = "worker.js"
+compatibility_date = "2024-01-01"
+
+# KV namespace for storing compressed XML data.
+# Create with:
+#   wrangler kv namespace create AEC_DATA
+#   wrangler kv namespace create AEC_DATA --preview
+# Then fill in the IDs below.
+[[kv_namespaces]]
+binding = "AEC_DATA"
+id = "efc260f7d0674179a97cd394a42a0b6d"
+preview_id = "91f8531ae8d64066875594688b45c12c"
+
+# Secret UPLOAD_SECRET must be set via:
+#   wrangler secret put UPLOAD_SECRET

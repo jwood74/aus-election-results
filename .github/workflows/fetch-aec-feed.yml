@@ -5,9 +5,6 @@ on:
     - cron: '*/5 * * * *'
   workflow_dispatch:
 
-permissions:
-  contents: write
-
 concurrency:
   group: aec-feed
   cancel-in-progress: true
@@ -17,12 +14,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
       - name: Download latest AEC feed zip
         run: |
-          ELECTION_ID="29807"
+          ELECTION_ID="31496"
           FTP_DIR="ftp://mediafeedarchive.aec.gov.au/${ELECTION_ID}/Detailed/Verbose/"
 
           # List directory and pick the most recent zip (filenames sort chronologically)
@@ -34,35 +28,37 @@ jobs:
           fi
 
           echo "Latest file: $LATEST"
-          echo "LATEST=$LATEST" >> "$GITHUB_ENV"
-
           curl -fL --retry 5 --retry-delay 10 --silent --output feed.zip "${FTP_DIR}${LATEST}"
 
       - name: Extract XML from zip
         run: |
           ELECTION_ID="29807"
 
-          mkdir -p extracted docs/data
+          mkdir -p extracted
           unzip -j feed.zip "xml/*.xml" -d extracted/
           FILE=$(ls extracted/*.xml 2>/dev/null | head -1)
           if [ -z "$FILE" ]; then
             echo "No XML extracted"
             exit 1
           fi
-          cp "$FILE" "docs/data/aec-mediafeed-results-detailed-verbose-${ELECTION_ID}.xml"
+          # Store path for upload step
+          echo "XML_FILE=$FILE" >> "$GITHUB_ENV"
+          echo "ELECTION_ID=$ELECTION_ID" >> "$GITHUB_ENV"
 
-      - name: Commit and push if data changed
+      - name: Upload XML to Cloudflare Worker
         run: |
-          source $GITHUB_ENV
-          ELECTION_ID="29807"
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
+          HTTP_STATUS=$(curl -s -o response.json -w "%{http_code}" \
+            -X POST \
+            -H "Authorization: Bearer ${{ secrets.AEC_WORKER_UPLOAD_SECRET }}" \
+            -H "Content-Type: application/xml" \
+            --data-binary "@${XML_FILE}" \
+            "https://aec-election-feed.jaxenwood.workers.dev/upload/${ELECTION_ID}")
 
-          git add "docs/data/aec-mediafeed-results-detailed-verbose-${ELECTION_ID}.xml"
+          echo "Response: $(cat response.json)"
 
-          if git diff --staged --quiet; then
-            echo "Feed unchanged — nothing to commit"
-          else
-            git commit -m "chore: update AEC feed ${ELECTION_ID} (${LATEST}) [skip ci]"
-            git push
+          if [ "$HTTP_STATUS" != "200" ]; then
+            echo "Upload failed with status $HTTP_STATUS"
+            exit 1
           fi
+
+          echo "Upload successful"
