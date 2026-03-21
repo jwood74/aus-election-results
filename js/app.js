@@ -702,6 +702,8 @@ async function loadElectionData() {
     renderGlobalTcpDropdown();
     renderTable(getSortedRows(allRowsData));
 
+    cachedConfig = config;
+
     const contestWord = allRows.length === 1 ? "contest" : "contests";
     statusEl.textContent = `Showing ${allRows.length} ${contestWord}.`;
     statusEl.classList.remove("error");
@@ -712,13 +714,114 @@ async function loadElectionData() {
   }
 }
 
+// ── Auto-refresh ─────────────────────────────────────────────────────────────
+const AUTO_REFRESH_INTERVAL = 60_000; // 60 seconds
+let cachedConfig = null;
+
+const TIME_FMT = { hour: "2-digit", minute: "2-digit", second: "2-digit" };
+
+/**
+ * Derive the Worker status URL from a feed URL.
+ * e.g. ".../feed/31496" → ".../status/31496"
+ */
+function feedToStatusUrl(feedUrl) {
+  try {
+    const url = new URL(feedUrl);
+    url.pathname = url.pathname.replace(/\/feed\//, "/status/");
+    return url.toString();
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Fetch the AEC data timestamp from the Worker /status endpoint.
+ * Returns a formatted local time string, or null on failure.
+ */
+async function fetchAecUpdatedTime(config) {
+  for (const election of config.elections) {
+    for (const filePath of election.files) {
+      const statusUrl = feedToStatusUrl(filePath);
+      if (!statusUrl) continue;
+      try {
+        const res = await fetch(statusUrl, { cache: "no-store" });
+        if (!res.ok) continue;
+        const data = await res.json();
+        if (data.updatedAt) {
+          return new Date(data.updatedAt).toLocaleTimeString("en-AU", TIME_FMT);
+        }
+      } catch { /* skip */ }
+    }
+  }
+  return null;
+}
+
+/**
+ * Build the status bar text showing contest count, AEC update time, and fetch time.
+ */
+function statusText(contestCount, aecTime) {
+  const contestWord = contestCount === 1 ? "contest" : "contests";
+  const fetchedAt = new Date().toLocaleTimeString("en-AU", TIME_FMT);
+  let text = `Showing ${contestCount} ${contestWord}.`;
+  if (aecTime) text += ` AEC data updated ${aecTime}.`;
+  text += ` Last checked ${fetchedAt}.`;
+  return text;
+}
+
+/**
+ * Re-fetch election data and re-render, preserving current sort/filter state.
+ * Uses cache: "no-store" to bypass browser cache on each tick.
+ */
+async function refreshElectionData() {
+  const statusEl = document.getElementById("status");
+  try {
+    if (!cachedConfig) return;
+
+    const allRows = [];
+    for (const election of cachedConfig.elections) {
+      for (const filePath of election.files) {
+        const xmlRes = await fetch(filePath, { cache: "no-store" });
+        if (!xmlRes.ok) continue;
+        const xmlText = await xmlRes.text();
+        const parser  = new DOMParser();
+        const xmlDoc  = parser.parseFromString(xmlText, "application/xml");
+        if (xmlDoc.querySelector("parsererror")) continue;
+
+        const rows = parseXML(xmlDoc, election.id);
+        allRows.push(...rows);
+      }
+    }
+
+    if (allRows.length === 0) return; // don't wipe table on transient errors
+
+    allRowsData = allRows;
+    updateTableWithFilters();
+
+    const aecTime = await fetchAecUpdatedTime(cachedConfig);
+    statusEl.textContent = statusText(allRows.length, aecTime);
+    statusEl.classList.remove("error");
+  } catch {
+    // Silently skip — don't disrupt the UI on transient network errors
+  }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   initSorting();
-  loadElectionData().then(() => {
+  loadElectionData().then(async () => {
     addFilterListeners();
     // Focus the Contest filter input in sticky bar on page load
     const contestInput = document.querySelector(".table-filter-bar-wrapper #filter-contest");
     if (contestInput) contestInput.focus();
     updateTableWithFilters();
+
+    // Fetch AEC timestamp and update status on initial load
+    if (cachedConfig) {
+      const statusEl = document.getElementById("status");
+      const aecTime = await fetchAecUpdatedTime(cachedConfig);
+      statusEl.textContent = statusText(allRowsData.length, aecTime);
+    }
+
+    // Start auto-refresh cycle
+    setInterval(refreshElectionData, AUTO_REFRESH_INTERVAL);
   });
 });
