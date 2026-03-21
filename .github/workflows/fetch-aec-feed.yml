@@ -32,7 +32,7 @@ jobs:
 
       - name: Extract XML from zip
         run: |
-          ELECTION_ID="29807"
+          ELECTION_ID="31496"
 
           mkdir -p extracted
           unzip -j feed.zip "xml/*.xml" -d extracted/
