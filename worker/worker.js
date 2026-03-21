@@ -64,23 +64,18 @@ async function handleServe(request, env, electionId) {
   const ttlStr = await env.AEC_DATA.get("config:cache-ttl");
   const ttl = ttlStr ? parseInt(ttlStr, 10) : DEFAULT_TTL;
 
-  const headers = {
-    "Content-Type": "application/xml; charset=utf-8",
-    "Cache-Control": `public, max-age=${ttl}, s-maxage=${ttl}`,
-    ...corsHeaders(request),
-  };
-
-  // If client supports gzip, serve compressed directly (zero-cost)
-  const acceptEncoding = request.headers.get("Accept-Encoding") || "";
-  if (acceptEncoding.includes("gzip")) {
-    headers["Content-Encoding"] = "gzip";
-    return new Response(compressed, { headers });
-  }
-
-  // Otherwise decompress for the client
+  // Always decompress before serving — avoids conflicts with
+  // Cloudflare's own compression layer on the edge.
   const ds = new DecompressionStream("gzip");
   const decompressed = new Response(compressed).body.pipeThrough(ds);
-  return new Response(decompressed, { headers });
+
+  return new Response(decompressed, {
+    headers: {
+      "Content-Type": "application/xml; charset=utf-8",
+      "Cache-Control": `public, max-age=${ttl}, s-maxage=${ttl}`,
+      ...corsHeaders(request),
+    },
+  });
 }
 
 async function handleUpload(request, env, electionId) {
