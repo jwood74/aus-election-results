@@ -14,3 +14,18 @@ preview_id = "91f8531ae8d64066875594688b45c12c"
 
 # Secret UPLOAD_SECRET must be set via:
 #   wrangler secret put UPLOAD_SECRET
+
+[observability]
+enabled = false
+head_sampling_rate = 1
+
+[observability.logs]
+enabled = true
+head_sampling_rate = 1
+persist = true
+invocation_logs = true
+
+[observability.traces]
+enabled = false
+persist = true
+head_sampling_rate = 1
