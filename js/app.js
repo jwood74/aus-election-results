@@ -183,12 +183,25 @@ function parseTCP(contestEl) {
     }
   }
 
+  // Detect if TCP pairing changed from previous election.
+  // AEC signals this by setting Swing == Percentage for all candidates.
+  // In this case, swing and historic data are meaningless — null them out.
+  const pairingChanged = candidates.length > 0 && Object.keys(tcpPctById).every(
+    cid => tcpPctById[cid] !== null && tcpSwingById[cid] !== null && tcpPctById[cid] === tcpSwingById[cid]
+  );
+  if (pairingChanged) {
+    for (const cid of Object.keys(tcpSwingById)) tcpSwingById[cid] = null;
+    alpTcpSwing = null;
+  }
+
   // Compute historic TCP percentages from historic vote counts
   const historicTcpPctById = {};
-  const totalHistoricVotes = Object.values(historicVotesById).reduce((s, v) => s + v, 0);
-  if (totalHistoricVotes > 0) {
-    for (const cid of Object.keys(historicVotesById)) {
-      historicTcpPctById[cid] = (historicVotesById[cid] / totalHistoricVotes) * 100;
+  if (!pairingChanged) {
+    const totalHistoricVotes = Object.values(historicVotesById).reduce((s, v) => s + v, 0);
+    if (totalHistoricVotes > 0) {
+      for (const cid of Object.keys(historicVotesById)) {
+        historicTcpPctById[cid] = (historicVotesById[cid] / totalHistoricVotes) * 100;
+      }
     }
   }
 
@@ -684,7 +697,18 @@ async function loadElectionData() {
       for (const filePath of election.files) {
         const xmlRes = await fetch(filePath);
         if (!xmlRes.ok) throw new Error(`Failed to load ${filePath} (${xmlRes.status})`);
-        const xmlText = await xmlRes.text();
+
+        // Worker serves gzip-compressed bytes as octet-stream to avoid CPU limits.
+        // Decompress client-side when needed.
+        let xmlText;
+        const contentType = xmlRes.headers.get("Content-Type") || "";
+        if (contentType.includes("octet-stream") && typeof DecompressionStream !== "undefined") {
+          const ds = new DecompressionStream("gzip");
+          const decompressed = xmlRes.body.pipeThrough(ds);
+          xmlText = await new Response(decompressed).text();
+        } else {
+          xmlText = await xmlRes.text();
+        }
         const parser  = new DOMParser();
         const xmlDoc  = parser.parseFromString(xmlText, "application/xml");
 

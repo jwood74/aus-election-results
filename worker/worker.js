@@ -64,14 +64,12 @@ async function handleServe(request, env, electionId) {
   const ttlStr = await env.AEC_DATA.get("config:cache-ttl");
   const ttl = ttlStr ? parseInt(ttlStr, 10) : DEFAULT_TTL;
 
-  // Always decompress before serving — avoids conflicts with
-  // Cloudflare's own compression layer on the edge.
-  const ds = new DecompressionStream("gzip");
-  const decompressed = new Response(compressed).body.pipeThrough(ds);
-
-  return new Response(decompressed, {
+  // Serve the gzip-compressed bytes directly as application/octet-stream.
+  // The client (app.js) handles decompression — this avoids exceeding the
+  // Worker's 10ms CPU time limit on the free plan.
+  return new Response(compressed, {
     headers: {
-      "Content-Type": "application/xml; charset=utf-8",
+      "Content-Type": "application/octet-stream",
       "Cache-Control": `public, max-age=${ttl}, s-maxage=${ttl}`,
       ...corsHeaders(request),
     },

@@ -58,7 +58,7 @@ function buildCandidateMap(contestEl) {
  * tcpAlpCandId: the candidate ID of the ALP TCP candidate (null if ALP not in TCP)
  * tcpLnpCandId: the candidate ID of the L/NP TCP candidate (null if L/NP not in TCP)
  */
-function parsePollingPlace(ppEl, candidateMap, tcpAlpCandId, tcpLnpCandId) {
+function parsePollingPlace(ppEl, candidateMap, tcpAlpCandId, tcpLnpCandId, tcpPairingChanged) {
   const ppIdEl = ppEl.getElementsByTagNameNS(NS_FEED, "PollingPlaceIdentifier")[0] ||
                  ppEl.getElementsByTagName("PollingPlaceIdentifier")[0];
   const name = attr(ppIdEl, "Name") ?? "Unknown";
@@ -179,6 +179,11 @@ function parsePollingPlace(ppEl, candidateMap, tcpAlpCandId, tcpLnpCandId) {
         lnpTcpVotes = votes;
       }
     }
+
+    if (tcpPairingChanged) {
+      for (const cid of Object.keys(tcpSwingById)) tcpSwingById[cid] = null;
+      alpTcpSwing = null;
+    }
   }
 
   // ── Preference Flow ──
@@ -223,9 +228,10 @@ function parsePollingPlace(ppEl, candidateMap, tcpAlpCandId, tcpLnpCandId) {
 function findTcpCandidateIds(contestEl, candidateMap) {
   const tcpEl = contestEl.getElementsByTagNameNS(NS_FEED, "TwoCandidatePreferred")[0] ||
                 contestEl.getElementsByTagName("TwoCandidatePreferred")[0];
-  if (!tcpEl) return { tcpAlpCandId: null, tcpLnpCandId: null };
+  if (!tcpEl) return { tcpAlpCandId: null, tcpLnpCandId: null, tcpPairingChanged: false };
 
   let tcpAlpCandId = null, tcpLnpCandId = null;
+  const pctSwingPairs = [];
   const tcpCands = Array.from(tcpEl.children).filter(n => n.localName === "Candidate");
   for (const cand of tcpCands) {
     const cidEl = childEML(cand, "CandidateIdentifier");
@@ -234,8 +240,19 @@ function findTcpCandidateIds(contestEl, candidateMap) {
     const group = partyGroup(code);
     if (group === "alp") tcpAlpCandId = cid;
     if (group === "lnp") tcpLnpCandId = cid;
+
+    const votesEl = getVotesEl(cand);
+    if (votesEl) {
+      pctSwingPairs.push({ pct: floatAttr(votesEl, "Percentage"), swing: floatAttr(votesEl, "Swing") });
+    }
   }
-  return { tcpAlpCandId, tcpLnpCandId };
+
+  // AEC signals a changed TCP pairing by setting Swing == Percentage
+  const tcpPairingChanged = pctSwingPairs.length > 0 && pctSwingPairs.every(
+    p => p.pct !== null && p.swing !== null && p.pct === p.swing
+  );
+
+  return { tcpAlpCandId, tcpLnpCandId, tcpPairingChanged };
 }
 
 /**
@@ -244,14 +261,14 @@ function findTcpCandidateIds(contestEl, candidateMap) {
  */
 function parseAllPollingPlaces(contestEl) {
   const candidateMap = buildCandidateMap(contestEl);
-  const { tcpAlpCandId, tcpLnpCandId } = findTcpCandidateIds(contestEl, candidateMap);
+  const { tcpAlpCandId, tcpLnpCandId, tcpPairingChanged } = findTcpCandidateIds(contestEl, candidateMap);
 
   const ppList = contestEl.getElementsByTagNameNS(NS_FEED, "PollingPlace");
   const fallback = contestEl.getElementsByTagName("PollingPlace");
   const places = ppList.length > 0 ? Array.from(ppList) : Array.from(fallback);
 
-  const ppRows = places.map(pp => parsePollingPlace(pp, candidateMap, tcpAlpCandId, tcpLnpCandId));
-  const typeRows = parseVoteTypeRows(contestEl, candidateMap, tcpAlpCandId, tcpLnpCandId);
+  const ppRows = places.map(pp => parsePollingPlace(pp, candidateMap, tcpAlpCandId, tcpLnpCandId, tcpPairingChanged));
+  const typeRows = parseVoteTypeRows(contestEl, candidateMap, tcpAlpCandId, tcpLnpCandId, tcpPairingChanged);
 
   return [...ppRows, ...typeRows];
 }
@@ -278,7 +295,7 @@ function getVotesByType(parentEl, voteType) {
 /**
  * Parse one vote-type "virtual polling place" row from contest-level VotesByType data.
  */
-function parseOneVoteTypeRow(contestEl, candidateMap, tcpAlpCandId, tcpLnpCandId, voteType, label) {
+function parseOneVoteTypeRow(contestEl, candidateMap, tcpAlpCandId, tcpLnpCandId, tcpPairingChanged, voteType, label) {
   const fpEl = contestEl.getElementsByTagNameNS(NS_FEED, "FirstPreferences")[0] ||
                contestEl.getElementsByTagName("FirstPreferences")[0];
 
@@ -366,6 +383,10 @@ function parseOneVoteTypeRow(contestEl, candidateMap, tcpAlpCandId, tcpLnpCandId
         lnpTcpVotes = parseInt(typeVotesEl.textContent, 10) || 0;
       }
     }
+
+    if (tcpPairingChanged) {
+      alpTcpSwing = null;
+    }
   }
 
   // Preference flow
@@ -400,9 +421,9 @@ function parseOneVoteTypeRow(contestEl, candidateMap, tcpAlpCandId, tcpLnpCandId
 }
 
 /** Parse all four vote-type rows for a contest. */
-function parseVoteTypeRows(contestEl, candidateMap, tcpAlpCandId, tcpLnpCandId) {
+function parseVoteTypeRows(contestEl, candidateMap, tcpAlpCandId, tcpLnpCandId, tcpPairingChanged) {
   return VOTE_TYPES.map(({ type, label }) =>
-    parseOneVoteTypeRow(contestEl, candidateMap, tcpAlpCandId, tcpLnpCandId, type, label)
+    parseOneVoteTypeRow(contestEl, candidateMap, tcpAlpCandId, tcpLnpCandId, tcpPairingChanged, type, label)
   );
 }
 
@@ -507,6 +528,15 @@ function parseContestTotalsRow(contestEl, name, candidateMap, tcpAlpCandId, tcpL
       if (tcpLnpCandId && cid === tcpLnpCandId) {
         lnpTcpVotes = votes;
       }
+    }
+
+    // Detect changed TCP pairing (AEC sets Swing == Percentage when no valid comparison)
+    const pairingChanged = Object.keys(tcpPctById).length > 0 && Object.keys(tcpPctById).every(
+      cid => tcpPctById[cid] !== null && tcpSwingById[cid] !== null && tcpPctById[cid] === tcpSwingById[cid]
+    );
+    if (pairingChanged) {
+      for (const cid of Object.keys(tcpSwingById)) tcpSwingById[cid] = null;
+      alpTcpSwing = null;
     }
   }
 
@@ -867,7 +897,18 @@ async function loadContestDetail() {
     for (const filePath of election.files) {
       const xmlRes = await fetch(filePath);
       if (!xmlRes.ok) throw new Error(`Failed to load ${filePath} (${xmlRes.status})`);
-      const xmlText = await xmlRes.text();
+
+      // Worker serves gzip-compressed bytes as octet-stream to avoid CPU limits.
+      // Decompress client-side when needed.
+      let xmlText;
+      const contentType = xmlRes.headers.get("Content-Type") || "";
+      if (contentType.includes("octet-stream") && typeof DecompressionStream !== "undefined") {
+        const ds = new DecompressionStream("gzip");
+        const decompressed = xmlRes.body.pipeThrough(ds);
+        xmlText = await new Response(decompressed).text();
+      } else {
+        xmlText = await xmlRes.text();
+      }
       const parser  = new DOMParser();
       const xmlDoc  = parser.parseFromString(xmlText, "application/xml");
 
