@@ -147,6 +147,7 @@ function initSorting() {
         sortState.direction = null;
       }
       updateSortIndicators();
+      if (typeof persistSortState === "function") persistSortState();
       renderTable(getSortedRows(allRowsData));
     });
   });

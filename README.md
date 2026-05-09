@@ -130,9 +130,11 @@ curl -X POST \
 
 ### Auto-Refresh
 
-The dashboard auto-refreshes every 60 seconds. The status bar shows:
+The dashboard and contest detail pages auto-refresh every 60 seconds. The status bar shows:
 - **AEC data updated** — when the GitHub Action last uploaded fresh data
 - **Last checked** — when the browser last fetched from the Worker
+
+Contest detail page sorting is stored per contest and preserved across auto-refreshes and manual browser refreshes.
 
 No manual page refresh needed on election night.
 

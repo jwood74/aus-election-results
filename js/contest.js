@@ -9,6 +9,32 @@
 
 let allRowsData = [];
 let sortState = { key: null, direction: null };
+let activeElectionId = null;
+let activeContestId = null;
+
+function getContestSortStorageKey() {
+  return activeElectionId && activeContestId ? `contest-sort-${activeElectionId}-${activeContestId}` : null;
+}
+
+function restoreSortState() {
+  const params = new URLSearchParams(window.location.search);
+  activeElectionId = params.get("electionId");
+  activeContestId = params.get("contestId");
+  const key = getContestSortStorageKey();
+  if (!key) return;
+  try {
+    const stored = JSON.parse(localStorage.getItem(key));
+    if (stored && typeof stored.key === "string" && ["asc", "desc"].includes(stored.direction)) {
+      sortState = { key: stored.key, direction: stored.direction };
+    }
+  } catch { /* ignore invalid stored state */ }
+}
+
+function persistSortState() {
+  const key = getContestSortStorageKey();
+  if (!key) return;
+  localStorage.setItem(key, JSON.stringify(sortState));
+}
 
 function getSortedRows(rows) {
   const normal    = rows.filter(r => !r.isVoteType);
@@ -998,14 +1024,96 @@ function renderRow(row) {
 
 // ── Main ─────────────────────────────────────────────────────────────────────
 
+const AUTO_REFRESH_INTERVAL = 60_000;
+const TIME_FMT = { hour: "2-digit", minute: "2-digit", second: "2-digit" };
+
 let tcpCandidates = [];
 let selectedTcpCandidateId = null;
+let cachedConfig = null;
+let lastFeedUpdatedAt = null;
+let autoRefreshTimer = null;
 
 function getTcpStorageKey(contestId) {
   return `tcp-candidate-${contestId}`;
 }
 
-async function loadContestDetail() {
+function feedToStatusUrl(feedUrl) {
+  try {
+    const url = new URL(feedUrl);
+    url.pathname = url.pathname.replace(/\/feed\//, "/status/");
+    return url.toString();
+  } catch {
+    return null;
+  }
+}
+
+function formatStatusText(updatedAt = lastFeedUpdatedAt) {
+  const checkedAt = new Date().toLocaleTimeString("en-AU", TIME_FMT);
+  let text = `Last checked ${checkedAt}.`;
+  if (updatedAt) {
+    text += ` AEC data updated ${new Date(updatedAt).toLocaleTimeString("en-AU", TIME_FMT)}.`;
+  }
+  return text;
+}
+
+async function fetchContestStatus(election) {
+  for (const filePath of election.files) {
+    const statusUrl = feedToStatusUrl(filePath);
+    if (!statusUrl) continue;
+    try {
+      const res = await fetch(statusUrl, { cache: "no-store" });
+      if (!res.ok) continue;
+      const data = await res.json();
+      if (data.updatedAt) return data.updatedAt;
+    } catch { /* skip */ }
+  }
+  return null;
+}
+
+async function getConfig() {
+  if (cachedConfig) return cachedConfig;
+  const cfgRes = await fetch("config.json", { cache: "no-store" });
+  if (!cfgRes.ok) throw new Error(`Failed to load config.json (${cfgRes.status})`);
+  cachedConfig = await cfgRes.json();
+  return cachedConfig;
+}
+
+async function readXmlResponse(xmlRes) {
+  const contentType = xmlRes.headers.get("Content-Type") || "";
+  if (contentType.includes("octet-stream") && typeof DecompressionStream !== "undefined") {
+    const ds = new DecompressionStream("gzip");
+    const decompressed = xmlRes.body.pipeThrough(ds);
+    return new Response(decompressed).text();
+  }
+  return xmlRes.text();
+}
+
+async function findContestElement(election, contestId) {
+  for (const filePath of election.files) {
+    const xmlRes = await fetch(filePath, { cache: "no-store" });
+    if (!xmlRes.ok) throw new Error(`Failed to load ${filePath} (${xmlRes.status})`);
+
+    const xmlText = await readXmlResponse(xmlRes);
+    const parser = new DOMParser();
+    const xmlDoc = parser.parseFromString(xmlText, "application/xml");
+
+    const parseErr = xmlDoc.querySelector("parsererror");
+    if (parseErr) throw new Error(`XML parse error in ${filePath}`);
+
+    const allContests = xmlDoc.getElementsByTagNameNS(NS_FEED, "Contest");
+    const fallback = xmlDoc.getElementsByTagName("Contest");
+    const list = allContests.length > 0 ? Array.from(allContests) : Array.from(fallback);
+
+    for (const c of list) {
+      const cidEl = childEML(c, "ContestIdentifier");
+      if (attr(cidEl, "Id") === String(contestId)) return c;
+    }
+  }
+
+  return null;
+}
+
+async function loadContestDetail({ background = false } = {}) {
   const params     = new URLSearchParams(window.location.search);
   const electionId = params.get("electionId");
   const contestId  = params.get("contestId");
@@ -1015,10 +1123,6 @@ async function loadContestDetail() {
 
   const statusEl  = document.getElementById("status");
   const labelEl   = document.getElementById("election-label");
-  const headerEl  = document.getElementById("contest-header");
-  const titleEl   = document.getElementById("contest-title");
-  const stateEl   = document.getElementById("contest-state");
-  const enrolEl   = document.getElementById("contest-enrolment");
 
   if (!electionId || !contestId) {
     statusEl.textContent = "Error: Missing electionId or contestId in URL.";
@@ -1027,56 +1131,14 @@ async function loadContestDetail() {
   }
 
   try {
-    // 1. Load config
-    const cfgRes = await fetch("config.json");
-    if (!cfgRes.ok) throw new Error(`Failed to load config.json (${cfgRes.status})`);
-    const config = await cfgRes.json();
-
+    const config = await getConfig();
     const election = config.elections.find(e => String(e.id) === String(electionId));
     if (!election) throw new Error(`Election ID "${electionId}" not found in config.`);
     labelEl.textContent = election.name;
 
-    // 2. Fetch and search XML files for the contest
-    let contestEl = null;
-    for (const filePath of election.files) {
-      const xmlRes = await fetch(filePath);
-      if (!xmlRes.ok) throw new Error(`Failed to load ${filePath} (${xmlRes.status})`);
-
-      // Worker serves gzip-compressed bytes as octet-stream to avoid CPU limits.
-      // Decompress client-side when needed.
-      let xmlText;
-      const contentType = xmlRes.headers.get("Content-Type") || "";
-      if (contentType.includes("octet-stream") && typeof DecompressionStream !== "undefined") {
-        const ds = new DecompressionStream("gzip");
-        const decompressed = xmlRes.body.pipeThrough(ds);
-        xmlText = await new Response(decompressed).text();
-      } else {
-        xmlText = await xmlRes.text();
-      }
-      const parser  = new DOMParser();
-      const xmlDoc  = parser.parseFromString(xmlText, "application/xml");
-
-      const parseErr = xmlDoc.querySelector("parsererror");
-      if (parseErr) throw new Error(`XML parse error in ${filePath}`);
-
-      // Find the contest matching contestId
-      const allContests = xmlDoc.getElementsByTagNameNS(NS_FEED, "Contest");
-      const fallback    = xmlDoc.getElementsByTagName("Contest");
-      const list = allContests.length > 0 ? Array.from(allContests) : Array.from(fallback);
-
-      for (const c of list) {
-        const cidEl = childEML(c, "ContestIdentifier");
-        if (attr(cidEl, "Id") === String(contestId)) {
-          contestEl = c;
-          break;
-        }
-      }
-      if (contestEl) break;
-    }
-
+    const contestEl = await findContestElement(election, contestId);
     if (!contestEl) throw new Error(`Contest ID "${contestId}" not found in election XML.`);
 
-    // 3. Populate contest header
     const contestNameEl = childEML(childEML(contestEl, "ContestIdentifier"), "ContestName");
     const districtEl    = contestEl.getElementsByTagNameNS(NS_FEED, "PollingDistrictIdentifier")[0] ||
                           contestEl.getElementsByTagName("PollingDistrictIdentifier")[0];
@@ -1089,12 +1151,11 @@ async function loadContestDetail() {
 
     document.title = `${contestNameEl?.textContent?.trim() ?? "Contest"} — AEC Election Results`;
 
-    // 4. Parse polling places (+ vote-type rows), render totals row, and render table
     allRowsData = parseAllPollingPlaces(contestEl);
 
     const contestLabel = `${contestNameEl?.textContent?.trim() ?? "Contest"} (${attr(stateIdEl, "Id") ?? "—"})`;
     document.getElementById("contest-label").textContent = contestLabel;
-    // Find all TCP candidates for dropdown
+
     const candidateMap = buildCandidateMap(contestEl);
     const tcpEl = contestEl.getElementsByTagNameNS(NS_FEED, "TwoCandidatePreferred")[0] ||
                   contestEl.getElementsByTagName("TwoCandidatePreferred")[0];
@@ -1111,8 +1172,7 @@ async function loadContestDetail() {
           return { id: cid, code, name };
         });
     }
-    // Default to ALP if present, else first TCP candidate
-    // Use contestId from outer scope, do not redeclare
+
     const storageKey = getTcpStorageKey(contestId);
     let stored = localStorage.getItem(storageKey);
     if (!stored && tcpCandidates.length) {
@@ -1123,23 +1183,55 @@ async function loadContestDetail() {
     selectedTcpCandidateId = stored;
     renderTcpCandidateDropdown();
 
-    // Use selected TCP candidate for rendering
     const totalsRow = parseContestTotalsRow(contestEl, "", candidateMap, selectedTcpCandidateId, null);
     renderTotalsRow(totalsRow);
 
     stampTcpPredictions(allRowsData);
     renderTable(getSortedRows(allRowsData));
 
-    statusEl.textContent = "";
+    lastFeedUpdatedAt = await fetchContestStatus(election) ?? lastFeedUpdatedAt;
+    statusEl.textContent = formatStatusText();
     statusEl.classList.remove("error");
   } catch (err) {
     console.error(err);
+    if (background) return;
     statusEl.textContent = `Error: ${err.message}`;
     statusEl.classList.add("error");
   }
 }
 
+async function refreshContestData() {
+  const params = new URLSearchParams(window.location.search);
+  const electionId = params.get("electionId");
+  if (!electionId) return;
+
+  try {
+    const config = await getConfig();
+    const election = config.elections.find(e => String(e.id) === String(electionId));
+    if (!election) return;
+
+    const updatedAt = await fetchContestStatus(election);
+    const statusEl = document.getElementById("status");
+    if (updatedAt && updatedAt === lastFeedUpdatedAt) {
+      statusEl.textContent = formatStatusText(updatedAt);
+      statusEl.classList.remove("error");
+      return;
+    }
+
+    if (updatedAt) lastFeedUpdatedAt = updatedAt;
+    await loadContestDetail({ background: true });
+  } catch {
+    // Keep the current table visible through transient refresh failures.
+  }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
+  restoreSortState();
   initSorting();
-  loadContestDetail();
+  updateSortIndicators();
+  loadContestDetail().then(() => {
+    if (!autoRefreshTimer) {
+      autoRefreshTimer = setInterval(refreshContestData, AUTO_REFRESH_INTERVAL);
+    }
+  });
 });
