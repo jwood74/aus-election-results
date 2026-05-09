@@ -139,7 +139,7 @@ function initSorting() {
       const key = th.dataset.sortKey;
       if (sortState.key !== key) {
         sortState.key = key;
-        sortState.direction = "asc";
+        sortState.direction = key === "updatedAtMs" ? "desc" : "asc";
       } else if (sortState.direction === "asc") {
         sortState.direction = "desc";
       } else {

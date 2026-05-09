@@ -249,6 +249,7 @@ Per-polling-place rows from `<PollingPlace>` elements. At booth level, the AEC s
 | **Polling Place** | `Name` attribute from `PollingPlaceIdentifier` | XML attribute |
 | **Expected Votes** | `Historic` attribute on `FirstPreferences/Total/Votes` | XML attribute |
 | **Votes Cast** | Text content of `FirstPreferences/Total/Votes` | XML element text |
+| **Updated** | Latest `Updated` value from `PollingPlace`, `FirstPreferences`, or `TwoCandidatePreferred`; displayed as time only | XML attribute |
 
 ### TCP Group
 
@@ -284,6 +285,7 @@ Appended after polling place rows, aggregated by vote type:
 - **Absent**, **Provisional**, **Pre-Poll**, **Postal**
 
 Same formulas as polling place rows, sourced from `VotesByType` sub-elements.
+The **Updated** column is shown only when the feed supplies an `Updated` timestamp on the relevant special-vote elements; otherwise it is blank.
 
 ### Totals Row
 

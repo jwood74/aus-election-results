@@ -26,6 +26,49 @@ function getSortedRows(rows) {
   return [...sorted, ...voteTypes];
 }
 
+function parseUpdatedMs(value) {
+  if (!value) return null;
+  const ms = Date.parse(value);
+  return Number.isNaN(ms) ? null : ms;
+}
+
+function getLatestUpdatedValue(...elements) {
+  let latestValue = null;
+  let latestMs = null;
+  for (const el of elements) {
+    const value = attr(el, "Updated");
+    const ms = parseUpdatedMs(value);
+    if (ms !== null && (latestMs === null || ms > latestMs)) {
+      latestValue = value;
+      latestMs = ms;
+    }
+  }
+  return latestValue;
+}
+
+function buildUpdatedFields(updatedAt) {
+  const updatedAtMs = parseUpdatedMs(updatedAt);
+  return {
+    updatedAt,
+    updatedAtMs,
+    updatedAtTime: updatedAtMs === null
+      ? null
+      : new Date(updatedAtMs).toLocaleTimeString("en-AU", {
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false,
+      }),
+  };
+}
+
+function updatedCell(row, extraClass = "") {
+  const cell = document.createElement("td");
+  cell.textContent = row.updatedAtTime ?? "";
+  cell.className = `col-updated${extraClass ? " " + extraClass : ""}`;
+  if (row.updatedAt) cell.title = row.updatedAt;
+  return cell;
+}
+
 /**
  * Build a map of candidateId → partyCode from contest-level FirstPreferences.
  * Includes both active Candidates and Ghosts.
@@ -144,6 +187,7 @@ function parsePollingPlace(ppEl, candidateMap, tcpAlpCandId, tcpLnpCandId, tcpPa
   // ── Two Candidate Preferred ──
   const tcpEl = ppEl.getElementsByTagNameNS(NS_FEED, "TwoCandidatePreferred")[0] ||
                 ppEl.getElementsByTagName("TwoCandidatePreferred")[0];
+  const updated = buildUpdatedFields(getLatestUpdatedValue(ppEl, fpEl, tcpEl));
 
   let alpTcpPct = null, alpTcpSwing = null, alpTcpVotes = 0;
   let lnpTcpVotes = 0;
@@ -214,6 +258,7 @@ function parsePollingPlace(ppEl, candidateMap, tcpAlpCandId, tcpLnpCandId, tcpPa
 
   return {
     name,
+    ...updated,
     expectedVotes,
     votesCast,
     alpTcpPct,
@@ -323,11 +368,13 @@ function parseOneVoteTypeRow(contestEl, candidateMap, tcpAlpCandId, tcpLnpCandId
   const totalTypeVotes = getVotesByType(totalEl, voteType);
   const votesCast     = totalTypeVotes ? parseInt(totalTypeVotes.textContent, 10) : null;
   const expectedVotes = totalTypeVotes ? parseInt(attr(totalTypeVotes, "Historic"), 10) : null;
+  const updatedElements = [getFirst(totalEl, "VotesByType"), totalTypeVotes];
 
   // Formal votes of this type (for flow denominator)
   const formalEl = getFirst(fpEl, "Formal");
   const formalTypeEl = getVotesByType(formalEl, voteType);
   const formalVotes  = formalTypeEl ? parseInt(formalTypeEl.textContent, 10) : 0;
+  updatedElements.push(getFirst(formalEl, "VotesByType"), formalTypeEl);
 
   // Per-party primary % and swing from each Candidate/Ghost VotesByType
   const primary = {
@@ -350,6 +397,7 @@ function parseOneVoteTypeRow(contestEl, candidateMap, tcpAlpCandId, tcpLnpCandId
     const group   = partyGroup(code);
     const typeVotesEl = getVotesByType(cand, voteType);
     if (!typeVotesEl) continue;
+    updatedElements.push(getFirst(cand, "VotesByType"), typeVotesEl);
 
     const pct   = floatAttr(typeVotesEl, "Percentage") ?? 0;
     const swing = floatAttr(typeVotesEl, "Swing");
@@ -393,6 +441,7 @@ function parseOneVoteTypeRow(contestEl, candidateMap, tcpAlpCandId, tcpLnpCandId
       const cid   = attr(cidEl, "Id");
       const typeVotesEl = getVotesByType(cand, voteType);
       if (!typeVotesEl) continue;
+      updatedElements.push(getFirst(cand, "VotesByType"), typeVotesEl);
 
       const pct = floatAttr(typeVotesEl, "Percentage");
       const swing = floatAttr(typeVotesEl, "Swing");
@@ -423,6 +472,7 @@ function parseOneVoteTypeRow(contestEl, candidateMap, tcpAlpCandId, tcpLnpCandId
   return {
     name: label,
     isVoteType: true,
+    ...buildUpdatedFields(getLatestUpdatedValue(...updatedElements)),
     expectedVotes,
     votesCast,
     alpTcpPct,
@@ -528,6 +578,7 @@ function parseContestTotalsRow(contestEl, name, candidateMap, tcpAlpCandId, tcpL
   let pairingChanged = false;
   const tcpEl = contestEl.getElementsByTagNameNS(NS_FEED, "TwoCandidatePreferred")[0] ||
                 contestEl.getElementsByTagName("TwoCandidatePreferred")[0];
+  const updated = buildUpdatedFields(getLatestUpdatedValue(contestEl, fpEl, tcpEl));
   if (tcpEl) {
     const tcpCands = Array.from(tcpEl.children).filter(n => n.localName === "Candidate");
     for (const cand of tcpCands) {
@@ -590,6 +641,7 @@ function parseContestTotalsRow(contestEl, name, candidateMap, tcpAlpCandId, tcpL
   return {
     name,
     isTotals: true,
+    ...updated,
     expectedVotes,
     votesCast,
     alpTcpPct,
@@ -771,6 +823,7 @@ function renderTotalsRow(row) {
   tr.appendChild(td(row.name, "col-contest sticky-col totals-name"));
   tr.appendChild(td(fmtInt(row.expectedVotes), "col-num"));
   tr.appendChild(td(row.votesCast === null || row.votesCast === 0 ? "—" : fmtInt(row.votesCast), "col-num"));
+  tr.appendChild(updatedCell(row));
 
   const tcpTd = document.createElement("td");
   let tcpPartyClass = "col-party-alp";
@@ -857,6 +910,7 @@ function renderRow(row) {
   tr.appendChild(td(row.name, "col-contest sticky-col"));
   tr.appendChild(td(fmtInt(row.expectedVotes), "col-num"));
   tr.appendChild(td(row.votesCast === null || row.votesCast === 0 ? "—" : fmtInt(row.votesCast), "col-num"));
+  tr.appendChild(updatedCell(row));
 
   // TCP % for selected candidate
   const tcpPctTd = document.createElement("td");
@@ -916,9 +970,9 @@ function renderRow(row) {
       const cand = tcpCandidates.find(c => c.id === selectedTcpCandidateId);
       if (cand && cand.code) tcpClass = `col-party-${cand.code.toLowerCase()}`;
     }
-    if (tds.length > 3) {
-      tds[3].className = `col-num ${tcpClass}`;
-      tds[4].className = `col-num ${tcpClass} col-swing`;
+    if (tds.length > 4) {
+      tds[4].className = `col-num ${tcpClass}`;
+      tds[5].className = `col-num ${tcpClass} col-swing`;
     }
   }
 

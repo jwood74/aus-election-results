@@ -190,6 +190,12 @@ td {
   width: 160px;
 }
 
+.col-updated {
+  width: 72px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
 td.col-contest {
   font-weight: 600;
   border-right: 2px solid #c8cdd5;
