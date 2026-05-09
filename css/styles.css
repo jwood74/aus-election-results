@@ -233,6 +233,16 @@ td.col-num {
   color: #888;
 }
 
+.value-zero {
+  color: #888;
+  font-weight: 400;
+}
+
+thead tr.totals-row td.value-zero {
+  color: #888;
+  font-weight: 400;
+}
+
 /* ── Party column colour tints ── */
 .col-party-alp {
   background-color: rgba(200, 0, 30, 0.07);

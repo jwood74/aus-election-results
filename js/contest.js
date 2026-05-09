@@ -95,6 +95,14 @@ function updatedCell(row, extraClass = "") {
   return cell;
 }
 
+function percentageCell(value, hasVotes, party = "") {
+  const cell = document.createElement("td");
+  cell.className = `col-num${party ? " " + party : ""}`;
+  cell.textContent = hasVotes ? fmt(value) : "—";
+  if (hasVotes && value === 0) cell.classList.add("value-zero");
+  return cell;
+}
+
 /**
  * Build a map of candidateId → partyCode from contest-level FirstPreferences.
  * Includes both active Candidates and Ghosts.
@@ -218,6 +226,7 @@ function parsePollingPlace(ppEl, candidateMap, tcpAlpCandId, tcpLnpCandId, tcpPa
   let alpTcpPct = null, alpTcpSwing = null, alpTcpVotes = 0;
   let lnpTcpVotes = 0;
   let tcpPctById = {}, tcpSwingById = {}, tcpHistoricVotes = {};
+  let tcpVotesTotal = 0;
 
   if (tcpEl) {
     const tcpCands = Array.from(tcpEl.children).filter(n => n.localName === "Candidate");
@@ -228,6 +237,7 @@ function parsePollingPlace(ppEl, candidateMap, tcpAlpCandId, tcpLnpCandId, tcpPa
       if (!votesEl) continue;
 
       const votes        = parseInt(votesEl.textContent, 10) || 0;
+      tcpVotesTotal += votes;
       const historicVotes = parseInt(attr(votesEl, "Historic") ?? "0", 10) || 0;
       const xmlPct = floatAttr(votesEl, "Percentage");
       const pct    = (xmlPct !== null && xmlPct !== 0)
@@ -253,6 +263,15 @@ function parsePollingPlace(ppEl, candidateMap, tcpAlpCandId, tcpLnpCandId, tcpPa
 
     if (tcpPairingChanged) {
       for (const cid of Object.keys(tcpSwingById)) tcpSwingById[cid] = null;
+      alpTcpSwing = null;
+    }
+
+    if (tcpVotesTotal === 0) {
+      for (const cid of Object.keys(tcpPctById)) {
+        tcpPctById[cid] = null;
+        tcpSwingById[cid] = null;
+      }
+      alpTcpPct = null;
       alpTcpSwing = null;
     }
   }
@@ -457,6 +476,7 @@ function parseOneVoteTypeRow(contestEl, candidateMap, tcpAlpCandId, tcpLnpCandId
   // ALP TCP % and swing from TwoCandidatePreferred/Candidate VotesByType
   let alpTcpPct = null, alpTcpSwing = null, alpTcpVotes = 0, lnpTcpVotes = 0;
   let tcpPctById = {}, tcpSwingById = {};
+  let tcpVotesTotal = 0;
   const tcpEl = contestEl.getElementsByTagNameNS(NS_FEED, "TwoCandidatePreferred")[0] ||
                 contestEl.getElementsByTagName("TwoCandidatePreferred")[0];
 
@@ -471,17 +491,28 @@ function parseOneVoteTypeRow(contestEl, candidateMap, tcpAlpCandId, tcpLnpCandId
 
       const pct = floatAttr(typeVotesEl, "Percentage");
       const swing = floatAttr(typeVotesEl, "Swing");
+      const votes = parseInt(typeVotesEl.textContent, 10) || 0;
+      tcpVotesTotal += votes;
       tcpPctById[cid] = pct;
       tcpSwingById[cid] = tcpPairingChanged ? null : swing;
 
       if (tcpAlpCandId && cid === tcpAlpCandId) {
         alpTcpPct   = pct;
         alpTcpSwing = tcpPairingChanged ? null : swing;
-        alpTcpVotes = parseInt(typeVotesEl.textContent, 10) || 0;
+        alpTcpVotes = votes;
       }
       if (tcpLnpCandId && cid === tcpLnpCandId) {
-        lnpTcpVotes = parseInt(typeVotesEl.textContent, 10) || 0;
+        lnpTcpVotes = votes;
       }
+    }
+
+    if (tcpVotesTotal === 0) {
+      for (const cid of Object.keys(tcpPctById)) {
+        tcpPctById[cid] = null;
+        tcpSwingById[cid] = null;
+      }
+      alpTcpPct = null;
+      alpTcpSwing = null;
     }
   }
 
@@ -602,6 +633,7 @@ function parseContestTotalsRow(contestEl, name, candidateMap, tcpAlpCandId, tcpL
   let alpTcpPct = null, alpTcpSwing = null, alpTcpVotes = 0, lnpTcpVotes = 0;
   let tcpPctById = {}, tcpSwingById = {}, tcpHistoricVotesMap = {};
   let pairingChanged = false;
+  let tcpVotesTotal = 0;
   const tcpEl = contestEl.getElementsByTagNameNS(NS_FEED, "TwoCandidatePreferred")[0] ||
                 contestEl.getElementsByTagName("TwoCandidatePreferred")[0];
   const updated = buildUpdatedFields(getLatestUpdatedValue(contestEl, fpEl, tcpEl));
@@ -613,6 +645,7 @@ function parseContestTotalsRow(contestEl, name, candidateMap, tcpAlpCandId, tcpL
       const votesEl = getVotesEl(cand);
       if (!votesEl) continue;
       const votes         = parseInt(votesEl.textContent, 10) || 0;
+      tcpVotesTotal += votes;
       const historicVotes = parseInt(attr(votesEl, "Historic") ?? "0", 10) || 0;
       const xmlPct        = floatAttr(votesEl, "Percentage");
       const pct           = (xmlPct !== null && xmlPct !== 0)
@@ -640,6 +673,15 @@ function parseContestTotalsRow(contestEl, name, candidateMap, tcpAlpCandId, tcpL
     );
     if (pairingChanged) {
       for (const cid of Object.keys(tcpSwingById)) tcpSwingById[cid] = null;
+      alpTcpSwing = null;
+    }
+
+    if (tcpVotesTotal === 0) {
+      for (const cid of Object.keys(tcpPctById)) {
+        tcpPctById[cid] = null;
+        tcpSwingById[cid] = null;
+      }
+      alpTcpPct = null;
       alpTcpSwing = null;
     }
   }
@@ -831,10 +873,7 @@ function renderTotalsRow(row) {
     return cell;
   };
   const pct = (v, party) => {
-    const cell = document.createElement("td");
-    cell.className = `col-num${party ? " " + party : ""}`;
-    cell.textContent = hasVotes ? fmt(v) : "—";
-    return cell;
+    return percentageCell(v, hasVotes, party);
   };
   const swing = (v, party = "") => {
     if (!hasVotes) {
@@ -861,6 +900,7 @@ function renderTotalsRow(row) {
     tcpTd.textContent = hasVotes ? fmt(row.alpTcpPct) : "—";
   }
   tcpTd.className = `col-num ${tcpPartyClass}`;
+  if (hasVotes && tcpTd.textContent === "0.00") tcpTd.classList.add("value-zero");
   tr.appendChild(tcpTd);
 
   // TCP Swing for selected candidate
@@ -918,10 +958,7 @@ function renderRow(row) {
   // Suppress percentages and swings when no votes have been cast
   const hasVotes = row.votesCast !== null && row.votesCast > 0;
   const pct = (v, party) => {
-    const cell = document.createElement("td");
-    cell.className = `col-num${party ? " " + party : ""}`;
-    cell.textContent = hasVotes ? fmt(v) : "—";
-    return cell;
+    return percentageCell(v, hasVotes, party);
   };
   const swing = (v, alp = false, party = "") => {
     if (!hasVotes) {
@@ -950,6 +987,7 @@ function renderRow(row) {
     tcpPctTd.textContent = hasVotes ? fmt(row.alpTcpPct) : "—";
   }
   tcpPctTd.className = `col-num ${tcpPartyClass}`;
+  if (hasVotes && tcpPctTd.textContent === "0.00") tcpPctTd.classList.add("value-zero");
   tr.appendChild(tcpPctTd);
 
   // TCP Swing for selected candidate
